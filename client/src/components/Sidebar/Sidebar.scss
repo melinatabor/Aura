@@ -40,27 +40,7 @@
 }
 
 .sidebar-brand {
-  display: flex;
-  align-items: center;
-  gap: $space-2;
   padding: 0 $space-2 $space-6;
-
-  .sidebar-brand-mark {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    background: $color-primary-light;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-  }
-
-  .sidebar-brand-name {
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-  }
 }
 
 .sidebar-nav {

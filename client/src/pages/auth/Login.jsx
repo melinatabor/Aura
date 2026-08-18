@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext.jsx'
+import Logo from '../../components/Logo/Logo.jsx'
 import './Auth.scss'
 
 export default function Login() {
@@ -22,7 +23,7 @@ export default function Login() {
     <div className="auth-page">
       <div className="aura-card auth-card">
         <Link to="/" className="auth-brand">
-          Aura
+          <Logo tone="light" size={28} />
         </Link>
         <h1>Iniciar sesión</h1>
         <p className="auth-subtitle">Gestión inteligente para bienestar y estética</p>

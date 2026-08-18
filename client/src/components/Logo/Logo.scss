@@ -1,0 +1,31 @@
+@use '../../styles/variables' as *;
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  display: block;
+  object-fit: contain;
+}
+
+.logo-word {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: $color-text;
+}
+
+// On the dark sidebar the sage-green icon has low contrast, so it's
+// flipped to white via filter instead of shipping a second image asset.
+.logo-dark {
+  .logo-icon {
+    filter: brightness(0) invert(1);
+  }
+
+  .logo-word {
+    color: $color-text-inverse;
+  }
+}

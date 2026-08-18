@@ -1,4 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom'
+import Logo from '../Logo/Logo.jsx'
 import './Sidebar.scss'
 
 const ITEMS = [
@@ -20,8 +21,7 @@ export default function Sidebar() {
   return (
     <aside className="sidebar">
       <div className="sidebar-brand">
-        <span className="sidebar-brand-mark">A</span>
-        <span className="sidebar-brand-name">Aura</span>
+        <Logo tone="dark" size={30} />
       </div>
       <nav className="sidebar-nav">
         <ul>

@@ -1,11 +1,12 @@
 import { Link, NavLink } from 'react-router-dom'
+import Logo from '../Logo/Logo.jsx'
 import './Navbar.scss'
 
 export default function Navbar() {
   return (
     <header className="public-navbar">
       <Link to="/" className="public-navbar-brand">
-        Aura
+        <Logo tone="light" size={30} />
       </Link>
       <nav className="public-navbar-links">
         <NavLink to="/" end>

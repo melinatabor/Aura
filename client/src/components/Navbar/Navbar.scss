@@ -10,9 +10,8 @@
 }
 
 .public-navbar-brand {
-  font-size: 20px;
-  font-weight: 700;
-  color: $color-primary-dark;
+  display: flex;
+  align-items: center;
 }
 
 .public-navbar-links {
