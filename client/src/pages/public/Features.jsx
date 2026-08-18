@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Calendar, FolderOpen, FileText, Bell, Star, MessageCircle, Flower2, Package, BarChart3 } from 'lucide-react'
 import './Features.scss'
 
 const GROUPS = [
@@ -6,27 +7,27 @@ const GROUPS = [
     title: 'Atención y clientes',
     description: 'Gestión integral del flujo de pacientes y servicios de manera centralizada.',
     items: [
-      { icon: '📅', title: 'Agenda de turnos', description: 'Consultá tus turnos por día, semana o profesional y evitá cruces de horario con control automático.' },
-      { icon: '🗂', title: 'Ficha del cliente', description: 'Centralizá datos de contacto, historial de tratamientos y notas internas de cada cliente.' },
-      { icon: '📝', title: 'Registro de tratamientos', description: 'Dejá constancia de cada atención: profesional responsable, observaciones y fecha.' },
+      { icon: Calendar, title: 'Agenda de turnos', description: 'Consultá tus turnos por día, semana o profesional y evitá cruces de horario con control automático.' },
+      { icon: FolderOpen, title: 'Ficha del cliente', description: 'Centralizá datos de contacto, historial de tratamientos y notas internas de cada cliente.' },
+      { icon: FileText, title: 'Registro de tratamientos', description: 'Dejá constancia de cada atención: profesional responsable, observaciones y fecha.' },
     ],
   },
   {
     title: 'Seguimiento inteligente',
     description: 'Automatización y control para la fidelización de pacientes.',
     items: [
-      { icon: '🔔', title: 'Alertas de seguimiento', description: 'Detectá pacientes que no reservan turnos hace tiempo o insumos que se están agotando.' },
-      { icon: '⭐', title: 'Priorización de clientes', description: 'Clasificá clientes según criterios operativos: seguimiento, vínculo y frecuencia de turno.' },
-      { icon: '💬', title: 'Asistente de recomendación', description: 'Sugerencias orientadas para programar contactos y proponer mensajes de seguimiento.' },
+      { icon: Bell, title: 'Alertas de seguimiento', description: 'Detectá pacientes que no reservan turnos hace tiempo o insumos que se están agotando.' },
+      { icon: Star, title: 'Priorización de clientes', description: 'Clasificá clientes según criterios operativos: seguimiento, vínculo y frecuencia de turno.' },
+      { icon: MessageCircle, title: 'Asistente de recomendación', description: 'Sugerencias orientadas para programar contactos y proponer mensajes de seguimiento.' },
     ],
   },
   {
     title: 'Operación interna',
     description: 'Control de recursos y desempeño del centro de manera integral.',
     items: [
-      { icon: '💆', title: 'Catálogo de tratamientos', description: 'Administrá tratamientos ofrecidos: categoría, duración, precio orientativo y estado.' },
-      { icon: '🧴', title: 'Insumos y stock', description: 'Registrá productos utilizados, controlá stock mínimo y recibí alerta cuando escasea.' },
-      { icon: '📊', title: 'Reportes operativos', description: 'Consultá turnos, clientes, tratamientos realizados y consumo de insumos en tiempo real.' },
+      { icon: Flower2, title: 'Catálogo de tratamientos', description: 'Administrá tratamientos ofrecidos: categoría, duración, precio orientativo y estado.' },
+      { icon: Package, title: 'Insumos y stock', description: 'Registrá productos utilizados, controlá stock mínimo y recibí alerta cuando escasea.' },
+      { icon: BarChart3, title: 'Reportes operativos', description: 'Consultá turnos, clientes, tratamientos realizados y consumo de insumos en tiempo real.' },
     ],
   },
 ]
@@ -49,7 +50,9 @@ export default function Features() {
           <div className="features-grid">
             {group.items.map((item) => (
               <div key={item.title} className="aura-card feature-card">
-                <div className="feature-icon">{item.icon}</div>
+                <div className="feature-icon">
+                  <item.icon size={20} strokeWidth={1.75} />
+                </div>
                 <h3>{item.title}</h3>
                 <p>{item.description}</p>
               </div>

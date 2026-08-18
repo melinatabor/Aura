@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Mail, MessageCircle, Clock, MapPin } from 'lucide-react'
 import './Contact.scss'
 
 const ACTIVITY_TYPES = ['Profesional independiente', 'Centro estético', 'Equipo de trabajo']
@@ -112,28 +113,36 @@ export default function Contact() {
           <h2>También podés contactarnos por</h2>
           <ul>
             <li>
-              <span className="contact-info-icon">✉</span>
+              <span className="contact-info-icon">
+                <Mail size={18} strokeWidth={1.75} />
+              </span>
               <div>
                 <strong>Email</strong>
                 <p>hola@aurasoft.com</p>
               </div>
             </li>
             <li>
-              <span className="contact-info-icon">💬</span>
+              <span className="contact-info-icon">
+                <MessageCircle size={18} strokeWidth={1.75} />
+              </span>
               <div>
                 <strong>WhatsApp</strong>
                 <p>+54 9 11 9876-4437</p>
               </div>
             </li>
             <li>
-              <span className="contact-info-icon">🕒</span>
+              <span className="contact-info-icon">
+                <Clock size={18} strokeWidth={1.75} />
+              </span>
               <div>
                 <strong>Horario de atención</strong>
                 <p>Lunes a viernes 9:00 - 18:00 hs</p>
               </div>
             </li>
             <li>
-              <span className="contact-info-icon">📍</span>
+              <span className="contact-info-icon">
+                <MapPin size={18} strokeWidth={1.75} />
+              </span>
               <div>
                 <strong>Ubicación</strong>
                 <p>Buenos Aires, Argentina</p>

@@ -1,19 +1,20 @@
 import { Link } from 'react-router-dom'
+import { Sparkles, Building2, Users } from 'lucide-react'
 import './Home.scss'
 
 const PROFILES = [
   {
-    icon: '✦',
+    icon: Sparkles,
     title: 'Profesional independiente',
     description: 'Organizá tus turnos, tratamientos y clientes, trabajando desde un mismo lugar.',
   },
   {
-    icon: '🏛',
+    icon: Building2,
     title: 'Centro estético',
     description: 'Centralizá la agenda, las fichas de tus clientes y la atención de tu equipo.',
   },
   {
-    icon: '👥',
+    icon: Users,
     title: 'Equipo de trabajo',
     description: 'Compartí agenda, turnos y seguimientos con visibilidad clara para todo el equipo.',
   },
@@ -64,7 +65,9 @@ export default function Home() {
         <div className="home-profiles">
           {PROFILES.map((profile) => (
             <div key={profile.title} className="aura-card home-profile-card">
-              <div className="home-profile-icon">{profile.icon}</div>
+              <div className="home-profile-icon">
+                <profile.icon size={22} strokeWidth={1.75} />
+              </div>
               <h3>{profile.title}</h3>
               <p>{profile.description}</p>
             </div>

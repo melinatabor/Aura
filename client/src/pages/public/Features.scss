@@ -47,7 +47,14 @@
 
 .feature-card {
   .feature-icon {
-    font-size: 22px;
+    width: 40px;
+    height: 40px;
+    border-radius: $radius-md;
+    background: $color-success-bg;
+    color: $color-primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-bottom: $space-3;
   }
 
