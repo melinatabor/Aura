@@ -3,7 +3,7 @@
 .sidebar {
   width: $sidebar-width;
   flex-shrink: 0;
-  background: $color-primary-dark;
+  background: $color-sidebar-bg;
   color: $color-text-inverse;
   min-height: 100vh;
   padding: $space-5 $space-3;
@@ -27,7 +27,7 @@
   border-top: 1px solid rgba($color-text-inverse, 0.12);
 
   .btn-primary {
-    background: $color-primary-light;
+    background: $color-sidebar-accent;
   }
 
   .btn-ghost {
@@ -68,7 +68,7 @@
 
     &.active {
       background: $color-text-inverse;
-      color: $color-primary-dark;
+      color: $color-sidebar-bg;
       font-weight: 700;
     }
   }
