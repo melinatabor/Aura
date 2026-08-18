@@ -3,15 +3,15 @@ import './Sidebar.scss'
 
 const ITEMS = [
   { to: '/app/dashboard', label: 'Panel principal', icon: '🏠' },
-  { to: '/app/agenda', label: 'Agenda', icon: '📅' },
-  { to: '/app/clientes', label: 'Clientes', icon: '👥' },
-  { to: '/app/tratamientos', label: 'Tratamientos', icon: '💆' },
-  { to: '/app/insumos', label: 'Insumos', icon: '🧴' },
-  { to: '/app/alertas', label: 'Alertas', icon: '🔔' },
-  { to: '/app/reportes', label: 'Reportes', icon: '📊' },
+  { to: '/app/schedule', label: 'Agenda', icon: '📅' },
+  { to: '/app/patients', label: 'Clientes', icon: '👥' },
+  { to: '/app/treatments', label: 'Tratamientos', icon: '💆' },
+  { to: '/app/supplies', label: 'Insumos', icon: '🧴' },
+  { to: '/app/alerts', label: 'Alertas', icon: '🔔' },
+  { to: '/app/reports', label: 'Reportes', icon: '📊' },
   { to: '/app/ai-scoring', label: 'AI Patient Scoring', icon: '✨' },
-  { to: '/app/empleados', label: 'Empleados y roles', icon: '🧑‍💼' },
-  { to: '/app/configuracion', label: 'Configuración', icon: '⚙️' },
+  { to: '/app/employees', label: 'Empleados y roles', icon: '🧑‍💼' },
+  { to: '/app/settings', label: 'Configuración', icon: '⚙️' },
 ]
 
 export default function Sidebar() {
@@ -36,10 +36,10 @@ export default function Sidebar() {
         </ul>
       </nav>
       <div className="sidebar-quick-actions">
-        <button type="button" className="btn btn-primary btn-sm" onClick={() => navigate('/app/agenda?nuevo=1')}>
+        <button type="button" className="btn btn-primary btn-sm" onClick={() => navigate('/app/schedule?new=1')}>
           + Agendar turno
         </button>
-        <button type="button" className="btn btn-ghost btn-sm" onClick={() => navigate('/app/clientes?nuevo=1')}>
+        <button type="button" className="btn btn-ghost btn-sm" onClick={() => navigate('/app/patients?new=1')}>
           + Nuevo cliente
         </button>
       </div>

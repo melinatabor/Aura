@@ -1,0 +1,6 @@
+[
+  { "id": 1, "firstName": "María", "lastName": "Alonso", "email": "maria.alonso@aura.com", "role": "Administrador", "status": "Activo" },
+  { "id": 2, "firstName": "Nicolás", "lastName": "Ferreyra", "email": "nicolas.ferreyra@aura.com", "role": "Operador", "status": "Activo" },
+  { "id": 3, "firstName": "Brenda", "lastName": "Quiroga", "email": "brenda.quiroga@aura.com", "role": "Operador", "status": "Activo" },
+  { "id": 4, "firstName": "Ezequiel", "lastName": "Paz", "email": "ezequiel.paz@aura.com", "role": "Operador", "status": "Inactivo" }
+]

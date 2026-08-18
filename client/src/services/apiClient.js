@@ -1,7 +1,7 @@
-// Simula la latencia/forma de una llamada real a la futura Web API.
-// El día que exista el backend, alcanza con reescribir el cuerpo de las
-// funciones de cada *Service.js (usar fetch/axios en vez de arrays en
-// memoria) sin tocar ninguna página ni componente que los consume.
+// Simulates the latency/shape of a real future Web API call.
+// Once the backend exists, it's enough to rewrite the body of each
+// *Service.js function (use fetch/axios instead of in-memory arrays)
+// without touching any page or component that consumes them.
 export function resolveAsync(value, delay = 150) {
   return new Promise((resolve) => setTimeout(() => resolve(value), delay))
 }

@@ -1,4 +1,4 @@
-const ESTADO_VARIANT = {
+const STATUS_VARIANT = {
   Activo: 'success',
   Confirmado: 'success',
   Realizado: 'success',
@@ -8,6 +8,6 @@ const ESTADO_VARIANT = {
 }
 
 export default function Badge({ children, variant }) {
-  const resolved = variant || ESTADO_VARIANT[children] || 'neutral'
+  const resolved = variant || STATUS_VARIANT[children] || 'neutral'
   return <span className={`badge badge-${resolved}`}>{children}</span>
 }

@@ -1,0 +1,20 @@
+[
+  { "id": 1, "patientId": 1, "professionalId": 1, "treatmentId": 1, "dayOffset": 0, "startTime": "09:00", "endTime": "10:00", "status": "Confirmado", "notes": "" },
+  { "id": 2, "patientId": 2, "professionalId": 3, "treatmentId": 4, "dayOffset": 0, "startTime": "10:30", "endTime": "11:20", "status": "Pendiente", "notes": "Primera sesión" },
+  { "id": 3, "patientId": 3, "professionalId": 2, "treatmentId": 3, "dayOffset": 0, "startTime": "14:00", "endTime": "14:40", "status": "Confirmado", "notes": "" },
+  { "id": 4, "patientId": 5, "professionalId": 4, "treatmentId": 5, "dayOffset": 0, "startTime": "16:00", "endTime": "17:00", "status": "Pendiente", "notes": "" },
+  { "id": 5, "patientId": 6, "professionalId": 1, "treatmentId": 2, "dayOffset": 1, "startTime": "09:30", "endTime": "10:15", "status": "Confirmado", "notes": "" },
+  { "id": 6, "patientId": 7, "professionalId": 3, "treatmentId": 4, "dayOffset": 1, "startTime": "11:00", "endTime": "11:50", "status": "Pendiente", "notes": "" },
+  { "id": 7, "patientId": 8, "professionalId": 2, "treatmentId": 3, "dayOffset": 1, "startTime": "13:30", "endTime": "14:10", "status": "Confirmado", "notes": "Consultar alergias" },
+  { "id": 8, "patientId": 1, "professionalId": 4, "treatmentId": 5, "dayOffset": 2, "startTime": "10:00", "endTime": "11:00", "status": "Pendiente", "notes": "" },
+  { "id": 9, "patientId": 9, "professionalId": 1, "treatmentId": 1, "dayOffset": 2, "startTime": "15:00", "endTime": "16:00", "status": "Cancelado", "notes": "Paciente reprogramó" },
+  { "id": 10, "patientId": 10, "professionalId": 3, "treatmentId": 4, "dayOffset": 3, "startTime": "09:00", "endTime": "09:50", "status": "Pendiente", "notes": "" },
+  { "id": 11, "patientId": 4, "professionalId": 2, "treatmentId": 3, "dayOffset": 3, "startTime": "12:00", "endTime": "12:40", "status": "Confirmado", "notes": "" },
+  { "id": 12, "patientId": 5, "professionalId": 1, "treatmentId": 6, "dayOffset": 4, "startTime": "10:00", "endTime": "10:30", "status": "Pendiente", "notes": "" },
+  { "id": 13, "patientId": 6, "professionalId": 4, "treatmentId": 5, "dayOffset": 4, "startTime": "14:30", "endTime": "15:30", "status": "Confirmado", "notes": "" },
+  { "id": 14, "patientId": 3, "professionalId": 3, "treatmentId": 4, "dayOffset": 5, "startTime": "11:30", "endTime": "12:20", "status": "Pendiente", "notes": "" },
+  { "id": 15, "patientId": 7, "professionalId": 1, "treatmentId": 1, "dayOffset": -1, "startTime": "09:00", "endTime": "10:00", "status": "Realizado", "notes": "" },
+  { "id": 16, "patientId": 8, "professionalId": 2, "treatmentId": 3, "dayOffset": -1, "startTime": "16:00", "endTime": "16:40", "status": "Realizado", "notes": "" },
+  { "id": 17, "patientId": 2, "professionalId": 4, "treatmentId": 5, "dayOffset": -2, "startTime": "10:00", "endTime": "11:00", "status": "Realizado", "notes": "" },
+  { "id": 18, "patientId": 10, "professionalId": 1, "treatmentId": 2, "dayOffset": 6, "startTime": "09:30", "endTime": "10:15", "status": "Pendiente", "notes": "" }
+]

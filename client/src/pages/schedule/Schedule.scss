@@ -1,0 +1,124 @@
+@use '../../styles/variables' as *;
+
+.schedule-week-nav {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  font-size: 13px;
+}
+
+.schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(150px, 1fr));
+  gap: $space-3;
+  overflow-x: auto;
+}
+
+.schedule-day {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+}
+
+.schedule-day-today {
+  border-color: $color-primary;
+  box-shadow: 0 0 0 1px $color-primary;
+}
+
+.schedule-day-header {
+  display: flex;
+  flex-direction: column;
+  padding: $space-3;
+  border-bottom: 1px solid $color-border;
+  font-size: 12px;
+  color: $color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+
+  strong {
+    font-size: 18px;
+    color: $color-text;
+    text-transform: none;
+  }
+}
+
+.schedule-day-body {
+  padding: $space-2;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  flex: 1;
+}
+
+.schedule-empty {
+  font-size: 12px;
+  color: $color-text-muted;
+  text-align: center;
+  padding: $space-4 0;
+}
+
+.schedule-appointment-card {
+  text-align: left;
+  border: none;
+  border-radius: $radius-sm;
+  padding: $space-2 $space-3;
+  cursor: pointer;
+  background: $color-info-bg;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+
+  strong {
+    font-size: 13px;
+  }
+
+  &.status-confirmado {
+    background: $color-success-bg;
+  }
+
+  &.status-pendiente {
+    background: $color-warning-bg;
+  }
+
+  &.status-cancelado {
+    background: $color-neutral-bg;
+    opacity: 0.7;
+  }
+
+  &.status-realizado {
+    background: $color-surface-alt;
+  }
+}
+
+.schedule-appointment-time {
+  font-weight: 700;
+  color: $color-text-muted;
+}
+
+.schedule-appointment-treatment {
+  color: $color-text-muted;
+}
+
+.schedule-appointment-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.schedule-appointment-cancel {
+  font-size: 11px;
+  color: $color-danger;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+@media (max-width: 1000px) {
+  .schedule-grid {
+    grid-template-columns: repeat(7, minmax(140px, 1fr));
+  }
+}

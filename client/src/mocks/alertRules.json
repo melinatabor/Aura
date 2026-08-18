@@ -1,0 +1,6 @@
+{
+  "upcomingAppointmentDays": 2,
+  "lowStockAlertEnabled": true,
+  "upcomingAppointmentAlertEnabled": true,
+  "administrativeAlertEnabled": true
+}

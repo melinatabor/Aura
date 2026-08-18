@@ -1,34 +1,34 @@
 import { useEffect, useState } from 'react'
 import Badge from '../../components/Badge/Badge.jsx'
 import StatCard from '../../components/StatCard/StatCard.jsx'
-import * as pacientesService from '../../services/pacientesService'
+import * as patientsService from '../../services/patientsService'
 import './AIPatientScoring.scss'
 
-// Datos de ejemplo fijos: esta pantalla es solo una maqueta visual del
-// Figma, no ejecuta ningún cálculo ni modelo real detrás.
+// Fixed example data: this screen is only a visual mock of the Figma,
+// there is no real calculation or model running behind it.
 const SCORES_MOCK = [
-  { pacienteId: 1, score: 92, prioridad: 'Alta', motivo: 'Turnos frecuentes, sin cancelaciones recientes.' },
-  { pacienteId: 3, score: 78, prioridad: 'Alta', motivo: 'Buen historial de asistencia.' },
-  { pacienteId: 5, score: 61, prioridad: 'Media', motivo: 'Frecuencia irregular en los últimos meses.' },
-  { pacienteId: 6, score: 55, prioridad: 'Media', motivo: 'Sin turnos en las últimas 3 semanas.' },
-  { pacienteId: 9, score: 28, prioridad: 'Baja', motivo: 'Cliente inactivo, sin turnos recientes.' },
+  { patientId: 1, score: 92, priority: 'Alta', reason: 'Turnos frecuentes, sin cancelaciones recientes.' },
+  { patientId: 3, score: 78, priority: 'Alta', reason: 'Buen historial de asistencia.' },
+  { patientId: 5, score: 61, priority: 'Media', reason: 'Frecuencia irregular en los últimos meses.' },
+  { patientId: 6, score: 55, priority: 'Media', reason: 'Sin turnos en las últimas 3 semanas.' },
+  { patientId: 9, score: 28, priority: 'Baja', reason: 'Cliente inactivo, sin turnos recientes.' },
 ]
 
-const PRIORIDAD_VARIANT = { Alta: 'success', Media: 'warning', Baja: 'danger' }
+const PRIORITY_VARIANT = { Alta: 'success', Media: 'warning', Baja: 'danger' }
 
 export default function AIPatientScoring() {
-  const [pacientes, setPacientes] = useState([])
+  const [patients, setPatients] = useState([])
 
   useEffect(() => {
-    pacientesService.getAll().then(setPacientes)
+    patientsService.getAll().then(setPatients)
   }, [])
 
-  const filas = SCORES_MOCK.map((s) => ({
+  const rows = SCORES_MOCK.map((s) => ({
     ...s,
-    paciente: pacientes.find((p) => p.id === s.pacienteId),
-  })).filter((f) => f.paciente)
+    patient: patients.find((p) => p.id === s.patientId),
+  })).filter((r) => r.patient)
 
-  const promedio = filas.length ? Math.round(filas.reduce((sum, f) => sum + f.score, 0) / filas.length) : 0
+  const average = rows.length ? Math.round(rows.reduce((sum, r) => sum + r.score, 0) / rows.length) : 0
 
   return (
     <div className="scoring-page">
@@ -43,9 +43,9 @@ export default function AIPatientScoring() {
       </div>
 
       <div className="stat-grid">
-        <StatCard label="Clientes evaluados" value={filas.length} />
-        <StatCard label="Puntaje promedio" value={promedio} />
-        <StatCard label="Prioridad alta" value={filas.filter((f) => f.prioridad === 'Alta').length} />
+        <StatCard label="Clientes evaluados" value={rows.length} />
+        <StatCard label="Puntaje promedio" value={average} />
+        <StatCard label="Prioridad alta" value={rows.filter((r) => r.priority === 'Alta').length} />
       </div>
 
       <div className="aura-table-wrap">
@@ -59,23 +59,23 @@ export default function AIPatientScoring() {
             </tr>
           </thead>
           <tbody>
-            {filas.map((f) => (
-              <tr key={f.pacienteId}>
+            {rows.map((r) => (
+              <tr key={r.patientId}>
                 <td>
                   <strong>
-                    {f.paciente.nombre} {f.paciente.apellido}
+                    {r.patient.firstName} {r.patient.lastName}
                   </strong>
                 </td>
                 <td>
                   <div className="scoring-bar-track">
-                    <div className="scoring-bar-fill" style={{ width: `${f.score}%` }} />
+                    <div className="scoring-bar-fill" style={{ width: `${r.score}%` }} />
                   </div>
-                  <span className="scoring-bar-value">{f.score}</span>
+                  <span className="scoring-bar-value">{r.score}</span>
                 </td>
                 <td>
-                  <Badge variant={PRIORIDAD_VARIANT[f.prioridad]}>{f.prioridad}</Badge>
+                  <Badge variant={PRIORITY_VARIANT[r.priority]}>{r.priority}</Badge>
                 </td>
-                <td>{f.motivo}</td>
+                <td>{r.reason}</td>
               </tr>
             ))}
           </tbody>

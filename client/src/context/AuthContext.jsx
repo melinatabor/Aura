@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from 'react'
 
 const AuthContext = createContext(null)
 
-const STORAGE_KEY = 'aura.sesion'
+const STORAGE_KEY = 'aura.session'
 
 function readStoredUser() {
   try {
@@ -14,24 +14,24 @@ function readStoredUser() {
 }
 
 export function AuthProvider({ children }) {
-  const [usuario, setUsuario] = useState(readStoredUser)
+  const [user, setUser] = useState(readStoredUser)
 
-  function login({ nombre, email }) {
-    const sesion = { nombre: nombre || 'María', email, rol: 'Administrador' }
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(sesion))
-    setUsuario(sesion)
+  function login({ name, email }) {
+    const session = { name: name || 'María', email, role: 'Administrador' }
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(session))
+    setUser(session)
   }
 
   function logout() {
     sessionStorage.removeItem(STORAGE_KEY)
-    setUsuario(null)
+    setUser(null)
   }
 
-  return <AuthContext.Provider value={{ usuario, login, logout }}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={{ user, login, logout }}>{children}</AuthContext.Provider>
 }
 
 export function useAuth() {
   const context = useContext(AuthContext)
-  if (!context) throw new Error('useAuth debe usarse dentro de <AuthProvider>')
+  if (!context) throw new Error('useAuth must be used within <AuthProvider>')
   return context
 }

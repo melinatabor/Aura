@@ -12,10 +12,10 @@ export default function Login() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    // Login simulado: no valida contra ningún backend todavía.
-    login({ nombre: 'María', email })
-    const destino = location.state?.from?.pathname ?? '/app/dashboard'
-    navigate(destino, { replace: true })
+    // Simulated login: does not validate against any backend yet.
+    login({ name: 'María', email })
+    const destination = location.state?.from?.pathname ?? '/app/dashboard'
+    navigate(destination, { replace: true })
   }
 
   return (
@@ -49,7 +49,7 @@ export default function Login() {
         </form>
 
         <p className="auth-footer">
-          ¿No tenés cuenta? <Link to="/activacion-cuenta">Creá una cuenta profesional</Link>
+          ¿No tenés cuenta? <Link to="/activate-account">Creá una cuenta profesional</Link>
         </p>
       </div>
     </div>

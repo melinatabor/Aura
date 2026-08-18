@@ -5,15 +5,15 @@ import './AppLayout.scss'
 
 const TITLES = [
   { prefix: '/app/dashboard', title: 'Panel principal' },
-  { prefix: '/app/agenda', title: 'Agenda' },
-  { prefix: '/app/clientes', title: 'Clientes' },
-  { prefix: '/app/tratamientos', title: 'Catálogo de tratamientos' },
-  { prefix: '/app/insumos', title: 'Insumos' },
-  { prefix: '/app/alertas', title: 'Alertas' },
-  { prefix: '/app/reportes', title: 'Reportes operativos' },
+  { prefix: '/app/schedule', title: 'Agenda' },
+  { prefix: '/app/patients', title: 'Clientes' },
+  { prefix: '/app/treatments', title: 'Catálogo de tratamientos' },
+  { prefix: '/app/supplies', title: 'Insumos' },
+  { prefix: '/app/alerts', title: 'Alertas' },
+  { prefix: '/app/reports', title: 'Reportes operativos' },
   { prefix: '/app/ai-scoring', title: 'AI Patient Scoring' },
-  { prefix: '/app/empleados', title: 'Empleados y roles' },
-  { prefix: '/app/configuracion', title: 'Configuración operativa' },
+  { prefix: '/app/employees', title: 'Empleados y roles' },
+  { prefix: '/app/settings', title: 'Configuración operativa' },
 ]
 
 function resolveTitle(pathname) {

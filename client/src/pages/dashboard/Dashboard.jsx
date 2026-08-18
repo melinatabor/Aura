@@ -3,51 +3,51 @@ import { Link } from 'react-router-dom'
 import StatCard from '../../components/StatCard/StatCard.jsx'
 import Badge from '../../components/Badge/Badge.jsx'
 import EmptyState from '../../components/EmptyState/EmptyState.jsx'
-import * as pacientesService from '../../services/pacientesService'
-import * as turnosService from '../../services/turnosService'
-import * as tratamientosService from '../../services/tratamientosService'
-import * as alertasService from '../../services/alertasService'
-import * as profesionalesService from '../../services/profesionalesService'
+import * as patientsService from '../../services/patientsService'
+import * as appointmentsService from '../../services/appointmentsService'
+import * as treatmentsService from '../../services/treatmentsService'
+import * as alertsService from '../../services/alertsService'
+import * as professionalsService from '../../services/professionalsService'
 import './Dashboard.scss'
 
 export default function Dashboard() {
   const [data, setData] = useState(null)
 
   useEffect(() => {
-    let activo = true
-    async function cargar() {
-      const [pacientes, turnosHoy, tratamientos, alertas, profesionales] = await Promise.all([
-        pacientesService.getAll(),
-        turnosService.getDeHoy(),
-        tratamientosService.getActivos(),
-        alertasService.getAlertas(),
-        profesionalesService.getAll(),
+    let active = true
+    async function load() {
+      const [patients, todayAppointments, treatments, alerts, professionals] = await Promise.all([
+        patientsService.getAll(),
+        appointmentsService.getToday(),
+        treatmentsService.getActive(),
+        alertsService.getAlerts(),
+        professionalsService.getAll(),
       ])
-      if (!activo) return
-      setData({ pacientes, turnosHoy, tratamientos, alertas, profesionales })
+      if (!active) return
+      setData({ patients, todayAppointments, treatments, alerts, professionals })
     }
-    cargar()
+    load()
     return () => {
-      activo = false
+      active = false
     }
   }, [])
 
   if (!data) return null
 
-  const { pacientes, turnosHoy, tratamientos, alertas, profesionales } = data
-  const pacientesActivos = pacientes.filter((p) => p.estado === 'Activo')
-  const seguimientoPendiente = pacientes
-    .filter((p) => p.estado === 'Activo' && !turnosHoy.some((t) => t.pacienteId === p.id))
+  const { patients, todayAppointments, treatments, alerts, professionals } = data
+  const activePatients = patients.filter((p) => p.status === 'Activo')
+  const pendingFollowUp = patients
+    .filter((p) => p.status === 'Activo' && !todayAppointments.some((a) => a.patientId === p.id))
     .slice(0, 4)
 
-  function nombrePaciente(id) {
-    const p = pacientes.find((pac) => pac.id === id)
-    return p ? `${p.nombre} ${p.apellido}` : '—'
+  function patientName(id) {
+    const p = patients.find((pat) => pat.id === id)
+    return p ? `${p.firstName} ${p.lastName}` : '—'
   }
 
-  function nombreProfesional(id) {
-    const prof = profesionales.find((pr) => pr.id === id)
-    return prof ? `${prof.nombre} ${prof.apellido}` : '—'
+  function professionalName(id) {
+    const prof = professionals.find((pr) => pr.id === id)
+    return prof ? `${prof.firstName} ${prof.lastName}` : '—'
   }
 
   return (
@@ -58,21 +58,21 @@ export default function Dashboard() {
       </div>
 
       <div className="stat-grid">
-        <StatCard label="Pacientes activos" value={pacientesActivos.length} />
-        <StatCard label="Turnos de hoy" value={turnosHoy.length} />
-        <StatCard label="Tratamientos activos" value={tratamientos.length} />
-        <StatCard label="Alertas activas" value={alertas.length} hint={alertas.length > 0 ? 'Requieren revisión' : 'Todo en orden'} />
+        <StatCard label="Pacientes activos" value={activePatients.length} />
+        <StatCard label="Turnos de hoy" value={todayAppointments.length} />
+        <StatCard label="Tratamientos activos" value={treatments.length} />
+        <StatCard label="Alertas activas" value={alerts.length} hint={alerts.length > 0 ? 'Requieren revisión' : 'Todo en orden'} />
       </div>
 
       <div className="dashboard-columns">
         <section className="aura-card">
           <div className="page-header-row">
             <h2 className="section-title">Turnos de hoy</h2>
-            <Link to="/app/agenda" className="btn btn-ghost btn-sm">
+            <Link to="/app/schedule" className="btn btn-ghost btn-sm">
               Ver agenda completa
             </Link>
           </div>
-          {turnosHoy.length === 0 ? (
+          {todayAppointments.length === 0 ? (
             <EmptyState title="No hay turnos agendados para hoy" />
           ) : (
             <div className="aura-table-wrap">
@@ -86,15 +86,15 @@ export default function Dashboard() {
                   </tr>
                 </thead>
                 <tbody>
-                  {turnosHoy
-                    .sort((a, b) => a.horaInicio.localeCompare(b.horaInicio))
-                    .map((turno) => (
-                      <tr key={turno.id}>
-                        <td>{turno.horaInicio}</td>
-                        <td>{nombrePaciente(turno.pacienteId)}</td>
-                        <td>{nombreProfesional(turno.profesionalId)}</td>
+                  {todayAppointments
+                    .sort((a, b) => a.startTime.localeCompare(b.startTime))
+                    .map((appointment) => (
+                      <tr key={appointment.id}>
+                        <td>{appointment.startTime}</td>
+                        <td>{patientName(appointment.patientId)}</td>
+                        <td>{professionalName(appointment.professionalId)}</td>
                         <td>
-                          <Badge>{turno.estado}</Badge>
+                          <Badge>{appointment.status}</Badge>
                         </td>
                       </tr>
                     ))}
@@ -107,22 +107,22 @@ export default function Dashboard() {
         <section className="aura-card">
           <div className="page-header-row">
             <h2 className="section-title">Alertas activas</h2>
-            <Link to="/app/alertas" className="btn btn-ghost btn-sm">
+            <Link to="/app/alerts" className="btn btn-ghost btn-sm">
               Ver todas
             </Link>
           </div>
-          {alertas.length === 0 ? (
+          {alerts.length === 0 ? (
             <EmptyState title="No hay alertas activas" />
           ) : (
             <ul className="dashboard-alert-list">
-              {alertas.slice(0, 5).map((alerta) => (
-                <li key={alerta.id}>
-                  <Badge variant={alerta.severidad === 'danger' ? 'danger' : alerta.severidad === 'warning' ? 'warning' : 'info'}>
-                    {alerta.tipo}
+              {alerts.slice(0, 5).map((alert) => (
+                <li key={alert.id}>
+                  <Badge variant={alert.severity === 'danger' ? 'danger' : alert.severity === 'warning' ? 'warning' : 'info'}>
+                    {alert.type}
                   </Badge>
                   <div>
-                    <strong>{alerta.titulo}</strong>
-                    <p>{alerta.descripcion}</p>
+                    <strong>{alert.title}</strong>
+                    <p>{alert.description}</p>
                   </div>
                 </li>
               ))}
@@ -133,19 +133,19 @@ export default function Dashboard() {
 
       <section className="aura-card">
         <h2 className="section-title">Clientes con seguimiento pendiente</h2>
-        {seguimientoPendiente.length === 0 ? (
+        {pendingFollowUp.length === 0 ? (
           <EmptyState title="Todos los clientes activos tienen seguimiento al día" />
         ) : (
           <ul className="dashboard-followup-list">
-            {seguimientoPendiente.map((p) => (
+            {pendingFollowUp.map((p) => (
               <li key={p.id}>
                 <div>
                   <strong>
-                    {p.nombre} {p.apellido}
+                    {p.firstName} {p.lastName}
                   </strong>
                   <p>Sin turno agendado para hoy</p>
                 </div>
-                <Link to={`/app/clientes/${p.id}`} className="btn btn-secondary btn-sm">
+                <Link to={`/app/patients/${p.id}`} className="btn btn-secondary btn-sm">
                   Ver ficha
                 </Link>
               </li>

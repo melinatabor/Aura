@@ -1,0 +1,12 @@
+[
+  { "id": 1, "name": "Crema hidratante facial", "description": "Uso en limpiezas e hidrataciones.", "currentStock": 18, "minStock": 10, "unit": "unidades", "category": "Cremas", "price": 4200, "status": "Activo" },
+  { "id": 2, "name": "Guantes de nitrilo (caja x100)", "description": "Descartables, uso general.", "currentStock": 4, "minStock": 6, "unit": "cajas", "category": "Descartables", "price": 8500, "status": "Activo" },
+  { "id": 3, "name": "Gasas estériles", "description": "Uso en tratamientos faciales y corporales.", "currentStock": 25, "minStock": 15, "unit": "paquetes", "category": "Descartables", "price": 1200, "status": "Activo" },
+  { "id": 4, "name": "Ácido glicólico 20%", "description": "Insumo para peeling químico.", "currentStock": 3, "minStock": 5, "unit": "frascos", "category": "Productos activos", "price": 6800, "status": "Activo" },
+  { "id": 5, "name": "Cera depilatoria", "description": "Uso en sesiones de depilación.", "currentStock": 12, "minStock": 8, "unit": "kg", "category": "Depilación", "price": 5400, "status": "Activo" },
+  { "id": 6, "name": "Aceite para masajes", "description": "Uso en masajes y drenajes.", "currentStock": 9, "minStock": 10, "unit": "litros", "category": "Corporal", "price": 3900, "status": "Activo" },
+  { "id": 7, "name": "Alcohol en gel", "description": "Higiene general del centro.", "currentStock": 30, "minStock": 12, "unit": "litros", "category": "Higiene", "price": 2100, "status": "Activo" },
+  { "id": 8, "name": "Bandas descartables cabello", "description": "Uso en tratamientos faciales.", "currentStock": 2, "minStock": 10, "unit": "unidades", "category": "Descartables", "price": 800, "status": "Activo" },
+  { "id": 9, "name": "Crema reafirmante corporal", "description": "Uso en tratamientos corporales.", "currentStock": 14, "minStock": 8, "unit": "unidades", "category": "Cremas", "price": 5600, "status": "Activo" },
+  { "id": 10, "name": "Protector solar FPS50", "description": "Aplicación posterior a tratamientos faciales.", "currentStock": 7, "minStock": 10, "unit": "unidades", "category": "Cremas", "price": 4700, "status": "Activo" }
+]

@@ -1,0 +1,92 @@
+@use '../../styles/variables' as *;
+
+.patient-profile {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: $space-5;
+  align-items: start;
+}
+
+.profile-main-column {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+}
+
+.profile-data {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $space-4;
+
+  dt {
+    font-size: 12px;
+    color: $color-text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  dd {
+    margin: 2px 0 0;
+    font-size: 14px;
+  }
+}
+
+.profile-appointments-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $space-3;
+    background: $color-surface-alt;
+    border-radius: $radius-md;
+  }
+
+  strong {
+    font-size: 14px;
+  }
+
+  p {
+    font-size: 12px;
+    color: $color-text-muted;
+    margin-top: 2px;
+  }
+}
+
+.patient-profile textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+  resize: vertical;
+}
+
+.profile-recommendations ul {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+
+  li {
+    padding: $space-3;
+    background: $color-success-bg;
+    color: $color-success;
+    border-radius: $radius-md;
+    font-size: 13px;
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 900px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}

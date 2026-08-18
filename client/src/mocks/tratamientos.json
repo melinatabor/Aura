@@ -1,8 +1,0 @@
-[
-  { "id": 1, "nombre": "Limpieza facial profunda", "descripcion": "Limpieza con extracción e hidratación final.", "duracionMinutos": 60, "precio": 18000, "categoria": "Facial", "estado": "Activo" },
-  { "id": 2, "nombre": "Peeling químico", "descripcion": "Renovación celular con ácidos suaves.", "duracionMinutos": 45, "precio": 22000, "categoria": "Facial", "estado": "Activo" },
-  { "id": 3, "nombre": "Depilación láser - Piernas", "descripcion": "Sesión de depilación definitiva en piernas completas.", "duracionMinutos": 40, "precio": 15000, "categoria": "Depilación", "estado": "Activo" },
-  { "id": 4, "nombre": "Masaje descontracturante", "descripcion": "Masaje terapéutico de espalda y cuello.", "duracionMinutos": 50, "precio": 16000, "categoria": "Corporal", "estado": "Activo" },
-  { "id": 5, "nombre": "Drenaje linfático", "descripcion": "Masaje corporal para reducir retención de líquidos.", "duracionMinutos": 60, "precio": 17500, "categoria": "Corporal", "estado": "Activo" },
-  { "id": 6, "nombre": "Radiofrecuencia facial", "descripcion": "Tratamiento reafirmante con radiofrecuencia.", "duracionMinutos": 30, "precio": 21000, "categoria": "Facial", "estado": "Inactivo" }
-]

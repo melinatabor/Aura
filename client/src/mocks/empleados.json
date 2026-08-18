@@ -1,6 +1,0 @@
-[
-  { "id": 1, "nombre": "María", "apellido": "Alonso", "email": "maria.alonso@aura.com", "rol": "Administrador", "estado": "Activo" },
-  { "id": 2, "nombre": "Nicolás", "apellido": "Ferreyra", "email": "nicolas.ferreyra@aura.com", "rol": "Operador", "estado": "Activo" },
-  { "id": 3, "nombre": "Brenda", "apellido": "Quiroga", "email": "brenda.quiroga@aura.com", "rol": "Operador", "estado": "Activo" },
-  { "id": 4, "nombre": "Ezequiel", "apellido": "Paz", "email": "ezequiel.paz@aura.com", "rol": "Operador", "estado": "Inactivo" }
-]
