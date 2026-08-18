@@ -40,8 +40,8 @@ export default function Home() {
         </div>
         <div className="home-hero-media">
           <img
-            src="https://images.pexels.com/photos/8834029/pexels-photo-8834029.jpeg?auto=compress&cs=tinysrgb&w=900"
-            alt="Recepcionista de un centro estético gestionando turnos desde la computadora"
+            src="https://images.pexels.com/photos/36837604/pexels-photo-36837604/free-photo-of-cozy-spa-room-interior-design-with-soft-lighting.jpeg?auto=compress&cs=tinysrgb&w=900"
+            alt="Sala de tratamiento de un centro estético, cálida y minimalista"
             loading="lazy"
           />
         </div>
