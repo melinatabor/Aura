@@ -1,0 +1,4 @@
+[
+  { "id": 1, "tipo": "Administrativa", "severidad": "warning", "titulo": "Matrícula próxima a vencer", "descripcion": "La matrícula de Paula Ibáñez vence en 15 días.", "diasOffset": -1 },
+  { "id": 2, "tipo": "Administrativa", "severidad": "info", "titulo": "Revisión de higiene programada", "descripcion": "Auditoría interna de bioseguridad programada para la próxima semana.", "diasOffset": -3 }
+]

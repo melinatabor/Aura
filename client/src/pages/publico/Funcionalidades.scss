@@ -1,0 +1,84 @@
+@use '../../styles/variables' as *;
+
+.funcionalidades-page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: $space-7 $space-5 $space-8;
+  display: flex;
+  flex-direction: column;
+  gap: $space-7;
+}
+
+.funcionalidades-hero {
+  text-align: center;
+
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: $space-3;
+  }
+
+  p {
+    color: $color-text-muted;
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+}
+
+.funcionalidades-grupo {
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .funcionalidades-grupo-desc {
+    color: $color-text-muted;
+    margin-top: $space-1;
+    margin-bottom: $space-4;
+  }
+}
+
+.funcionalidades-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: $space-4;
+}
+
+.funcionalidad-card {
+  .funcionalidad-icon {
+    font-size: 22px;
+    margin-bottom: $space-3;
+  }
+
+  h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: $space-2;
+  }
+
+  p {
+    color: $color-text-muted;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+}
+
+.funcionalidades-cta {
+  background: $color-primary;
+  color: $color-text-inverse;
+  border-radius: $radius-lg;
+  padding: $space-7 $space-6;
+  text-align: center;
+
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: $space-2;
+  }
+
+  p {
+    opacity: 0.85;
+    margin-bottom: $space-4;
+  }
+}

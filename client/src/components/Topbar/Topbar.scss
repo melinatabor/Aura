@@ -1,0 +1,27 @@
+@use '../../styles/variables' as *;
+
+.topbar {
+  height: $topbar-height;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 $space-6;
+  border-bottom: 1px solid $color-border;
+  background: $color-surface;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  h1 {
+    font-size: 16px;
+    font-weight: 700;
+  }
+}
+
+.topbar-user {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  font-size: 14px;
+  color: $color-text-muted;
+}

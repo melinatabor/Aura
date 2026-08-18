@@ -1,0 +1,124 @@
+@use '../../styles/variables' as *;
+
+.agenda-week-nav {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  font-size: 13px;
+}
+
+.agenda-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(150px, 1fr));
+  gap: $space-3;
+  overflow-x: auto;
+}
+
+.agenda-day {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+}
+
+.agenda-day-today {
+  border-color: $color-primary;
+  box-shadow: 0 0 0 1px $color-primary;
+}
+
+.agenda-day-header {
+  display: flex;
+  flex-direction: column;
+  padding: $space-3;
+  border-bottom: 1px solid $color-border;
+  font-size: 12px;
+  color: $color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+
+  strong {
+    font-size: 18px;
+    color: $color-text;
+    text-transform: none;
+  }
+}
+
+.agenda-day-body {
+  padding: $space-2;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  flex: 1;
+}
+
+.agenda-empty {
+  font-size: 12px;
+  color: $color-text-muted;
+  text-align: center;
+  padding: $space-4 0;
+}
+
+.agenda-turno-card {
+  text-align: left;
+  border: none;
+  border-radius: $radius-sm;
+  padding: $space-2 $space-3;
+  cursor: pointer;
+  background: $color-info-bg;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+
+  strong {
+    font-size: 13px;
+  }
+
+  &.estado-confirmado {
+    background: $color-success-bg;
+  }
+
+  &.estado-pendiente {
+    background: $color-warning-bg;
+  }
+
+  &.estado-cancelado {
+    background: $color-neutral-bg;
+    opacity: 0.7;
+  }
+
+  &.estado-realizado {
+    background: $color-surface-alt;
+  }
+}
+
+.agenda-turno-hora {
+  font-weight: 700;
+  color: $color-text-muted;
+}
+
+.agenda-turno-tratamiento {
+  color: $color-text-muted;
+}
+
+.agenda-turno-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.agenda-turno-cancelar {
+  font-size: 11px;
+  color: $color-danger;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+@media (max-width: 1000px) {
+  .agenda-grid {
+    grid-template-columns: repeat(7, minmax(140px, 1fr));
+  }
+}

@@ -1,0 +1,45 @@
+@use '../../styles/variables' as *;
+
+.public-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $space-4 $space-7;
+  border-bottom: 1px solid $color-border;
+  background: $color-surface;
+}
+
+.public-navbar-brand {
+  font-size: 20px;
+  font-weight: 700;
+  color: $color-primary-dark;
+}
+
+.public-navbar-links {
+  display: flex;
+  gap: $space-6;
+  font-size: 14px;
+  font-weight: 600;
+
+  a {
+    color: $color-text-muted;
+
+    &.active,
+    &:hover {
+      color: $color-primary-dark;
+    }
+  }
+}
+
+.public-navbar-actions {
+  display: flex;
+  gap: $space-3;
+}
+
+@media (max-width: 720px) {
+  .public-navbar {
+    flex-wrap: wrap;
+    gap: $space-3;
+    padding: $space-4;
+  }
+}

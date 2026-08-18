@@ -1,0 +1,88 @@
+@use '../../styles/variables' as *;
+
+.contacto-page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: $space-7 $space-5 $space-8;
+}
+
+.contacto-hero {
+  text-align: center;
+  margin-bottom: $space-6;
+
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: $space-3;
+  }
+
+  p {
+    color: $color-text-muted;
+    max-width: 620px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+}
+
+.contacto-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: $space-5;
+  align-items: start;
+}
+
+.contacto-form h2,
+.contacto-info h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: $space-4;
+}
+
+.contacto-info ul {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.contacto-info li {
+  display: flex;
+  gap: $space-3;
+  align-items: flex-start;
+
+  strong {
+    display: block;
+    font-size: 14px;
+  }
+
+  p {
+    color: $color-text-muted;
+    font-size: 13px;
+    margin-top: 2px;
+  }
+}
+
+.contacto-info-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: $color-surface-alt;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.contacto-disclaimer {
+  margin-top: $space-6;
+  color: $color-text-muted;
+  font-size: 12px;
+  text-align: center;
+  max-width: 640px;
+  margin-inline: auto;
+}
+
+@media (max-width: 800px) {
+  .contacto-grid {
+    grid-template-columns: 1fr;
+  }
+}

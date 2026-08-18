@@ -1,0 +1,7 @@
+[
+  { "id": 1, "nombre": "María", "apellido": "López", "dni": "27123456", "matricula": "MP-4521", "telefono": "+54 9 11 4411-2233", "email": "maria.lopez@aura.com", "especialidad": "Cosmetología", "estado": "Activo" },
+  { "id": 2, "nombre": "Laura", "apellido": "García", "dni": "30456789", "matricula": "MP-5892", "telefono": "+54 9 11 5522-3344", "email": "laura.garcia@aura.com", "especialidad": "Depilación", "estado": "Activo" },
+  { "id": 3, "nombre": "Rocío", "apellido": "Fernández", "dni": "32987654", "matricula": "MP-6123", "telefono": "+54 9 11 6633-4455", "email": "rocio.fernandez@aura.com", "especialidad": "Masoterapia", "estado": "Activo" },
+  { "id": 4, "nombre": "Damián", "apellido": "Castro", "dni": "29123321", "matricula": "MP-3987", "telefono": "+54 9 11 7744-5566", "email": "damian.castro@aura.com", "especialidad": "Tratamientos corporales", "estado": "Activo" },
+  { "id": 5, "nombre": "Paula", "apellido": "Ibáñez", "dni": "31654987", "matricula": "MP-7345", "telefono": "+54 9 11 8855-6677", "email": "paula.ibanez@aura.com", "especialidad": "Tratamientos faciales", "estado": "Inactivo" }
+]

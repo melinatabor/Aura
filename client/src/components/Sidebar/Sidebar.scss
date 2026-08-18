@@ -1,0 +1,99 @@
+@use '../../styles/variables' as *;
+
+.sidebar {
+  width: $sidebar-width;
+  flex-shrink: 0;
+  background: $color-primary-dark;
+  color: $color-text-inverse;
+  min-height: 100vh;
+  padding: $space-5 $space-3;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-nav {
+  flex: 1;
+}
+
+.sidebar-quick-actions {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  padding: $space-4 $space-2 0;
+  margin-top: $space-4;
+  border-top: 1px solid rgba($color-text-inverse, 0.12);
+
+  .btn-primary {
+    background: $color-primary-light;
+  }
+
+  .btn-ghost {
+    color: $color-text-inverse;
+
+    &:hover {
+      background: rgba($color-text-inverse, 0.08);
+    }
+  }
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: 0 $space-2 $space-6;
+
+  .sidebar-brand-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: $color-primary-light;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+  }
+
+  .sidebar-brand-name {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+}
+
+.sidebar-nav {
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    padding: 10px $space-3;
+    border-radius: $radius-md;
+    color: rgba($color-text-inverse, 0.78);
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.15s ease, color 0.15s ease;
+
+    &:hover {
+      background: rgba($color-text-inverse, 0.08);
+      color: $color-text-inverse;
+    }
+
+    &.active {
+      background: $color-text-inverse;
+      color: $color-primary-dark;
+      font-weight: 700;
+    }
+  }
+
+  .sidebar-icon {
+    font-size: 15px;
+  }
+}

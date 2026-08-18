@@ -1,0 +1,52 @@
+@use '../../styles/variables' as *;
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-surface-alt;
+  padding: $space-5;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+
+  h1 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: $space-4;
+  }
+}
+
+.auth-brand {
+  font-size: 18px;
+  font-weight: 700;
+  color: $color-primary-dark;
+}
+
+.auth-subtitle {
+  color: $color-text-muted;
+  font-size: 13px;
+  margin-top: $space-1;
+  margin-bottom: $space-5;
+}
+
+.auth-submit {
+  width: 100%;
+  justify-content: center;
+  margin-top: $space-2;
+}
+
+.auth-footer {
+  margin-top: $space-5;
+  font-size: 13px;
+  color: $color-text-muted;
+  text-align: center;
+
+  a {
+    color: $color-primary;
+    font-weight: 600;
+  }
+}

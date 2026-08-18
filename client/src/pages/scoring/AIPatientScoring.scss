@@ -1,0 +1,32 @@
+@use '../../styles/variables' as *;
+
+.scoring-disclaimer {
+  background: $color-info-bg;
+  color: $color-info;
+  border-radius: $radius-md;
+  padding: $space-3 $space-4;
+  font-size: 13px;
+  margin-bottom: $space-5;
+}
+
+.scoring-bar-track {
+  display: inline-block;
+  width: 100px;
+  height: 8px;
+  background: $color-surface-alt;
+  border-radius: 999px;
+  overflow: hidden;
+  vertical-align: middle;
+  margin-right: $space-2;
+}
+
+.scoring-bar-fill {
+  height: 100%;
+  background: $color-primary;
+  border-radius: 999px;
+}
+
+.scoring-bar-value {
+  font-weight: 700;
+  font-size: 13px;
+}
