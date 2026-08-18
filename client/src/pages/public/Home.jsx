@@ -38,7 +38,13 @@ export default function Home() {
             </Link>
           </div>
         </div>
-        <div className="home-hero-media" aria-hidden="true" />
+        <div className="home-hero-media">
+          <img
+            src="https://images.pexels.com/photos/6948103/pexels-photo-6948103.jpeg?auto=compress&cs=tinysrgb&w=900"
+            alt="Profesional de centro estético consultando la agenda de turnos desde una tablet"
+            loading="lazy"
+          />
+        </div>
       </section>
 
       <section className="home-section home-problem">
