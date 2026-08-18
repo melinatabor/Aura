@@ -32,10 +32,9 @@ export default function AppRoutes() {
         <Route path="/features" element={<Features />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/contact/confirmation" element={<ContactConfirmation />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/activate-account" element={<ActivateAccount />} />
       </Route>
-
-      <Route path="/login" element={<Login />} />
-      <Route path="/activate-account" element={<ActivateAccount />} />
 
       <Route element={<RequireAuth />}>
         <Route element={<AppLayout />}>

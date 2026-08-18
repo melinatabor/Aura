@@ -1,12 +1,12 @@
 @use '../../styles/variables' as *;
 
 .auth-page {
-  min-height: 100vh;
+  min-height: calc(100vh - 140px);
   display: flex;
   align-items: center;
   justify-content: center;
   background: $color-surface-alt;
-  padding: $space-5;
+  padding: $space-6 $space-5;
 }
 
 .auth-card {
@@ -16,12 +16,7 @@
   h1 {
     font-size: 20px;
     font-weight: 700;
-    margin-top: $space-4;
   }
-}
-
-.auth-brand {
-  display: inline-flex;
 }
 
 .auth-subtitle {

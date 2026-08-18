@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import Logo from '../../components/Logo/Logo.jsx'
 import './Auth.scss'
 
 export default function ActivateAccount() {
@@ -32,9 +31,6 @@ export default function ActivateAccount() {
   return (
     <div className="auth-page">
       <div className="aura-card auth-card">
-        <Link to="/" className="auth-brand">
-          <Logo tone="light" size={28} />
-        </Link>
         <h1>Crear cuenta profesional</h1>
         <p className="auth-subtitle">Activá tu espacio de trabajo en Aura</p>
 
