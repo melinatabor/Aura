@@ -3,6 +3,7 @@ import StatCard from '../../components/StatCard/StatCard.jsx'
 import Modal from '../../components/Modal/Modal.jsx'
 import EmptyState from '../../components/EmptyState/EmptyState.jsx'
 import DonutChart from '../../components/DonutChart/DonutChart.jsx'
+import TrendChart from '../../components/TrendChart/TrendChart.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
 import * as reportsService from '../../bll/reportsService'
 import { downloadOperationalReportPdf } from '../../utils/pdfExport'
@@ -12,12 +13,13 @@ const priceFormatter = new Intl.NumberFormat('es-AR', { style: 'currency', curre
 const dateFormatter = new Intl.DateTimeFormat('es-AR', { dateStyle: 'short', timeStyle: 'short' })
 
 // Paleta categórica fija (orden fijo, nunca ciclada) para identificar tratamientos en el gráfico.
-const TREATMENT_COLORS = ['#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#e87ba4', '#008300']
+const TREATMENT_COLORS = ['#1f8a5c', '#c1652c', '#2d6fa3', '#c99a1e', '#b23a5c', '#6a3fa0']
 
 export default function OperationalReports() {
   const { user } = useAuth()
   const [reports, setReports] = useState(null)
   const [history, setHistory] = useState([])
+  const [trend, setTrend] = useState(null)
   const [exported, setExported] = useState(false)
   const [exporting, setExporting] = useState(false)
 
@@ -27,6 +29,7 @@ export default function OperationalReports() {
 
   useEffect(() => {
     reportsService.getReports().then(setReports)
+    reportsService.getRevenueTrend().then(setTrend)
     loadHistory()
   }, [])
 
@@ -72,6 +75,15 @@ export default function OperationalReports() {
         <StatCard label="Turnos realizados" value={reports.completedAppointments} />
         <StatCard label="Clientes activos" value={reports.activePatients} />
       </div>
+
+      <section className="aura-card reports-chart-card">
+        <h2 className="section-title">Ingresos por día (últimos 14 días)</h2>
+        {trend && trend.some((d) => d.value > 0) ? (
+          <TrendChart data={trend} color="#3e6259" formatValue={priceFormatter.format} />
+        ) : (
+          <EmptyState title="Todavía no hay turnos realizados en este período" />
+        )}
+      </section>
 
       <section className="aura-card reports-chart-card">
         <h2 className="section-title">Distribución de ingresos por tratamiento</h2>

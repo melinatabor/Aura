@@ -63,3 +63,22 @@ export async function getExportHistory() {
   const rows = await operationalReportsDal.getAll()
   return rows.map(toOperationalReport)
 }
+
+// Ingresos reales por día, para ver la tendencia en vez de solo el total acumulado.
+export async function getRevenueTrend(days = 14) {
+  const [appointments, treatments] = await Promise.all([appointmentsService.getAll(), treatmentsService.getAll()])
+  const treatmentById = Object.fromEntries(treatments.map((t) => [t.id, t]))
+  const completed = appointments.filter((a) => a.status === 'Realizado')
+
+  const series = []
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date()
+    d.setDate(d.getDate() - i)
+    const iso = d.toISOString().slice(0, 10)
+    const value = completed
+      .filter((a) => a.date === iso)
+      .reduce((sum, a) => sum + (treatmentById[a.treatmentId]?.price ?? 0), 0)
+    series.push({ date: iso, value })
+  }
+  return resolveAsync(series)
+}
