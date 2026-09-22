@@ -10,6 +10,14 @@ const PAD_BOTTOM = 32
 
 const shortDate = new Intl.DateTimeFormat('es-AR', { day: 'numeric', month: 'short' })
 
+// new Date('YYYY-MM-DD') parses as UTC midnight; formatting that in a
+// negative-UTC-offset timezone (like Argentina) rolls it back a day.
+// Parsing the parts as local components avoids that shift.
+function parseLocalDate(isoDate) {
+  const [year, month, day] = isoDate.split('-').map(Number)
+  return new Date(year, month - 1, day)
+}
+
 // data: [{ date: 'YYYY-MM-DD', value }] — un solo hilo, sin necesidad de leyenda.
 export default function TrendChart({ data, color, formatValue = (v) => v }) {
   const [hoverIndex, setHoverIndex] = useState(null)
@@ -76,7 +84,7 @@ export default function TrendChart({ data, color, formatValue = (v) => v }) {
         {data.map((d, i) =>
           dateLabelIndices.has(i) ? (
             <text key={d.date} x={xAt(i)} y={HEIGHT - 8} className="trend-chart-tick" textAnchor="middle">
-              {shortDate.format(new Date(d.date))}
+              {shortDate.format(parseLocalDate(d.date))}
             </text>
           ) : null,
         )}
@@ -106,7 +114,7 @@ export default function TrendChart({ data, color, formatValue = (v) => v }) {
           style={{ left: `${(xAt(hoverIndex) / WIDTH) * 100}%` }}
         >
           <strong>{formatValue(hovered.value)}</strong>
-          <span>{shortDate.format(new Date(hovered.date))}</span>
+          <span>{shortDate.format(parseLocalDate(hovered.date))}</span>
         </div>
       )}
     </div>
