@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Mail, MessageCircle, Clock, MapPin } from 'lucide-react'
+import * as contactInquiriesService from '../../bll/contactInquiriesService'
 import './Contact.scss'
 
 const ACTIVITY_TYPES = ['Profesional independiente', 'Centro estético', 'Equipo de trabajo']
@@ -16,14 +17,25 @@ export default function Contact() {
     reason: REASONS[0],
     message: '',
   })
+  const [error, setError] = useState('')
+  const [submitting, setSubmitting] = useState(false)
 
   function handleChange(field, value) {
     setForm((prev) => ({ ...prev, [field]: value }))
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    navigate('/contact/confirmation')
+    setError('')
+    setSubmitting(true)
+    try {
+      await contactInquiriesService.submitInquiry(form)
+      navigate('/contact/confirmation')
+    } catch (err) {
+      setError('No pudimos enviar tu consulta. Probá de nuevo en unos minutos.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -104,8 +116,9 @@ export default function Contact() {
               placeholder="¿En qué podemos ayudarte?"
             />
           </div>
-          <button type="submit" className="btn btn-primary">
-            Enviar consulta
+          {error && <p className="field-error">{error}</p>}
+          <button type="submit" className="btn btn-primary" disabled={submitting}>
+            {submitting ? 'Enviando...' : 'Enviar consulta'}
           </button>
         </form>
 
