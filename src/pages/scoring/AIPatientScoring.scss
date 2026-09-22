@@ -9,34 +9,189 @@
   margin-bottom: $space-5;
 }
 
-.scoring-bar-track {
-  display: inline-block;
-  width: 100px;
-  height: 8px;
-  background: $color-surface-alt;
-  border-radius: 999px;
-  overflow: hidden;
-  vertical-align: middle;
-  margin-right: $space-2;
-}
-
-.scoring-bar-fill {
-  height: 100%;
-  background: $color-primary;
-  border-radius: 999px;
-}
-
-.scoring-bar-value {
-  font-weight: 700;
-  font-size: 13px;
-}
-
 .scoring-chart-card {
   margin-bottom: $space-5;
 }
 
 .scoring-ai-cell {
-  min-width: 220px;
+  min-width: 180px;
+}
+
+.scoring-score-cell {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.scoring-score-value {
+  font-weight: 700;
+  font-size: 16px;
+  width: 26px;
+  flex-shrink: 0;
+}
+
+// La card destacada del cliente de mayor prioridad: es la "cara" de la IA en
+// la sección, por eso lleva un acento propio — pero clara, como el resto de
+// AURA, no un degradé oscuro que hace ilegibles los textos grises.
+.scoring-hero {
+  position: relative;
+  background: linear-gradient(135deg, #eef3ee 0%, #fbf1e3 100%);
+  border: 1px solid $color-border;
+  border-left: 4px solid $color-primary;
+  border-radius: $radius-lg;
+  padding: $space-5;
+  margin-bottom: $space-5;
+  color: $color-text;
+  box-shadow: $shadow-md;
+}
+
+.scoring-hero-tag {
+  display: inline-block;
+  background: $color-primary;
+  color: $color-text-inverse;
+  border-radius: 999px;
+  padding: $space-1 $space-3;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-bottom: $space-4;
+}
+
+.scoring-hero-body {
+  display: grid;
+  grid-template-columns: minmax(200px, 280px) 1fr;
+  gap: $space-6;
+  align-items: start;
+}
+
+.scoring-hero-main {
+  h2 {
+    margin: 0 0 $space-2;
+    font-size: 24px;
+    color: $color-text;
+  }
+}
+
+.scoring-hero-meta {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  margin-bottom: $space-4;
+}
+
+.scoring-hero-score {
+  font-size: 14px;
+  font-weight: 700;
+  color: $color-text-muted;
+}
+
+.scoring-hero-insight {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  padding: $space-4;
+}
+
+.scoring-hero-insight-text {
+  margin: 0;
+  line-height: 1.6;
+  font-size: 14px;
+  color: $color-text;
+
+  &--loading {
+    color: $color-text-muted;
+    font-style: italic;
+  }
+}
+
+.scoring-hero-insight-error {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-2;
+}
+
+// Resumen + lista de acciones concretas — reemplaza al párrafo largo, tanto
+// en la card destacada como en el modal de "Ver recomendación".
+.scoring-recommendation-summary {
+  margin: 0 0 $space-3;
+  line-height: 1.5;
+  color: $color-text;
+  font-size: 14px;
+}
+
+.scoring-recommendation-actions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: $space-2;
+    font-size: 13px;
+    font-weight: 600;
+    color: $color-text;
+  }
+}
+
+.scoring-recommendation-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: $color-success-bg;
+  color: $color-success;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.scoring-table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-3;
+  margin-bottom: $space-3;
+  flex-wrap: wrap;
+}
+
+// Botón "hero" de IA: se repite en la tabla y en la acción grupal, con
+// degradé cálido para que se note que dispara algo distinto de una acción
+// común (crear, editar, exportar).
+.scoring-ai-generate-btn {
+  background: linear-gradient(135deg, $color-primary 0%, $color-accent 130%);
+  color: $color-text-inverse;
+  border: none;
+  border-radius: $radius-sm;
+  padding: $space-2 $space-4;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(201, 123, 46, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(201, 123, 46, 0.45);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+.scoring-ai-generate-btn--sm {
+  padding: $space-1 $space-3;
+  font-size: 12px;
+  box-shadow: none;
 }
 
 .scoring-ai-loading {
@@ -45,9 +200,19 @@
   font-style: italic;
 }
 
-.scoring-ai-text {
+.scoring-ai-view-btn {
+  background: $color-info-bg;
+  color: $color-info;
+  border: none;
+  border-radius: $radius-sm;
+  padding: $space-1 $space-3;
   font-size: 13px;
-  color: $color-text;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(0.95);
+  }
 }
 
 .scoring-ai-error {
@@ -59,5 +224,35 @@
   span {
     font-size: 12px;
     color: $color-danger;
+  }
+}
+
+.scoring-ai-modal {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.scoring-ai-modal-meta {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+}
+
+.scoring-ai-modal-score {
+  font-size: 13px;
+  color: $color-text-muted;
+  font-weight: 600;
+}
+
+.scoring-ai-modal-footnote {
+  font-size: 12px;
+  color: $color-text-muted;
+  align-self: flex-end;
+}
+
+@media (max-width: 700px) {
+  .scoring-hero-body {
+    grid-template-columns: 1fr;
   }
 }

@@ -27,10 +27,10 @@ Deno.serve(async (req) => {
 
     const { patientName, score, priority, recencyDays, completedCount, cancellationRate } = await req.json()
 
-    const prompt = `Sos un asistente de un centro de estética y bienestar. Con estos datos de un cliente, escribí en
-español, en un solo párrafo breve (máximo 3 oraciones), una explicación de su prioridad y una recomendación concreta
-y accionable para el equipo (por ejemplo: contactarlo, ofrecerle un beneficio de fidelización, o no hacer nada por
-ahora). No repitas los números crudos tal cual, redactalo en lenguaje natural.
+    const prompt = `Sos un asistente de un centro de estética y bienestar. Con estos datos de un cliente, generá una
+respuesta breve y práctica para el equipo: un resumen de una sola oración explicando su prioridad, y entre 1 y 3
+acciones concretas, cortas y accionables (en imperativo, ej. "Contactarlo por WhatsApp esta semana", "Ofrecer 15% de
+descuento en su próximo turno", "No requiere acción por ahora"). No repitas los números crudos tal cual.
 
 Cliente: ${patientName}
 Puntaje de prioridad: ${score}/100 (${priority})
@@ -48,10 +48,25 @@ Proporción de cancelaciones: ${Math.round((cancellationRate ?? 0) * 100)}%`
         },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
-          // thinkingBudget: 0 evita que el modelo gaste el límite de tokens de
-          // salida en "razonamiento" interno antes de escribir la respuesta
-          // (causaba textos cortados a mitad de frase).
-          generationConfig: { maxOutputTokens: 300, thinkingConfig: { thinkingBudget: 0 } },
+          generationConfig: {
+            maxOutputTokens: 300,
+            // thinkingBudget: 0 evita que el modelo gaste el límite de tokens de
+            // salida en "razonamiento" interno antes de escribir la respuesta
+            // (causaba textos cortados a mitad de frase).
+            thinkingConfig: { thinkingBudget: 0 },
+            // Forzamos JSON con un schema en vez de pedirle "formato" en el
+            // prompt, así el front puede renderizar acciones como lista en
+            // vez de un párrafo de texto suelto.
+            responseMimeType: 'application/json',
+            responseSchema: {
+              type: 'OBJECT',
+              properties: {
+                summary: { type: 'STRING' },
+                actions: { type: 'ARRAY', items: { type: 'STRING' } },
+              },
+              required: ['summary', 'actions'],
+            },
+          },
         }),
       },
     )
@@ -63,9 +78,19 @@ Proporción de cancelaciones: ${Math.round((cancellationRate ?? 0) * 100)}%`
 
     const data = await response.json()
     const parts = data.candidates?.[0]?.content?.parts ?? []
-    const insight = parts.map((p) => p.text ?? '').join('').trim() || 'No se pudo generar una recomendación.'
+    const raw = parts.map((p) => p.text ?? '').join('').trim()
 
-    return new Response(JSON.stringify({ insight }), {
+    let summary = 'No se pudo generar una recomendación.'
+    let actions = []
+    try {
+      const parsed = JSON.parse(raw)
+      summary = parsed.summary ?? summary
+      actions = Array.isArray(parsed.actions) ? parsed.actions : []
+    } catch {
+      if (raw) summary = raw
+    }
+
+    return new Response(JSON.stringify({ summary, actions }), {
       headers: { ...corsHeaders, 'content-type': 'application/json' },
     })
   } catch (err) {

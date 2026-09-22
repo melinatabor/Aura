@@ -45,8 +45,9 @@ function scorePatient(patient, allAppointments) {
 
   const frequency = Math.min(FREQUENCY_WEIGHT, completed.length * 7)
   const reliability = withOutcome.length > 0 ? (1 - cancellationRate) * RELIABILITY_WEIGHT : RELIABILITY_WEIGHT * 0.6
+  const recency = recencyScore(recencyDays)
 
-  const score = Math.round(Math.min(100, recencyScore(recencyDays) + frequency + reliability))
+  const score = Math.round(Math.min(100, recency + frequency + reliability))
   const priority = score >= 70 ? 'Alta' : score >= 40 ? 'Media' : 'Baja'
 
   return {
@@ -57,8 +58,15 @@ function scorePatient(patient, allAppointments) {
     recencyDays,
     completedCount: completed.length,
     cancellationRate,
+    breakdown: {
+      recency: Math.round(recency),
+      frequency: Math.round(frequency),
+      reliability: Math.round(reliability),
+    },
   }
 }
+
+export const SCORE_WEIGHTS = { recency: RECENCY_WEIGHT, frequency: FREQUENCY_WEIGHT, reliability: RELIABILITY_WEIGHT }
 
 export async function getScores() {
   const [patients, appointments] = await Promise.all([patientsService.getAll(), appointmentsService.getAll()])
@@ -85,5 +93,5 @@ export async function generateInsight(entry, patientName) {
   })
   if (error) throw error
   if (data?.error) throw new Error(data.error)
-  return data.insight
+  return { summary: data.summary, actions: data.actions ?? [] }
 }
