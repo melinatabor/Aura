@@ -1,5 +1,7 @@
 import * as suppliesDal from '../dal/suppliesDal'
+import * as stockExportsDal from '../dal/stockExportsDal'
 import { toSupply, toSupplyRow } from '../mappers/supplyMapper'
+import { toStockExport, toStockExportRow } from '../mappers/stockExportMapper'
 
 export async function getAll() {
   const rows = await suppliesDal.getAll()
@@ -34,4 +36,22 @@ export async function adjustStock(id, newStock) {
 export async function setStatus(id, status) {
   await suppliesDal.update(id, { status })
   return true
+}
+
+// Guarda una foto del inventario actual como registro consultable (stock_export).
+export async function exportStock(userId) {
+  const all = await getAll()
+  const lowStock = all.filter((s) => s.status === 'Activo' && s.currentStock <= s.minStock)
+  const totalValue = all.reduce((sum, s) => sum + s.currentStock * (s.price ?? 0), 0)
+  const snapshot = all.map((s) => ({ name: s.name, currentStock: s.currentStock, minStock: s.minStock, unit: s.unit }))
+
+  const row = await stockExportsDal.insert(
+    toStockExportRow({ lowStockCount: lowStock.length, totalSupplies: all.length, totalValue, snapshot }, userId),
+  )
+  return toStockExport(row)
+}
+
+export async function getExportHistory() {
+  const rows = await stockExportsDal.getAll()
+  return rows.map(toStockExport)
 }

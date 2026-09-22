@@ -41,8 +41,9 @@ export default function TreatmentCatalog() {
     reload()
   }
 
-  async function handleEdit(data) {
+  async function handleEdit(data, recommendedIds) {
     await treatmentsService.update(editing.id, data)
+    await treatmentsService.setRecommendationsForTreatment(editing.id, recommendedIds)
     setEditing(null)
     reload()
   }

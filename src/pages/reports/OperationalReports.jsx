@@ -1,23 +1,45 @@
 import { useEffect, useState } from 'react'
 import StatCard from '../../components/StatCard/StatCard.jsx'
 import Modal from '../../components/Modal/Modal.jsx'
+import EmptyState from '../../components/EmptyState/EmptyState.jsx'
+import { useAuth } from '../../context/AuthContext.jsx'
 import * as reportsService from '../../bll/reportsService'
 import './Reports.scss'
 
 const priceFormatter = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 })
+const dateFormatter = new Intl.DateTimeFormat('es-AR', { dateStyle: 'short', timeStyle: 'short' })
 
 export default function OperationalReports() {
+  const { user } = useAuth()
   const [reports, setReports] = useState(null)
+  const [history, setHistory] = useState([])
   const [exported, setExported] = useState(false)
+  const [exporting, setExporting] = useState(false)
+
+  async function loadHistory() {
+    setHistory(await reportsService.getExportHistory())
+  }
 
   useEffect(() => {
     reportsService.getReports().then(setReports)
+    loadHistory()
   }, [])
 
   if (!reports) return null
 
   const maxOccupancy = Math.max(1, ...reports.occupancyByProfessional.map((o) => o.appointments))
   const maxPerformance = Math.max(1, ...reports.performanceByTreatment.map((d) => d.completed))
+
+  async function handleExport() {
+    setExporting(true)
+    try {
+      await reportsService.exportReport(user.id)
+      setExported(true)
+      loadHistory()
+    } finally {
+      setExporting(false)
+    }
+  }
 
   return (
     <div>
@@ -26,8 +48,8 @@ export default function OperationalReports() {
           <h1>Reportes operativos</h1>
           <p>Consultá turnos, tratamientos y desempeño del equipo con los datos actuales del sistema.</p>
         </div>
-        <button type="button" className="btn btn-primary" onClick={() => setExported(true)}>
-          Exportar reporte
+        <button type="button" className="btn btn-primary" onClick={handleExport} disabled={exporting}>
+          {exporting ? 'Exportando...' : 'Exportar reporte'}
         </button>
       </div>
 
@@ -82,11 +104,43 @@ export default function OperationalReports() {
         </section>
       </div>
 
+      <section className="aura-card" style={{ marginTop: 24 }}>
+        <h2 className="section-title">Historial de exportaciones</h2>
+        {history.length === 0 ? (
+          <EmptyState title="Todavía no se exportó ningún reporte" />
+        ) : (
+          <div className="aura-table-wrap">
+            <table className="aura-table">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Ingresos</th>
+                  <th>Turnos realizados</th>
+                  <th>Clientes activos</th>
+                </tr>
+              </thead>
+              <tbody>
+                {history.map((h) => (
+                  <tr key={h.id}>
+                    <td>{dateFormatter.format(new Date(h.createdAt))}</td>
+                    <td>{priceFormatter.format(h.totalRevenue)}</td>
+                    <td>{h.completedAppointments}</td>
+                    <td>{h.activePatients}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
+
       {exported && (
         <Modal title="Reporte exportado" onClose={() => setExported(false)}>
           <div style={{ textAlign: 'center', padding: '8px 0' }}>
             <div className="modal-confirm-icon icon-success">✓</div>
-            <p style={{ color: '#6f6b60', marginBottom: 24 }}>El reporte operativo se generó correctamente con los datos actuales.</p>
+            <p style={{ color: '#6f6b60', marginBottom: 24 }}>
+              El reporte operativo se generó y se guardó en el historial correctamente.
+            </p>
             <button type="button" className="btn btn-primary" onClick={() => setExported(false)}>
               Cerrar
             </button>

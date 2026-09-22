@@ -1,8 +1,10 @@
-import { resolveAsync } from './apiClient'
+import { resolveAsync, todayISO } from './apiClient'
 import * as appointmentsService from './appointmentsService'
 import * as treatmentsService from './treatmentsService'
 import * as professionalsService from './professionalsService'
 import * as patientsService from './patientsService'
+import * as operationalReportsDal from '../dal/operationalReportsDal'
+import { toOperationalReport, toOperationalReportRow } from '../mappers/operationalReportMapper'
 
 // Reports are calculated from the other modules' real data (appointments,
 // treatments, professionals) instead of being stored separately, so they
@@ -43,4 +45,21 @@ export async function getReports() {
     occupancyByProfessional,
     performanceByTreatment,
   })
+}
+
+// Guarda una foto del reporte actual como registro consultable (unifica
+// operational_report + report_export: acá ambas acciones ocurren juntas,
+// al tocar "Exportar reporte").
+export async function exportReport(userId) {
+  const current = await getReports()
+  const today = todayISO()
+  const row = await operationalReportsDal.insert(
+    toOperationalReportRow({ ...current, periodFrom: today, periodTo: today }, userId),
+  )
+  return toOperationalReport(row)
+}
+
+export async function getExportHistory() {
+  const rows = await operationalReportsDal.getAll()
+  return rows.map(toOperationalReport)
 }

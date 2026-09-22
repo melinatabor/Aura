@@ -1,20 +1,32 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Modal from '../../components/Modal/Modal.jsx'
+import * as treatmentsService from '../../bll/treatmentsService'
 
 export default function TreatmentFormModal({ treatment, onSave, onClose }) {
   const [form, setForm] = useState({ ...treatment })
+  const [otherTreatments, setOtherTreatments] = useState([])
+  const [selectedIds, setSelectedIds] = useState([])
+
+  useEffect(() => {
+    treatmentsService.getAll().then((all) => setOtherTreatments(all.filter((t) => t.id !== treatment.id)))
+    treatmentsService.getRecommendationsForTreatment(treatment.id).then((recs) => setSelectedIds(recs.map((r) => r.id)))
+  }, [treatment.id])
 
   function handleChange(field, value) {
     setForm((prev) => ({ ...prev, [field]: value }))
   }
 
+  function toggleRecommended(id) {
+    setSelectedIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]))
+  }
+
   function handleSubmit(e) {
     e.preventDefault()
-    onSave({ ...form, price: Number(form.price), durationMinutes: Number(form.durationMinutes) })
+    onSave({ ...form, price: Number(form.price), durationMinutes: Number(form.durationMinutes) }, selectedIds)
   }
 
   return (
-    <Modal title="Modificar tratamiento" onClose={onClose}>
+    <Modal title="Modificar tratamiento" onClose={onClose} large>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name">Nombre</label>
@@ -48,6 +60,20 @@ export default function TreatmentFormModal({ treatment, onSave, onClose }) {
             />
           </div>
         </div>
+
+        <div className="form-group">
+          <label>Tratamientos recomendados junto con este</label>
+          <div className="tratamiento-insumos-picker">
+            {otherTreatments.map((t) => (
+              <label key={t.id} className="tratamiento-insumo-check">
+                <input type="checkbox" checked={selectedIds.includes(t.id)} onChange={() => toggleRecommended(t.id)} />
+                {t.name}
+              </label>
+            ))}
+          </div>
+          <span className="field-hint">Ej. quienes hacen este tratamiento también suelen pedir estos otros.</span>
+        </div>
+
         <div className="form-actions">
           <button type="button" className="btn btn-secondary" onClick={onClose}>
             Cancelar
