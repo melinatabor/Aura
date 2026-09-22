@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import StatCard from '../../components/StatCard/StatCard.jsx'
 import Modal from '../../components/Modal/Modal.jsx'
 import EmptyState from '../../components/EmptyState/EmptyState.jsx'
+import DonutChart from '../../components/DonutChart/DonutChart.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
 import * as reportsService from '../../bll/reportsService'
 import { downloadOperationalReportPdf } from '../../utils/pdfExport'
@@ -9,6 +10,9 @@ import './Reports.scss'
 
 const priceFormatter = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 })
 const dateFormatter = new Intl.DateTimeFormat('es-AR', { dateStyle: 'short', timeStyle: 'short' })
+
+// Paleta categórica fija (orden fijo, nunca ciclada) para identificar tratamientos en el gráfico.
+const TREATMENT_COLORS = ['#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#e87ba4', '#008300']
 
 export default function OperationalReports() {
   const { user } = useAuth()
@@ -30,6 +34,14 @@ export default function OperationalReports() {
 
   const maxOccupancy = Math.max(1, ...reports.occupancyByProfessional.map((o) => o.appointments))
   const maxPerformance = Math.max(1, ...reports.performanceByTreatment.map((d) => d.completed))
+
+  const revenueByTreatment = reports.performanceByTreatment
+    .filter((d) => d.revenue > 0)
+    .sort((a, b) => b.revenue - a.revenue)
+  const topTreatments = revenueByTreatment.slice(0, 5)
+  const otherRevenue = revenueByTreatment.slice(5).reduce((sum, d) => sum + d.revenue, 0)
+  const revenueChartData = topTreatments.map((d, i) => ({ label: d.treatment, value: d.revenue, color: TREATMENT_COLORS[i] }))
+  if (otherRevenue > 0) revenueChartData.push({ label: 'Otros', value: otherRevenue, color: TREATMENT_COLORS[5] })
 
   async function handleExport() {
     setExporting(true)
@@ -60,6 +72,20 @@ export default function OperationalReports() {
         <StatCard label="Turnos realizados" value={reports.completedAppointments} />
         <StatCard label="Clientes activos" value={reports.activePatients} />
       </div>
+
+      <section className="aura-card reports-chart-card">
+        <h2 className="section-title">Distribución de ingresos por tratamiento</h2>
+        {revenueChartData.length === 0 ? (
+          <EmptyState title="Todavía no hay turnos realizados con ingresos" />
+        ) : (
+          <DonutChart
+            data={revenueChartData}
+            centerLabel="Ingresos totales"
+            centerValue={priceFormatter.format(reports.totalRevenue)}
+            formatValue={priceFormatter.format}
+          />
+        )}
+      </section>
 
       <div className="reports-columns">
         <section className="aura-card">

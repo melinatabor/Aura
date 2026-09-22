@@ -33,8 +33,8 @@ export default function AppLayout() {
           <Outlet />
         </div>
         <p className="app-layout-footnote">
-          Clientes, Tratamientos, Insumos, Empleados y Agenda ya se guardan en Supabase. Los Reportes operativos
-          todavía se calculan sobre datos de ejemplo en memoria.
+          Clientes, Tratamientos, Insumos, Empleados, Agenda, Reportes y AI Patient Scoring ya trabajan con datos
+          reales persistidos en Supabase.
         </p>
       </div>
     </div>

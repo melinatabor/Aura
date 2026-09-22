@@ -1,45 +1,47 @@
 import { useEffect, useState } from 'react'
 import Badge from '../../components/Badge/Badge.jsx'
 import StatCard from '../../components/StatCard/StatCard.jsx'
+import DonutChart from '../../components/DonutChart/DonutChart.jsx'
 import * as patientsService from '../../bll/patientsService'
+import * as scoringService from '../../bll/scoringService'
 import './AIPatientScoring.scss'
 
-// Fixed example data: this screen is only a visual mock of the Figma,
-// there is no real calculation or model running behind it.
-const SCORES_MOCK = [
-  { patientId: 1, score: 92, priority: 'Alta', reason: 'Turnos frecuentes, sin cancelaciones recientes.' },
-  { patientId: 3, score: 78, priority: 'Alta', reason: 'Buen historial de asistencia.' },
-  { patientId: 5, score: 61, priority: 'Media', reason: 'Frecuencia irregular en los últimos meses.' },
-  { patientId: 6, score: 55, priority: 'Media', reason: 'Sin turnos en las últimas 3 semanas.' },
-  { patientId: 9, score: 28, priority: 'Baja', reason: 'Cliente inactivo, sin turnos recientes.' },
-]
-
 const PRIORITY_VARIANT = { Alta: 'success', Media: 'warning', Baja: 'danger' }
+const PRIORITY_COLORS = { Alta: '#3e7d5a', Media: '#c97b2e', Baja: '#b84c4c' }
 
 export default function AIPatientScoring() {
   const [patients, setPatients] = useState([])
+  const [scores, setScores] = useState([])
 
   useEffect(() => {
     patientsService.getAll().then(setPatients)
+    scoringService.getScores().then(setScores)
   }, [])
 
-  const rows = SCORES_MOCK.map((s) => ({
+  const rows = scores.map((s) => ({
     ...s,
     patient: patients.find((p) => p.id === s.patientId),
   })).filter((r) => r.patient)
 
   const average = rows.length ? Math.round(rows.reduce((sum, r) => sum + r.score, 0) / rows.length) : 0
 
+  const priorityData = ['Alta', 'Media', 'Baja'].map((priority) => ({
+    label: priority,
+    value: rows.filter((r) => r.priority === priority).length,
+    color: PRIORITY_COLORS[priority],
+  }))
+
   return (
     <div className="scoring-page">
       <div className="page-header">
         <h1>AI Patient Scoring</h1>
-        <p>Vista conceptual de priorización de clientes. Los valores son de ejemplo, no provienen de un cálculo real.</p>
+        <p>Priorización de clientes calculada sobre sus turnos reales: recencia, frecuencia y confiabilidad.</p>
       </div>
 
       <div className="scoring-disclaimer">
-        Esta pantalla es una maqueta visual. No hay ningún modelo de IA ni cálculo automático detrás de los puntajes
-        mostrados — quedará fuera de esta fase del proyecto.
+        El puntaje se calcula con una fórmula de reglas ponderadas (no es un modelo de machine learning): qué tan
+        reciente fue su último turno, cuántos turnos realizó y qué proporción canceló. Cada puntaje se puede explicar
+        a mano a partir de esos tres factores.
       </div>
 
       <div className="stat-grid">
@@ -47,6 +49,11 @@ export default function AIPatientScoring() {
         <StatCard label="Puntaje promedio" value={average} />
         <StatCard label="Prioridad alta" value={rows.filter((r) => r.priority === 'Alta').length} />
       </div>
+
+      <section className="aura-card scoring-chart-card">
+        <h2 className="section-title">Distribución por prioridad</h2>
+        <DonutChart data={priorityData} centerLabel="Clientes evaluados" centerValue={rows.length} />
+      </section>
 
       <div className="aura-table-wrap">
         <table className="aura-table">
