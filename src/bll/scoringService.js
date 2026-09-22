@@ -1,5 +1,6 @@
 import * as patientsService from './patientsService'
 import * as appointmentsService from './appointmentsService'
+import { supabase } from '../dal/supabaseClient'
 
 // AI Patient Scoring: no es un modelo de machine learning, es un sistema
 // experto de reglas ponderadas (recencia + frecuencia + confiabilidad) sobre
@@ -53,6 +54,9 @@ function scorePatient(patient, allAppointments) {
     score,
     priority,
     reason: buildReason({ recencyDays, completedCount: completed.length, cancellationRate }),
+    recencyDays,
+    completedCount: completed.length,
+    cancellationRate,
   }
 }
 
@@ -62,4 +66,24 @@ export async function getScores() {
     .filter((p) => p.status === 'Activo')
     .map((p) => scorePatient(p, appointments))
     .sort((a, b) => b.score - a.score)
+}
+
+// El puntaje sigue siendo la fórmula (determinística, explicable, gratis);
+// esto genera además una recomendación en lenguaje natural con un modelo de
+// IA real (Claude), a pedido, vía una Supabase Edge Function que guarda la
+// API key del lado del servidor.
+export async function generateInsight(entry, patientName) {
+  const { data, error } = await supabase.functions.invoke('patient-insight', {
+    body: {
+      patientName,
+      score: entry.score,
+      priority: entry.priority,
+      recencyDays: entry.recencyDays,
+      completedCount: entry.completedCount,
+      cancellationRate: entry.cancellationRate,
+    },
+  })
+  if (error) throw error
+  if (data?.error) throw new Error(data.error)
+  return data.insight
 }
