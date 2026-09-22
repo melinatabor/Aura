@@ -5,7 +5,7 @@ import EmptyState from '../../components/EmptyState/EmptyState.jsx'
 import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog.jsx'
 import TreatmentFormModal from './TreatmentFormModal.jsx'
 import NewTreatmentModal from './NewTreatmentModal.jsx'
-import * as treatmentsService from '../../services/treatmentsService'
+import * as treatmentsService from '../../bll/treatmentsService'
 import './Treatments.scss'
 
 const priceFormatter = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 })

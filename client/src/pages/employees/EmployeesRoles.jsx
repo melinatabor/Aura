@@ -3,12 +3,12 @@ import Badge from '../../components/Badge/Badge.jsx'
 import EmptyState from '../../components/EmptyState/EmptyState.jsx'
 import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog.jsx'
 import EmployeeFormModal from './EmployeeFormModal.jsx'
-import * as employeesService from '../../services/employeesService'
+import * as employeesService from '../../bll/employeesService'
 
 export default function EmployeesRoles() {
   const [employees, setEmployees] = useState([])
-  const [modal, setModal] = useState(null)
-  const [toDelete, setToDelete] = useState(null)
+  const [editing, setEditing] = useState(null)
+  const [toToggle, setToToggle] = useState(null)
 
   async function reload() {
     setEmployees(await employeesService.getAll())
@@ -19,18 +19,14 @@ export default function EmployeesRoles() {
   }, [])
 
   async function handleSave(data) {
-    if (modal.mode === 'create') {
-      await employeesService.create(data)
-    } else {
-      await employeesService.update(modal.employee.id, data)
-    }
-    setModal(null)
+    await employeesService.update(editing.id, data)
+    setEditing(null)
     reload()
   }
 
-  async function handleDelete() {
-    await employeesService.remove(toDelete.id)
-    setToDelete(null)
+  async function handleToggleStatus() {
+    await employeesService.setStatus(toToggle.id, toToggle.status === 'Activo' ? 'Inactivo' : 'Activo')
+    setToToggle(null)
     reload()
   }
 
@@ -39,15 +35,15 @@ export default function EmployeesRoles() {
       <div className="page-header-row">
         <div className="page-header">
           <h1>Empleados y roles</h1>
-          <p>Administrá el equipo con acceso al sistema y el rol asignado a cada uno.</p>
+          <p>Administrá el rol y el estado de las cuentas que ya se registraron en AURA.</p>
         </div>
-        <button type="button" className="btn btn-primary" onClick={() => setModal({ mode: 'create' })}>
-          + Nuevo rol
-        </button>
       </div>
 
       {employees.length === 0 ? (
-        <EmptyState title="Todavía no hay empleados cargados" />
+        <EmptyState
+          title="Todavía no hay empleados registrados"
+          description="Las cuentas se crean desde “Crear cuenta” en la pantalla de inicio de sesión; después les asignás el rol acá."
+        />
       ) : (
         <div className="aura-table-wrap">
           <table className="aura-table">
@@ -77,11 +73,11 @@ export default function EmployeesRoles() {
                   </td>
                   <td>
                     <div className="table-actions">
-                      <button type="button" className="btn btn-secondary btn-sm" onClick={() => setModal({ mode: 'edit', employee: e })}>
+                      <button type="button" className="btn btn-secondary btn-sm" onClick={() => setEditing(e)}>
                         Editar
                       </button>
-                      <button type="button" className="btn btn-danger btn-sm" onClick={() => setToDelete(e)}>
-                        Eliminar
+                      <button type="button" className="btn btn-danger btn-sm" onClick={() => setToToggle(e)}>
+                        {e.status === 'Activo' ? 'Desactivar' : 'Activar'}
                       </button>
                     </div>
                   </td>
@@ -92,17 +88,15 @@ export default function EmployeesRoles() {
         </div>
       )}
 
-      {modal && (
-        <EmployeeFormModal employee={modal.mode === 'edit' ? modal.employee : null} onSave={handleSave} onClose={() => setModal(null)} />
-      )}
+      {editing && <EmployeeFormModal employee={editing} onSave={handleSave} onClose={() => setEditing(null)} />}
 
-      {toDelete && (
+      {toToggle && (
         <ConfirmDialog
-          title="¿Estás seguro de que deseas eliminar este empleado?"
-          message="El empleado perderá el acceso al sistema con el rol asignado."
-          confirmLabel="Sí, eliminar"
-          onConfirm={handleDelete}
-          onCancel={() => setToDelete(null)}
+          title={`¿Confirmás ${toToggle.status === 'Activo' ? 'desactivar' : 'activar'} a este empleado?`}
+          message="Desactivar no borra la cuenta, solo le quita el acceso operativo al sistema."
+          confirmLabel="Confirmar"
+          onConfirm={handleToggleStatus}
+          onCancel={() => setToToggle(null)}
         />
       )}
     </div>

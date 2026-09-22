@@ -3,10 +3,8 @@ import Modal from '../../components/Modal/Modal.jsx'
 
 const ROLES = ['Administrador', 'Operador']
 
-const EMPTY = { firstName: '', lastName: '', email: '', role: 'Operador' }
-
 export default function EmployeeFormModal({ employee, onSave, onClose }) {
-  const [form, setForm] = useState(employee ? { ...employee } : { ...EMPTY })
+  const [form, setForm] = useState({ ...employee })
 
   function handleChange(field, value) {
     setForm((prev) => ({ ...prev, [field]: value }))
@@ -14,11 +12,11 @@ export default function EmployeeFormModal({ employee, onSave, onClose }) {
 
   function handleSubmit(e) {
     e.preventDefault()
-    onSave(form)
+    onSave({ firstName: form.firstName, lastName: form.lastName, role: form.role })
   }
 
   return (
-    <Modal title={employee ? 'Editar empleado' : 'Nuevo rol'} onClose={onClose}>
+    <Modal title="Editar empleado" onClose={onClose}>
       <form onSubmit={handleSubmit}>
         <div className="form-row">
           <div className="form-group">
@@ -32,7 +30,8 @@ export default function EmployeeFormModal({ employee, onSave, onClose }) {
         </div>
         <div className="form-group">
           <label htmlFor="email">Email</label>
-          <input id="email" type="email" required value={form.email} onChange={(e) => handleChange('email', e.target.value)} />
+          <input id="email" type="email" value={form.email} disabled />
+          <span className="field-hint">El email de acceso se define al crear la cuenta y no se puede editar acá.</span>
         </div>
         <div className="form-group">
           <label htmlFor="role">Rol asignado</label>

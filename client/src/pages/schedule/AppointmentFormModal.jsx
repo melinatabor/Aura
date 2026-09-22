@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import Modal from '../../components/Modal/Modal.jsx'
-import * as patientsService from '../../services/patientsService'
-import * as professionalsService from '../../services/professionalsService'
-import * as treatmentsService from '../../services/treatmentsService'
-import * as appointmentsService from '../../services/appointmentsService'
+import * as patientsService from '../../bll/patientsService'
+import * as professionalsService from '../../bll/professionalsService'
+import * as treatmentsService from '../../bll/treatmentsService'
+import * as appointmentsService from '../../bll/appointmentsService'
 
 const STATUSES = ['Pendiente', 'Confirmado', 'Realizado', 'Cancelado']
 

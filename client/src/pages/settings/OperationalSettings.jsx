@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Modal from '../../components/Modal/Modal.jsx'
-import * as alertRulesService from '../../services/alertRulesService'
+import * as alertRulesService from '../../bll/alertRulesService'
 import './Settings.scss'
 
 export default function OperationalSettings() {

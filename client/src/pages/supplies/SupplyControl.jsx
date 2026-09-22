@@ -3,7 +3,7 @@ import StatCard from '../../components/StatCard/StatCard.jsx'
 import Badge from '../../components/Badge/Badge.jsx'
 import EmptyState from '../../components/EmptyState/EmptyState.jsx'
 import SupplyFormModal from './SupplyFormModal.jsx'
-import * as suppliesService from '../../services/suppliesService'
+import * as suppliesService from '../../bll/suppliesService'
 
 const priceFormatter = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 })
 

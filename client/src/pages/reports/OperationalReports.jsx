@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import StatCard from '../../components/StatCard/StatCard.jsx'
 import Modal from '../../components/Modal/Modal.jsx'
-import * as reportsService from '../../services/reportsService'
+import * as reportsService from '../../bll/reportsService'
 import './Reports.scss'
 
 const priceFormatter = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 })

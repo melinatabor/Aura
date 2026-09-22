@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Badge from '../../components/Badge/Badge.jsx'
 import StatCard from '../../components/StatCard/StatCard.jsx'
-import * as patientsService from '../../services/patientsService'
+import * as patientsService from '../../bll/patientsService'
 import './AIPatientScoring.scss'
 
 // Fixed example data: this screen is only a visual mock of the Figma,

@@ -7,15 +7,24 @@ export default function Login() {
   const { login } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
-  const [email, setEmail] = useState('maria@centroaura.com')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [submitting, setSubmitting] = useState(false)
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    // Simulated login: does not validate against any backend yet.
-    login({ name: 'María', email })
-    const destination = location.state?.from?.pathname ?? '/app/dashboard'
-    navigate(destination, { replace: true })
+    setError('')
+    setSubmitting(true)
+    try {
+      await login({ email, password })
+      const destination = location.state?.from?.pathname ?? '/app/dashboard'
+      navigate(destination, { replace: true })
+    } catch (err) {
+      setError('No pudimos iniciar sesión. Revisá el email y la contraseña.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -40,8 +49,9 @@ export default function Login() {
               placeholder="••••••••"
             />
           </div>
-          <button type="submit" className="btn btn-primary auth-submit">
-            Iniciar sesión
+          {error && <p className="field-error">{error}</p>}
+          <button type="submit" className="btn btn-primary auth-submit" disabled={submitting}>
+            {submitting ? 'Ingresando...' : 'Iniciar sesión'}
           </button>
         </form>
 

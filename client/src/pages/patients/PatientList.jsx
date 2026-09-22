@@ -5,7 +5,7 @@ import Badge from '../../components/Badge/Badge.jsx'
 import EmptyState from '../../components/EmptyState/EmptyState.jsx'
 import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog.jsx'
 import PatientFormModal from './PatientFormModal.jsx'
-import * as patientsService from '../../services/patientsService'
+import * as patientsService from '../../bll/patientsService'
 
 export default function PatientList() {
   const [searchParams, setSearchParams] = useSearchParams()

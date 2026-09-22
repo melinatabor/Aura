@@ -1,14 +1,31 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext.jsx'
 import './Auth.scss'
 
 export default function ActivateAccount() {
-  const navigate = useNavigate()
+  const { signup } = useAuth()
+  const [form, setForm] = useState({ firstName: '', lastName: '', email: '', password: '' })
   const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState('')
+  const [submitting, setSubmitting] = useState(false)
 
-  function handleSubmit(e) {
+  function handleChange(field, value) {
+    setForm((prev) => ({ ...prev, [field]: value }))
+  }
+
+  async function handleSubmit(e) {
     e.preventDefault()
-    setSubmitted(true)
+    setError('')
+    setSubmitting(true)
+    try {
+      await signup(form)
+      setSubmitted(true)
+    } catch (err) {
+      setError('No pudimos crear la cuenta. Probá con otro email o revisá la contraseña (mínimo 6 caracteres).')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   if (submitted) {
@@ -35,20 +52,42 @@ export default function ActivateAccount() {
         <p className="auth-subtitle">Activá tu espacio de trabajo en Aura</p>
 
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="centerName">Nombre del centro o profesional</label>
-            <input id="centerName" required placeholder="Ej. Centro Estético Bienestar" />
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="firstName">Nombre</label>
+              <input id="firstName" required value={form.firstName} onChange={(e) => handleChange('firstName', e.target.value)} />
+            </div>
+            <div className="form-group">
+              <label htmlFor="lastName">Apellido</label>
+              <input id="lastName" required value={form.lastName} onChange={(e) => handleChange('lastName', e.target.value)} />
+            </div>
           </div>
           <div className="form-group">
             <label htmlFor="activationEmail">Correo electrónico</label>
-            <input id="activationEmail" type="email" required placeholder="nombre@ejemplo.com" />
+            <input
+              id="activationEmail"
+              type="email"
+              required
+              placeholder="nombre@ejemplo.com"
+              value={form.email}
+              onChange={(e) => handleChange('email', e.target.value)}
+            />
           </div>
           <div className="form-group">
             <label htmlFor="activationPassword">Contraseña</label>
-            <input id="activationPassword" type="password" required placeholder="••••••••" />
+            <input
+              id="activationPassword"
+              type="password"
+              required
+              minLength={6}
+              placeholder="••••••••"
+              value={form.password}
+              onChange={(e) => handleChange('password', e.target.value)}
+            />
           </div>
-          <button type="submit" className="btn btn-primary auth-submit">
-            Crear cuenta
+          {error && <p className="field-error">{error}</p>}
+          <button type="submit" className="btn btn-primary auth-submit" disabled={submitting}>
+            {submitting ? 'Creando cuenta...' : 'Crear cuenta'}
           </button>
         </form>
 

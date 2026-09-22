@@ -33,7 +33,8 @@ export default function AppLayout() {
           <Outlet />
         </div>
         <p className="app-layout-footnote">
-          Los datos de esta demo se guardan en memoria del navegador y se pierden al recargar la página.
+          Clientes, Tratamientos, Insumos y Empleados ya se guardan en Supabase. La Agenda y los Reportes todavía usan
+          datos de ejemplo en memoria y se pierden al recargar la página.
         </p>
       </div>
     </div>

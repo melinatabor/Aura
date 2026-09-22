@@ -3,7 +3,7 @@ import StatCard from '../../components/StatCard/StatCard.jsx'
 import Badge from '../../components/Badge/Badge.jsx'
 import EmptyState from '../../components/EmptyState/EmptyState.jsx'
 import Modal from '../../components/Modal/Modal.jsx'
-import * as alertsService from '../../services/alertsService'
+import * as alertsService from '../../bll/alertsService'
 
 const SEVERITY_BADGE = { danger: 'danger', warning: 'warning', info: 'info' }
 const TYPES = ['Todos', 'Stock bajo', 'Turno próximo', 'Administrativa']

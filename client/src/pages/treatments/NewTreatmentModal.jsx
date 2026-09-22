@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Modal from '../../components/Modal/Modal.jsx'
-import * as suppliesService from '../../services/suppliesService'
+import * as suppliesService from '../../bll/suppliesService'
 
 const CATEGORIES = ['Facial', 'Corporal', 'Depilación']
 
