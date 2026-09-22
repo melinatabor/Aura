@@ -50,6 +50,7 @@ export default function EmployeesRoles() {
             <thead>
               <tr>
                 <th>Empleado</th>
+                <th>Usuario</th>
                 <th>Email</th>
                 <th>Rol</th>
                 <th>Estado</th>
@@ -64,6 +65,7 @@ export default function EmployeesRoles() {
                       {e.firstName} {e.lastName}
                     </strong>
                   </td>
+                  <td>{e.username || '—'}</td>
                   <td>{e.email}</td>
                   <td>
                     <Badge variant={e.role === 'Administrador' ? 'info' : 'neutral'}>{e.role}</Badge>

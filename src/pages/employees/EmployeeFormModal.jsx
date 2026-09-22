@@ -29,6 +29,10 @@ export default function EmployeeFormModal({ employee, onSave, onClose }) {
           </div>
         </div>
         <div className="form-group">
+          <label htmlFor="username">Usuario</label>
+          <input id="username" value={form.username || ''} disabled />
+        </div>
+        <div className="form-group">
           <label htmlFor="email">Email</label>
           <input id="email" type="email" value={form.email} disabled />
           <span className="field-hint">El email de acceso se define al crear la cuenta y no se puede editar acá.</span>

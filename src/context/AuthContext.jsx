@@ -10,6 +10,7 @@ async function buildUser(authUser) {
   return {
     id: authUser.id,
     email: authUser.email,
+    username: profile?.username ?? '',
     firstName: profile?.first_name ?? '',
     lastName: profile?.last_name ?? '',
     name: profile?.first_name || authUser.email,
@@ -43,16 +44,29 @@ export function AuthProvider({ children }) {
     }
   }, [])
 
-  async function login({ email, password }) {
+  // Acepta email o nombre de usuario: si lo que se tipeó no tiene "@",
+  // primero resolvemos el email real llamando a la función de Postgres
+  // get_email_by_username (el usuario todavía no está logueado en este
+  // punto, por eso no puede consultar la tabla profiles directamente).
+  async function login({ identifier, password }) {
+    let email = identifier
+    if (!identifier.includes('@')) {
+      const { data, error: lookupError } = await supabase.rpc('get_email_by_username', {
+        lookup_username: identifier,
+      })
+      if (lookupError) throw lookupError
+      if (!data) throw new Error('Usuario no encontrado')
+      email = data
+    }
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) throw error
   }
 
-  async function signup({ email, password, firstName, lastName }) {
+  async function signup({ email, password, firstName, lastName, username }) {
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { first_name: firstName, last_name: lastName } },
+      options: { data: { first_name: firstName, last_name: lastName, username } },
     })
     if (error) throw error
   }

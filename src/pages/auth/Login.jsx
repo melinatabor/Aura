@@ -7,7 +7,7 @@ export default function Login() {
   const { login } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
-  const [email, setEmail] = useState('')
+  const [identifier, setIdentifier] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
@@ -17,11 +17,11 @@ export default function Login() {
     setError('')
     setSubmitting(true)
     try {
-      await login({ email, password })
+      await login({ identifier, password })
       const destination = location.state?.from?.pathname ?? '/app/dashboard'
       navigate(destination, { replace: true })
     } catch (err) {
-      setError('No pudimos iniciar sesión. Revisá el email y la contraseña.')
+      setError('No pudimos iniciar sesión. Revisá el usuario/email y la contraseña.')
     } finally {
       setSubmitting(false)
     }
@@ -35,8 +35,14 @@ export default function Login() {
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="email">Correo electrónico</label>
-            <input id="email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+            <label htmlFor="identifier">Usuario o correo electrónico</label>
+            <input
+              id="identifier"
+              required
+              value={identifier}
+              onChange={(e) => setIdentifier(e.target.value)}
+              placeholder="tu_usuario o nombre@ejemplo.com"
+            />
           </div>
           <div className="form-group">
             <label htmlFor="password">Contraseña</label>

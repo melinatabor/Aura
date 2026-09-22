@@ -5,7 +5,7 @@ import './Auth.scss'
 
 export default function ActivateAccount() {
   const { signup } = useAuth()
-  const [form, setForm] = useState({ firstName: '', lastName: '', email: '', password: '' })
+  const [form, setForm] = useState({ firstName: '', lastName: '', username: '', email: '', password: '' })
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
@@ -22,7 +22,7 @@ export default function ActivateAccount() {
       await signup(form)
       setSubmitted(true)
     } catch (err) {
-      setError('No pudimos crear la cuenta. Probá con otro email o revisá la contraseña (mínimo 6 caracteres).')
+      setError('No pudimos crear la cuenta. El usuario o el email ya existen, o la contraseña tiene menos de 6 caracteres.')
     } finally {
       setSubmitting(false)
     }
@@ -61,6 +61,17 @@ export default function ActivateAccount() {
               <label htmlFor="lastName">Apellido</label>
               <input id="lastName" required value={form.lastName} onChange={(e) => handleChange('lastName', e.target.value)} />
             </div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="username">Nombre de usuario</label>
+            <input
+              id="username"
+              required
+              placeholder="ej. maria.lopez"
+              value={form.username}
+              onChange={(e) => handleChange('username', e.target.value)}
+            />
+            <span className="field-hint">Vas a poder usarlo para iniciar sesión en vez del email.</span>
           </div>
           <div className="form-group">
             <label htmlFor="activationEmail">Correo electrónico</label>

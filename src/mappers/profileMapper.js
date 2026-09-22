@@ -3,6 +3,7 @@ export function toEmployee(row) {
     id: row.id,
     firstName: row.first_name,
     lastName: row.last_name,
+    username: row.username,
     email: row.email,
     role: row.role,
     status: row.status,
