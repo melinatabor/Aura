@@ -1,9 +1,5 @@
 @use '../../styles/variables' as *;
 
-.reports-chart-card {
-  margin-top: $space-5;
-}
-
 .reports-columns {
   display: grid;
   grid-template-columns: 1fr 1fr;

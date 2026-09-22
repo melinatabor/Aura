@@ -3,6 +3,12 @@
 .trend-chart {
   position: relative;
   width: 100%;
+
+  svg {
+    display: block;
+    width: 100%;
+    aspect-ratio: 600 / 220;
+  }
 }
 
 .trend-chart-gridline {

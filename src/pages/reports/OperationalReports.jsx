@@ -13,7 +13,7 @@ const priceFormatter = new Intl.NumberFormat('es-AR', { style: 'currency', curre
 const dateFormatter = new Intl.DateTimeFormat('es-AR', { dateStyle: 'short', timeStyle: 'short' })
 
 // Paleta categórica fija (orden fijo, nunca ciclada) para identificar tratamientos en el gráfico.
-const TREATMENT_COLORS = ['#1f8a5c', '#c1652c', '#2d6fa3', '#c99a1e', '#b23a5c', '#6a3fa0']
+const TREATMENT_COLORS = ['#1f8a5c', '#c1652c', '#356fa5', '#c99a1e', '#b23a5c', '#6a3fa0']
 
 export default function OperationalReports() {
   const { user } = useAuth()
@@ -76,28 +76,30 @@ export default function OperationalReports() {
         <StatCard label="Clientes activos" value={reports.activePatients} />
       </div>
 
-      <section className="aura-card reports-chart-card">
-        <h2 className="section-title">Ingresos por día (últimos 14 días)</h2>
-        {trend && trend.some((d) => d.value > 0) ? (
-          <TrendChart data={trend} color="#3e6259" formatValue={priceFormatter.format} />
-        ) : (
-          <EmptyState title="Todavía no hay turnos realizados en este período" />
-        )}
-      </section>
+      <div className="reports-columns">
+        <section className="aura-card reports-chart-card">
+          <h2 className="section-title">Ingresos por día (últimos 14 días)</h2>
+          {trend && trend.some((d) => d.value > 0) ? (
+            <TrendChart data={trend} color="#3e6259" formatValue={priceFormatter.format} />
+          ) : (
+            <EmptyState title="Todavía no hay turnos realizados en este período" />
+          )}
+        </section>
 
-      <section className="aura-card reports-chart-card">
-        <h2 className="section-title">Distribución de ingresos por tratamiento</h2>
-        {revenueChartData.length === 0 ? (
-          <EmptyState title="Todavía no hay turnos realizados con ingresos" />
-        ) : (
-          <DonutChart
-            data={revenueChartData}
-            centerLabel="Ingresos totales"
-            centerValue={priceFormatter.format(reports.totalRevenue)}
-            formatValue={priceFormatter.format}
-          />
-        )}
-      </section>
+        <section className="aura-card reports-chart-card">
+          <h2 className="section-title">Distribución de ingresos por tratamiento</h2>
+          {revenueChartData.length === 0 ? (
+            <EmptyState title="Todavía no hay turnos realizados con ingresos" />
+          ) : (
+            <DonutChart
+              data={revenueChartData}
+              centerLabel="Ingresos totales"
+              centerValue={priceFormatter.format(reports.totalRevenue)}
+              formatValue={priceFormatter.format}
+            />
+          )}
+        </section>
+      </div>
 
       <div className="reports-columns">
         <section className="aura-card">

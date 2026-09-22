@@ -51,8 +51,6 @@ export default function TrendChart({ data, color, formatValue = (v) => v }) {
       <svg
         viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
         width="100%"
-        height={HEIGHT}
-        preserveAspectRatio="none"
         onMouseMove={handleMove}
         onMouseLeave={() => setHoverIndex(null)}
       >
