@@ -1,6 +1,13 @@
 @use '../../styles/variables' as *;
 
 .trend-chart {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.trend-chart-inner {
   position: relative;
   width: 100%;
 

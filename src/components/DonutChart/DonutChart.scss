@@ -4,8 +4,10 @@
   --donut-track: #{$color-surface-alt};
   display: flex;
   align-items: center;
-  gap: $space-6;
+  justify-content: center;
+  gap: $space-7;
   flex-wrap: wrap;
+  height: 100%;
 }
 
 .donut-chart-plot {

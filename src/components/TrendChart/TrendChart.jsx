@@ -63,60 +63,59 @@ export default function TrendChart({ data, color, formatValue = (v) => v }) {
 
   return (
     <div className="trend-chart">
-      <svg
-        viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-        width="100%"
-        onMouseMove={handleMove}
-        onMouseLeave={() => setHoverIndex(null)}
-      >
-        {ticks.map((t) => (
-          <g key={t.y}>
-            <line x1={PAD_LEFT} x2={WIDTH - PAD_RIGHT} y1={t.y} y2={t.y} className="trend-chart-gridline" />
-            <text x={PAD_LEFT - 8} y={t.y} className="trend-chart-tick" textAnchor="end" dominantBaseline="middle">
-              {formatValue(Math.round(t.value))}
-            </text>
-          </g>
-        ))}
+      <div className="trend-chart-inner">
+        <svg
+          viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+          width="100%"
+          onMouseMove={handleMove}
+          onMouseLeave={() => setHoverIndex(null)}
+        >
+          {ticks.map((t) => (
+            <g key={t.y}>
+              <line x1={PAD_LEFT} x2={WIDTH - PAD_RIGHT} y1={t.y} y2={t.y} className="trend-chart-gridline" />
+              <text x={PAD_LEFT - 8} y={t.y} className="trend-chart-tick" textAnchor="end" dominantBaseline="middle">
+                {formatValue(Math.round(t.value))}
+              </text>
+            </g>
+          ))}
 
-        <path d={areaPath} fill={color} opacity="0.1" stroke="none" />
-        <path d={linePath} fill="none" stroke={color} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+          <path d={areaPath} fill={color} opacity="0.1" stroke="none" />
+          <path d={linePath} fill="none" stroke={color} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
 
-        {data.map((d, i) =>
-          dateLabelIndices.has(i) ? (
-            <text key={d.date} x={xAt(i)} y={HEIGHT - 8} className="trend-chart-tick" textAnchor="middle">
-              {shortDate.format(parseLocalDate(d.date))}
-            </text>
-          ) : null,
-        )}
+          {data.map((d, i) =>
+            dateLabelIndices.has(i) ? (
+              <text key={d.date} x={xAt(i)} y={HEIGHT - 8} className="trend-chart-tick" textAnchor="middle">
+                {shortDate.format(parseLocalDate(d.date))}
+              </text>
+            ) : null,
+          )}
 
-        <circle cx={points.at(-1)[0]} cy={points.at(-1)[1]} r="4" fill={color} className="trend-chart-end-dot" />
-        <text x={points.at(-1)[0]} y={points.at(-1)[1] - 10} textAnchor="end" className="trend-chart-end-label">
-          {formatValue(last.value)}
-        </text>
+          <circle cx={points.at(-1)[0]} cy={points.at(-1)[1]} r="4" fill={color} className="trend-chart-end-dot" />
+          <text x={points.at(-1)[0]} y={points.at(-1)[1] - 10} textAnchor="end" className="trend-chart-end-label">
+            {formatValue(last.value)}
+          </text>
+
+          {hovered && (
+            <g>
+              <line
+                x1={xAt(hoverIndex)}
+                x2={xAt(hoverIndex)}
+                y1={PAD_TOP}
+                y2={PAD_TOP + plotHeight}
+                className="trend-chart-crosshair"
+              />
+              <circle cx={xAt(hoverIndex)} cy={yAt(hovered.value)} r="4" fill={color} stroke="#fff" strokeWidth="2" />
+            </g>
+          )}
+        </svg>
 
         {hovered && (
-          <g>
-            <line
-              x1={xAt(hoverIndex)}
-              x2={xAt(hoverIndex)}
-              y1={PAD_TOP}
-              y2={PAD_TOP + plotHeight}
-              className="trend-chart-crosshair"
-            />
-            <circle cx={xAt(hoverIndex)} cy={yAt(hovered.value)} r="4" fill={color} stroke="#fff" strokeWidth="2" />
-          </g>
+          <div className="trend-chart-tooltip" style={{ left: `${(xAt(hoverIndex) / WIDTH) * 100}%` }}>
+            <strong>{formatValue(hovered.value)}</strong>
+            <span>{shortDate.format(parseLocalDate(hovered.date))}</span>
+          </div>
         )}
-      </svg>
-
-      {hovered && (
-        <div
-          className="trend-chart-tooltip"
-          style={{ left: `${(xAt(hoverIndex) / WIDTH) * 100}%` }}
-        >
-          <strong>{formatValue(hovered.value)}</strong>
-          <span>{shortDate.format(parseLocalDate(hovered.date))}</span>
-        </div>
-      )}
+      </div>
     </div>
   )
 }

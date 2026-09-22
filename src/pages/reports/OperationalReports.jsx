@@ -76,7 +76,7 @@ export default function OperationalReports() {
         <StatCard label="Clientes activos" value={reports.activePatients} />
       </div>
 
-      <div className="reports-columns">
+      <div className="reports-columns reports-columns-charts">
         <section className="aura-card reports-chart-card">
           <h2 className="section-title">Ingresos por día (últimos 14 días)</h2>
           <p className="reports-chart-hint">

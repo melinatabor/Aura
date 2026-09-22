@@ -6,6 +6,19 @@
   margin: -4px 0 $space-3;
 }
 
+.reports-columns-charts {
+  align-items: stretch;
+}
+
+.reports-chart-card {
+  display: flex;
+  flex-direction: column;
+
+  > *:last-child {
+    flex: 1;
+  }
+}
+
 .reports-columns {
   display: grid;
   grid-template-columns: 1fr 1fr;
