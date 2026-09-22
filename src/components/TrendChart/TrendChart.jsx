@@ -26,7 +26,14 @@ export default function TrendChart({ data, color, formatValue = (v) => v }) {
   const areaPath = `${linePath} L ${points.at(-1)[0]} ${PAD_TOP + plotHeight} L ${points[0][0]} ${PAD_TOP + plotHeight} Z`
 
   const ticks = [0, 0.5, 1].map((f) => ({ y: PAD_TOP + (1 - f) * plotHeight, value: maxValue * f }))
-  const labelEvery = Math.ceil(data.length / 6)
+
+  // Distribuye las etiquetas del eje X en indices parejos (incluye el primero y
+  // el último) en vez de "cada N" + el último forzado, que podía dejar dos
+  // fechas pegadas cuando el total de días no era múltiplo de N.
+  const tickCount = Math.min(6, data.length)
+  const dateLabelIndices = new Set(
+    Array.from({ length: tickCount }, (_, t) => Math.round((t / Math.max(1, tickCount - 1)) * (data.length - 1))),
+  )
 
   function handleMove(e) {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -67,7 +74,7 @@ export default function TrendChart({ data, color, formatValue = (v) => v }) {
         <path d={linePath} fill="none" stroke={color} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
 
         {data.map((d, i) =>
-          i % labelEvery === 0 || i === data.length - 1 ? (
+          dateLabelIndices.has(i) ? (
             <text key={d.date} x={xAt(i)} y={HEIGHT - 8} className="trend-chart-tick" textAnchor="middle">
               {shortDate.format(new Date(d.date))}
             </text>
