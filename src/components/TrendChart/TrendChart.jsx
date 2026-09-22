@@ -35,13 +35,17 @@ export default function TrendChart({ data, color, formatValue = (v) => v }) {
 
   const ticks = [0, 0.5, 1].map((f) => ({ y: PAD_TOP + (1 - f) * plotHeight, value: maxValue * f }))
 
-  // Distribuye las etiquetas del eje X en indices parejos (incluye el primero y
-  // el último) en vez de "cada N" + el último forzado, que podía dejar dos
-  // fechas pegadas cuando el total de días no era múltiplo de N.
+  // Las marcas del eje X van a posiciones parejas en píxeles (no "cada N
+  // índices"), así la distancia entre fechas siempre se ve igual aunque la
+  // cantidad de días no sea múltiplo exacto de la cantidad de marcas. El
+  // texto de cada marca es la fecha real más cercana a esa posición.
   const tickCount = Math.min(6, data.length)
-  const dateLabelIndices = new Set(
-    Array.from({ length: tickCount }, (_, t) => Math.round((t / Math.max(1, tickCount - 1)) * (data.length - 1))),
-  )
+  const xTicks = Array.from({ length: tickCount }, (_, t) => {
+    const frac = t / Math.max(1, tickCount - 1)
+    const idx = Math.round(frac * (data.length - 1))
+    const anchor = t === 0 ? 'start' : t === tickCount - 1 ? 'end' : 'middle'
+    return { x: PAD_LEFT + frac * plotWidth, date: data[idx].date, anchor }
+  })
 
   function handleMove(e) {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -82,13 +86,11 @@ export default function TrendChart({ data, color, formatValue = (v) => v }) {
           <path d={areaPath} fill={color} opacity="0.1" stroke="none" />
           <path d={linePath} fill="none" stroke={color} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
 
-          {data.map((d, i) =>
-            dateLabelIndices.has(i) ? (
-              <text key={d.date} x={xAt(i)} y={HEIGHT - 8} className="trend-chart-tick" textAnchor="middle">
-                {shortDate.format(parseLocalDate(d.date))}
-              </text>
-            ) : null,
-          )}
+          {xTicks.map((t) => (
+            <text key={t.x} x={t.x} y={HEIGHT - 8} className="trend-chart-tick" textAnchor={t.anchor}>
+              {shortDate.format(parseLocalDate(t.date))}
+            </text>
+          ))}
 
           <circle cx={points.at(-1)[0]} cy={points.at(-1)[1]} r="4" fill={color} className="trend-chart-end-dot" />
           <text x={points.at(-1)[0]} y={points.at(-1)[1] - 10} textAnchor="end" className="trend-chart-end-label">

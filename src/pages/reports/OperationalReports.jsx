@@ -76,78 +76,84 @@ export default function OperationalReports() {
         <StatCard label="Clientes activos" value={reports.activePatients} />
       </div>
 
-      <div className="reports-columns reports-columns-charts">
-        <section className="aura-card reports-chart-card">
-          <h2 className="section-title">Ingresos por día (últimos 14 días)</h2>
-          <p className="reports-chart-hint">
-            Solo turnos realizados en este período — puede no coincidir con el ingreso total de arriba si hay turnos
-            realizados fuera de estos 14 días.
-          </p>
-          {trend && trend.some((d) => d.value > 0) ? (
-            <TrendChart data={trend} color="#3e6259" formatValue={priceFormatter.format} />
-          ) : (
-            <EmptyState title="Todavía no hay turnos realizados en este período" />
-          )}
-        </section>
-
-        <section className="aura-card reports-chart-card">
-          <h2 className="section-title">Distribución de ingresos por tratamiento</h2>
-          {revenueChartData.length === 0 ? (
-            <EmptyState title="Todavía no hay turnos realizados con ingresos" />
-          ) : (
-            <DonutChart
-              data={revenueChartData}
-              centerLabel="Ingresos totales"
-              centerValue={priceFormatter.format(reports.totalRevenue)}
-              formatValue={priceFormatter.format}
-            />
-          )}
-        </section>
-      </div>
-
       <div className="reports-columns">
-        <section className="aura-card">
-          <h2 className="section-title">Ocupación por profesional</h2>
-          <div className="reports-bars">
-            {reports.occupancyByProfessional.map((o) => (
-              <div key={o.professional} className="reports-bar-row">
-                <span className="reports-bar-label">{o.professional}</span>
-                <div className="reports-bar-track">
-                  <div className="reports-bar-fill" style={{ width: `${(o.appointments / maxOccupancy) * 100}%` }} />
-                </div>
-                <span className="reports-bar-value">{o.appointments}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+        <div className="reports-column">
+          <section className="aura-card reports-chart-card">
+            <h2 className="section-title">Ingresos por día (últimos 14 días)</h2>
+            <p className="reports-chart-hint">
+              Solo turnos realizados en este período — puede no coincidir con el ingreso total de arriba si hay
+              turnos realizados fuera de estos 14 días.
+            </p>
+            {trend && trend.some((d) => d.value > 0) ? (
+              <TrendChart data={trend} color="#3e6259" formatValue={priceFormatter.format} />
+            ) : (
+              <EmptyState title="Todavía no hay turnos realizados en este período" />
+            )}
+          </section>
 
-        <section className="aura-card">
-          <h2 className="section-title">Desempeño por tratamiento</h2>
-          <div className="aura-table-wrap">
-            <table className="aura-table">
-              <thead>
-                <tr>
-                  <th>Tratamiento</th>
-                  <th>Realizados</th>
-                  <th>Ingresos</th>
-                </tr>
-              </thead>
-              <tbody>
-                {reports.performanceByTreatment.map((d) => (
-                  <tr key={d.treatment}>
-                    <td>{d.treatment}</td>
-                    <td>
-                      <div className="reports-bar-track reports-bar-track-sm">
-                        <div className="reports-bar-fill" style={{ width: `${(d.completed / maxPerformance) * 100}%` }} />
-                      </div>
-                    </td>
-                    <td>{priceFormatter.format(d.revenue)}</td>
+          <section className="aura-card">
+            <h2 className="section-title">Desempeño por tratamiento</h2>
+            <div className="aura-table-wrap">
+              <table className="aura-table">
+                <thead>
+                  <tr>
+                    <th>Tratamiento</th>
+                    <th>Realizados</th>
+                    <th>Ingresos</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
+                </thead>
+                <tbody>
+                  {reports.performanceByTreatment.map((d) => (
+                    <tr key={d.treatment}>
+                      <td>{d.treatment}</td>
+                      <td>
+                        <div className="reports-bar-track reports-bar-track-sm">
+                          <div
+                            className="reports-bar-fill"
+                            style={{ width: `${(d.completed / maxPerformance) * 100}%` }}
+                          />
+                        </div>
+                      </td>
+                      <td>{priceFormatter.format(d.revenue)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
+        <div className="reports-column">
+          <section className="aura-card reports-chart-card">
+            <h2 className="section-title">Distribución de ingresos por tratamiento</h2>
+            {revenueChartData.length === 0 ? (
+              <EmptyState title="Todavía no hay turnos realizados con ingresos" />
+            ) : (
+              <DonutChart
+                data={revenueChartData}
+                centerLabel="Ingresos totales"
+                centerValue={priceFormatter.format(reports.totalRevenue)}
+                formatValue={priceFormatter.format}
+                legendLayout="full"
+              />
+            )}
+          </section>
+
+          <section className="aura-card">
+            <h2 className="section-title">Ocupación por profesional</h2>
+            <div className="reports-bars">
+              {reports.occupancyByProfessional.map((o) => (
+                <div key={o.professional} className="reports-bar-row">
+                  <span className="reports-bar-label">{o.professional}</span>
+                  <div className="reports-bar-track">
+                    <div className="reports-bar-fill" style={{ width: `${(o.appointments / maxOccupancy) * 100}%` }} />
+                  </div>
+                  <span className="reports-bar-value">{o.appointments}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
       </div>
 
       <section className="aura-card" style={{ marginTop: 24 }}>

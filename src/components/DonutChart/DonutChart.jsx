@@ -8,7 +8,7 @@ const CIRCUMFERENCE = 2 * Math.PI * RADIUS
 const SEGMENT_GAP = 3
 
 // data: [{ label, value, color }]
-export default function DonutChart({ data, centerLabel, centerValue, formatValue = (v) => v }) {
+export default function DonutChart({ data, centerLabel, centerValue, formatValue = (v) => v, legendLayout = 'side' }) {
   const [hovered, setHovered] = useState(null)
   const total = data.reduce((sum, d) => sum + d.value, 0)
 
@@ -25,7 +25,7 @@ export default function DonutChart({ data, centerLabel, centerValue, formatValue
   const active = hovered !== null ? segments[hovered] : null
 
   return (
-    <div className="donut-chart">
+    <div className={`donut-chart${legendLayout === 'full' ? ' donut-chart--stacked' : ''}`}>
       <div className="donut-chart-plot">
         <svg viewBox={`0 0 ${SIZE} ${SIZE}`} width={SIZE} height={SIZE} role="img" aria-label={centerLabel}>
           <circle cx={SIZE / 2} cy={SIZE / 2} r={RADIUS} fill="none" stroke="var(--donut-track)" strokeWidth={STROKE} />
@@ -63,8 +63,10 @@ export default function DonutChart({ data, centerLabel, centerValue, formatValue
             onMouseEnter={() => setHovered(i)}
             onMouseLeave={() => setHovered(null)}
           >
-            <span className="donut-chart-swatch" style={{ background: seg.color }} />
-            <span className="donut-chart-legend-label">{seg.label}</span>
+            <span className="donut-chart-legend-name">
+              <span className="donut-chart-swatch" style={{ background: seg.color }} />
+              <span className="donut-chart-legend-label">{seg.label}</span>
+            </span>
             <span className="donut-chart-legend-value">
               {formatValue(seg.value)} ({Math.round(seg.fraction * 100)}%)
             </span>
