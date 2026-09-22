@@ -6,6 +6,7 @@ import Modal from '../../components/Modal/Modal.jsx'
 import SupplyFormModal from './SupplyFormModal.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
 import * as suppliesService from '../../bll/suppliesService'
+import { downloadStockExportPdf } from '../../utils/pdfExport'
 
 const priceFormatter = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 })
 const dateFormatter = new Intl.DateTimeFormat('es-AR', { dateStyle: 'short', timeStyle: 'short' })
@@ -54,6 +55,7 @@ export default function SupplyControl() {
     setExporting(true)
     try {
       await suppliesService.exportStock(user.id)
+      downloadStockExportPdf(supplies)
       setExported(true)
       loadHistory()
     } finally {
@@ -172,7 +174,9 @@ export default function SupplyControl() {
         <Modal title="Stock exportado" onClose={() => setExported(false)}>
           <div style={{ textAlign: 'center', padding: '8px 0' }}>
             <div className="modal-confirm-icon icon-success">✓</div>
-            <p style={{ color: '#6f6b60', marginBottom: 24 }}>El estado del inventario se guardó correctamente en el historial.</p>
+            <p style={{ color: '#6f6b60', marginBottom: 24 }}>
+              El estado del inventario se descargó en PDF y se guardó correctamente en el historial.
+            </p>
             <button type="button" className="btn btn-primary" onClick={() => setExported(false)}>
               Cerrar
             </button>

@@ -4,6 +4,7 @@ import Modal from '../../components/Modal/Modal.jsx'
 import EmptyState from '../../components/EmptyState/EmptyState.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
 import * as reportsService from '../../bll/reportsService'
+import { downloadOperationalReportPdf } from '../../utils/pdfExport'
 import './Reports.scss'
 
 const priceFormatter = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 })
@@ -34,6 +35,7 @@ export default function OperationalReports() {
     setExporting(true)
     try {
       await reportsService.exportReport(user.id)
+      downloadOperationalReportPdf(reports)
       setExported(true)
       loadHistory()
     } finally {
@@ -139,7 +141,7 @@ export default function OperationalReports() {
           <div style={{ textAlign: 'center', padding: '8px 0' }}>
             <div className="modal-confirm-icon icon-success">✓</div>
             <p style={{ color: '#6f6b60', marginBottom: 24 }}>
-              El reporte operativo se generó y se guardó en el historial correctamente.
+              El reporte operativo se descargó en PDF y se guardó en el historial correctamente.
             </p>
             <button type="button" className="btn btn-primary" onClick={() => setExported(false)}>
               Cerrar
