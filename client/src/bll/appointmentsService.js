@@ -1,68 +1,59 @@
-import appointmentsMock from '../mocks/appointments.json'
-import { resolveAsync, nextId, todayISO } from './apiClient'
+import * as appointmentsDal from '../dal/appointmentsDal'
+import { toAppointment, toAppointmentRow } from '../mappers/appointmentMapper'
+import { todayISO } from './apiClient'
 
-// Mocked appointments use "dayOffset" relative to today instead of fixed
-// dates, so the sample schedule always shows current appointments no matter when the app runs.
-let appointments = appointmentsMock.map(({ dayOffset, ...appointment }) => ({
-  ...appointment,
-  date: todayISO(dayOffset),
-}))
-
-export function getAll() {
-  return resolveAsync([...appointments])
+export async function getAll() {
+  const rows = await appointmentsDal.getAll()
+  return rows.map(toAppointment)
 }
 
-export function getById(id) {
-  return resolveAsync(appointments.find((a) => a.id === Number(id)) ?? null)
+export async function getById(id) {
+  const row = await appointmentsDal.getById(id)
+  return row ? toAppointment(row) : null
 }
 
-export function getByDateRange(from, to) {
-  return resolveAsync(appointments.filter((a) => a.date >= from && a.date <= to))
+export async function getByDateRange(from, to) {
+  const rows = await appointmentsDal.getByDateRange(from, to)
+  return rows.map(toAppointment)
 }
 
-export function getToday() {
+export async function getToday() {
   const today = todayISO()
-  return resolveAsync(appointments.filter((a) => a.date === today))
+  return getByDateRange(today, today)
 }
 
-export function getUpcoming(days) {
+export async function getUpcoming(days) {
   const today = todayISO()
   const limit = todayISO(days)
-  return resolveAsync(appointments.filter((a) => a.date >= today && a.date <= limit && a.status !== 'Cancelado'))
+  const rows = await getByDateRange(today, limit)
+  return rows.filter((a) => a.status !== 'Cancelado')
 }
 
-export function create(data) {
-  const created = { id: nextId('appointments', appointments), status: 'Pendiente', notes: '', ...data }
-  appointments = [created, ...appointments]
-  return resolveAsync(created)
+export async function create(data) {
+  const row = await appointmentsDal.insert(toAppointmentRow({ status: 'Pendiente', notes: '', ...data }))
+  return toAppointment(row)
 }
 
-export function update(id, data) {
-  appointments = appointments.map((a) => (a.id === Number(id) ? { ...a, ...data } : a))
-  return resolveAsync(appointments.find((a) => a.id === Number(id)) ?? null)
+export async function update(id, data) {
+  const row = await appointmentsDal.update(id, toAppointmentRow(data))
+  return toAppointment(row)
 }
 
-export function setStatus(id, status) {
-  appointments = appointments.map((a) => (a.id === Number(id) ? { ...a, status } : a))
-  return resolveAsync(true)
+export async function setStatus(id, status) {
+  await appointmentsDal.update(id, { status })
+  return true
 }
 
-export function remove(id) {
-  appointments = appointments.filter((a) => a.id !== Number(id))
-  return resolveAsync(true)
+export async function remove(id) {
+  await appointmentsDal.remove(id)
+  return true
 }
 
-// Minimal business rule for this phase (full real validation comes with the backend phase):
-// prevents overlapping schedules for the same professional.
-export function hasOverlap({ professionalId, date, startTime, endTime, excludeId }) {
-  const conflict = appointments.some(
-    (a) =>
-      a.id !== Number(excludeId) &&
-      a.professionalId === Number(professionalId) &&
-      a.date === date &&
-      a.status !== 'Cancelado' &&
-      startTime < a.endTime &&
-      endTime > a.startTime,
-  )
-  return resolveAsync(conflict)
+// Business rule: prevents overlapping schedules for the same professional.
+export async function hasOverlap({ professionalId, date, startTime, endTime, excludeId }) {
+  const rows = await appointmentsDal.getByProfessionalAndDate(professionalId, date)
+  return rows.some((row) => {
+    const a = toAppointment(row)
+    return a.id !== Number(excludeId) && a.status !== 'Cancelado' && startTime < a.endTime && endTime > a.startTime
+  })
 }
