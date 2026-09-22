@@ -10,7 +10,7 @@
 // tarjeta, en https://aistudio.google.com/apikey
 
 const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY')
-const MODEL = 'gemini-2.0-flash'
+const MODEL = 'gemini-3.6-flash'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
