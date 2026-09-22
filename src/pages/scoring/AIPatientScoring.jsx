@@ -78,7 +78,7 @@ export default function AIPatientScoring() {
       <div className="scoring-disclaimer">
         El puntaje (0-100) se calcula con una fórmula de reglas ponderadas y explicables (recencia, frecuencia y
         confiabilidad) — es determinístico, no una caja negra. La columna "Recomendación con IA" sí llama a un
-        modelo de lenguaje real (Claude, vía una Supabase Edge Function) para redactar una sugerencia en lenguaje
+        modelo de lenguaje real (Google Gemini, vía una Supabase Edge Function) para redactar una sugerencia en lenguaje
         natural a partir de esos mismos datos; se genera a pedido para no hacer una llamada a la IA por cada carga
         de la pantalla.
       </div>

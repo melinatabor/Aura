@@ -70,7 +70,7 @@ export async function getScores() {
 
 // El puntaje sigue siendo la fórmula (determinística, explicable, gratis);
 // esto genera además una recomendación en lenguaje natural con un modelo de
-// IA real (Claude), a pedido, vía una Supabase Edge Function que guarda la
+// IA real (Google Gemini), a pedido, vía una Supabase Edge Function que guarda la
 // API key del lado del servidor.
 export async function generateInsight(entry, patientName) {
   const { data, error } = await supabase.functions.invoke('patient-insight', {
