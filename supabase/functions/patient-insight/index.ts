@@ -48,7 +48,10 @@ Proporción de cancelaciones: ${Math.round((cancellationRate ?? 0) * 100)}%`
         },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { maxOutputTokens: 200 },
+          // thinkingBudget: 0 evita que el modelo gaste el límite de tokens de
+          // salida en "razonamiento" interno antes de escribir la respuesta
+          // (causaba textos cortados a mitad de frase).
+          generationConfig: { maxOutputTokens: 300, thinkingConfig: { thinkingBudget: 0 } },
         }),
       },
     )
@@ -59,7 +62,8 @@ Proporción de cancelaciones: ${Math.round((cancellationRate ?? 0) * 100)}%`
     }
 
     const data = await response.json()
-    const insight = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() ?? 'No se pudo generar una recomendación.'
+    const parts = data.candidates?.[0]?.content?.parts ?? []
+    const insight = parts.map((p) => p.text ?? '').join('').trim() || 'No se pudo generar una recomendación.'
 
     return new Response(JSON.stringify({ insight }), {
       headers: { ...corsHeaders, 'content-type': 'application/json' },
