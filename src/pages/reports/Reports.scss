@@ -1,5 +1,11 @@
 @use '../../styles/variables' as *;
 
+.reports-chart-hint {
+  font-size: 12px;
+  color: $color-text-muted;
+  margin: -4px 0 $space-3;
+}
+
 .reports-columns {
   display: grid;
   grid-template-columns: 1fr 1fr;

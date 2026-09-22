@@ -13,7 +13,7 @@ const priceFormatter = new Intl.NumberFormat('es-AR', { style: 'currency', curre
 const dateFormatter = new Intl.DateTimeFormat('es-AR', { dateStyle: 'short', timeStyle: 'short' })
 
 // Paleta categórica fija (orden fijo, nunca ciclada) para identificar tratamientos en el gráfico.
-const TREATMENT_COLORS = ['#1f8a5c', '#c1652c', '#356fa5', '#c99a1e', '#b23a5c', '#6a3fa0']
+const TREATMENT_COLORS = ['#1f8a5c', '#c1652c', '#6a3fa0', '#c99a1e', '#b23a5c', '#356fa5']
 
 export default function OperationalReports() {
   const { user } = useAuth()
@@ -79,6 +79,10 @@ export default function OperationalReports() {
       <div className="reports-columns">
         <section className="aura-card reports-chart-card">
           <h2 className="section-title">Ingresos por día (últimos 14 días)</h2>
+          <p className="reports-chart-hint">
+            Solo turnos realizados en este período — puede no coincidir con el ingreso total de arriba si hay turnos
+            realizados fuera de estos 14 días.
+          </p>
           {trend && trend.some((d) => d.value > 0) ? (
             <TrendChart data={trend} color="#3e6259" formatValue={priceFormatter.format} />
           ) : (

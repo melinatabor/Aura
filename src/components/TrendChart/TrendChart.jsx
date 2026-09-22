@@ -3,10 +3,10 @@ import './TrendChart.scss'
 
 const WIDTH = 600
 const HEIGHT = 220
-const PAD_LEFT = 46
+const PAD_LEFT = 58
 const PAD_RIGHT = 12
 const PAD_TOP = 16
-const PAD_BOTTOM = 28
+const PAD_BOTTOM = 32
 
 const shortDate = new Intl.DateTimeFormat('es-AR', { day: 'numeric', month: 'short' })
 
