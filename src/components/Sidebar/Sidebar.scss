@@ -3,7 +3,7 @@
 .sidebar {
   width: $sidebar-width;
   flex-shrink: 0;
-  background: $color-sidebar-bg;
+  background: linear-gradient(180deg, lighten($color-sidebar-bg, 3%) 0%, darken($color-sidebar-bg, 5%) 100%);
   color: $color-text-inverse;
   min-height: 100vh;
   padding: $space-5 $space-3;
@@ -70,6 +70,7 @@
       background: $color-text-inverse;
       color: $color-sidebar-bg;
       font-weight: 700;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
     }
   }
 

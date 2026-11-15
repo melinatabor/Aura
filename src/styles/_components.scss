@@ -12,8 +12,13 @@
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease, transform 0.15s ease,
+    box-shadow 0.15s ease;
   white-space: nowrap;
+
+  &:active:not(:disabled) {
+    transform: translateY(1px);
+  }
 
   &:disabled {
     opacity: 0.6;
@@ -22,11 +27,14 @@
 }
 
 .btn-primary {
-  background: $color-primary;
+  background: linear-gradient(180deg, lighten($color-primary, 4%) 0%, $color-primary 100%);
   color: $color-text-inverse;
+  box-shadow: 0 1px 2px rgba($color-primary-dark, 0.25), 0 4px 10px rgba($color-primary, 0.18);
 
   &:hover:not(:disabled) {
     background: $color-primary-dark;
+    box-shadow: 0 2px 4px rgba($color-primary-dark, 0.3), 0 8px 16px rgba($color-primary, 0.22);
+    transform: translateY(-1px);
   }
 }
 
@@ -70,6 +78,7 @@
   border-radius: $radius-lg;
   padding: $space-5;
   box-shadow: $shadow-sm;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 // Stat cards del dashboard/listados
@@ -82,6 +91,24 @@
 .stat-card {
   @extend .aura-card;
   padding: $space-4 $space-5;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    bottom: 14px;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background: linear-gradient(180deg, $color-primary-light, $color-primary);
+  }
+
+  &:hover {
+    box-shadow: $shadow-md;
+    border-color: darken($color-border, 6%);
+  }
 
   .stat-label {
     font-size: 13px;
@@ -144,6 +171,7 @@
   border: 1px solid $color-border;
   border-radius: $radius-lg;
   background: $color-surface;
+  box-shadow: $shadow-sm;
 }
 
 .aura-table {
@@ -172,8 +200,12 @@
     border-bottom: none;
   }
 
+  tbody tr {
+    transition: background-color 0.12s ease;
+  }
+
   tbody tr:hover {
-    background: $color-surface-alt;
+    background: rgba($color-surface-alt, 0.7);
   }
 }
 
@@ -270,8 +302,9 @@
   margin-bottom: $space-5;
 
   h1 {
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 700;
+    letter-spacing: -0.02em;
   }
 
   p {
@@ -298,12 +331,34 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(38, 38, 34, 0.45);
+  background: rgba(38, 38, 34, 0.42);
+  backdrop-filter: blur(3px);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: $space-4;
   z-index: 100;
+  animation: overlay-in 0.18s ease both;
+}
+
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .modal-box {
@@ -315,6 +370,7 @@
   max-height: 90vh;
   overflow-y: auto;
   padding: $space-5;
+  animation: modal-in 0.22s ease both;
 
   &.modal-lg {
     max-width: 640px;
