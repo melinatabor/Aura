@@ -226,58 +226,73 @@
   flex-wrap: wrap;
 }
 
-// Botón "hero" de IA: se repite en la tabla y en la acción grupal, con
-// degradé cálido para que se note que dispara algo distinto de una acción
-// común (crear, editar, exportar).
+// Botón de IA: pastilla oscura con borde degradé que fluye lentamente, para
+// distinguir las acciones con IA de las acciones comunes.
 .scoring-ai-generate-btn {
-  background: linear-gradient(135deg, $color-primary 0%, $color-accent 130%);
-  color: $color-text-inverse;
-  border: none;
-  border-radius: $radius-sm;
-  padding: $space-2 $space-4;
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(201, 123, 46, 0.35);
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  padding: 10px 20px;
+  border: 1.5px solid transparent;
+  border-radius: 999px;
+  background:
+    linear-gradient($color-primary-dark, $color-primary-dark) padding-box,
+    linear-gradient(110deg, #8fd0b4, $color-accent, #8fd0b4, $color-accent) border-box;
+  background-size: 100% 100%, 300% 100%;
+  color: $color-text-inverse;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  box-shadow: 0 6px 18px -6px rgba($color-primary-dark, 0.55);
+  animation: ai-border-flow 6s linear infinite;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 
-  // Destello que cruza el botón al pasar el mouse.
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -60%;
-    width: 40%;
-    height: 100%;
-    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.45), transparent);
-    transform: skewX(-20deg);
-  }
-
-  &:hover:not(:disabled)::after {
-    animation: ai-shine 0.8s ease;
+  svg {
+    color: #8fd0b4;
+    transition: transform 0.3s ease;
   }
 
   &:hover:not(:disabled) {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(201, 123, 46, 0.45);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px -6px rgba($color-accent, 0.5);
+
+    svg {
+      transform: rotate(-12deg) scale(1.15);
+    }
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
   }
 
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.45;
     cursor: not-allowed;
     box-shadow: none;
+    animation: none;
   }
 }
 
+// Versión compacta para las filas de la tabla: fondo claro, mismo borde degradé.
 .scoring-ai-generate-btn--sm {
-  padding: $space-1 $space-3;
+  padding: 5px 13px;
   font-size: 12px;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(110deg, $color-primary-light, $color-accent, $color-primary-light, $color-accent) border-box;
+  background-size: 100% 100%, 300% 100%;
+  color: $color-primary-dark;
   box-shadow: none;
+
+  svg {
+    color: $color-primary;
+  }
+
+  &:hover:not(:disabled) {
+    box-shadow: 0 6px 14px -6px rgba($color-accent, 0.6);
+  }
 }
 
 .scoring-ai-loading {
@@ -289,11 +304,11 @@
 }
 
 .scoring-ai-view-btn {
-  background: $color-info-bg;
-  color: $color-info;
-  border: none;
-  border-radius: $radius-sm;
-  padding: $space-1 $space-3;
+  background: $color-surface-alt;
+  color: $color-primary-dark;
+  border: 1px solid $color-border;
+  border-radius: 999px;
+  padding: 5px 13px;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -346,7 +361,7 @@
   align-self: flex-end;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 1100px) {
   .scoring-hero-body {
     grid-template-columns: 1fr;
   }
@@ -401,6 +416,12 @@
 .score-breakdown-fill {
   transform-origin: left;
   animation: ai-grow 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes ai-border-flow {
+  to {
+    background-position: 0 0, -300% 0;
+  }
 }
 
 @keyframes ai-rise {
@@ -466,6 +487,7 @@
   .scoring-hero::before,
   .scoring-hero::after,
   .ai-pulse::after,
+  .scoring-ai-generate-btn,
   .ai-dots i,
   .ai-skeleton,
   .score-breakdown-fill,
