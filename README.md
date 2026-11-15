@@ -49,6 +49,12 @@ Supabase (Postgres + Auth + Edge Functions)
 
 Cada módulo (pacientes, tratamientos, insumos, turnos, etc.) tiene su propio archivo en cada capa, con el mismo nombre de funciones en todas partes — así ninguna pantalla necesita cambiar si el día de mañana cambia cómo se accede a los datos.
 
+## Modelo de datos
+
+![Diagrama Entidad-Relación](docs/der/der_aura.png)
+
+El diagrama está también en [SVG](docs/der/der_aura.svg), para ampliarlo sin perder calidad.
+
 ## Seguridad: roles y permisos
 
 Cada empleado tiene un rol (Administrador, Operador, Profesional o uno personalizado), y cada rol tiene permisos por módulo (`patients.view`, `schedule.manage`, `employees.manage`, etc.), editables desde **Empleados y roles → Roles y permisos**.

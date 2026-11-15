@@ -1,0 +1,626 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2340" height="2010" viewBox="0 0 2340 2010" font-family="Segoe UI, Arial, sans-serif">
+<defs>
+<marker id="many" viewBox="0 0 20 20" refX="1" refY="10" markerWidth="20" markerHeight="20" orient="auto" markerUnits="userSpaceOnUse">
+  <path d="M1 2 L16 10 M1 18 L16 10 M1 10 L16 10" stroke="#5b5b55" stroke-width="1.6" fill="none"/>
+</marker>
+<marker id="one" viewBox="0 0 20 20" refX="19" refY="10" markerWidth="20" markerHeight="20" orient="auto" markerUnits="userSpaceOnUse">
+  <path d="M10 3 L10 17 M15 3 L15 17" stroke="#5b5b55" stroke-width="1.6"/>
+</marker>
+<marker id="one-start" viewBox="0 0 20 20" refX="1" refY="10" markerWidth="20" markerHeight="20" orient="auto" markerUnits="userSpaceOnUse">
+  <path d="M5 3 L5 17 M10 3 L10 17" stroke="#5b5b55" stroke-width="1.6"/>
+</marker>
+</defs>
+<rect width="2340" height="2010" fill="#ffffff"/>
+<text x="40" y="38" font-size="22" font-weight="700" fill="#262622">AURA — Diagrama Entidad-Relación</text>
+<text x="470" y="38" font-size="14" fill="#6f6b60">Tablas implementadas en Supabase (Postgres)</text>
+<rect x="20" y="60" width="1310" height="730" rx="14" fill="#f7f4ec" stroke="#e4ddcc"/>
+<text x="1314" y="84" font-size="13" font-weight="700" fill="#3e6259" text-anchor="end" letter-spacing="0.5">USUARIOS, ROLES Y PERMISOS</text>
+<rect x="1340" y="60" width="980" height="730" rx="14" fill="#f7f4ec" stroke="#e4ddcc"/>
+<text x="2304" y="84" font-size="13" font-weight="700" fill="#3e6259" text-anchor="end" letter-spacing="0.5">CENTRO, REPORTES Y SITIO PÚBLICO</text>
+<rect x="20" y="810" width="2300" height="600" rx="14" fill="#f7f4ec" stroke="#e4ddcc"/>
+<text x="2304" y="834" font-size="13" font-weight="700" fill="#3e6259" text-anchor="end" letter-spacing="0.5">PROFESIONALES, TRATAMIENTOS, INSUMOS Y AGENDA</text>
+<rect x="20" y="1430" width="2300" height="470" rx="14" fill="#f7f4ec" stroke="#e4ddcc"/>
+<text x="2304" y="1454" font-size="13" font-weight="700" fill="#3e6259" text-anchor="end" letter-spacing="0.5">CLIENTES, ALERTAS Y RECORDATORIOS</text>
+<polyline points="180,260 180,200" fill="none" stroke="#5b5b55" stroke-width="1.6" marker-start="url(#one-start)" marker-end="url(#one)"><title>profiles→auth</title></polyline>
+<polyline points="320,320 370,320" fill="none" stroke="#5b5b55" stroke-width="1.6" marker-start="url(#many)" marker-end="url(#one)"><title>profiles→roles</title></polyline>
+<polyline points="700,300 650,300" fill="none" stroke="#5b5b55" stroke-width="1.6" marker-start="url(#many)" marker-end="url(#one)"><title>role_permissions→roles</title></polyline>
+<polyline points="980,300 1030,300" fill="none" stroke="#5b5b55" stroke-width="1.6" marker-start="url(#many)" marker-end="url(#one)"><title>role_permissions→permissions</title></polyline>
+<polyline points="510,470 510,400" fill="none" stroke="#5b5b55" stroke-width="1.6" marker-start="url(#many)" marker-end="url(#one)"><title>invitations→roles</title></polyline>
+<polyline points="510,710 510,850" fill="none" stroke="#5b5b55" stroke-width="1.6" marker-start="url(#many)" marker-end="url(#one)"><title>invitations→professionals</title></polyline>
+<polyline points="150,480 150,960 370,960" fill="none" stroke="#5b5b55" stroke-width="1.6" marker-start="url(#many)" marker-end="url(#one)"><title>profiles→professionals</title></polyline>
+<polyline points="700,920 650,920" fill="none" stroke="#5b5b55" stroke-width="1.6" marker-start="url(#many)" marker-end="url(#one)"><title>prof_treat→professionals</title></polyline>
+<polyline points="980,920 1030,920" fill="none" stroke="#5b5b55" stroke-width="1.6" marker-start="url(#many)" marker-end="url(#one)"><title>prof_treat→treatments</title></polyline>
+<polyline points="1360,920 1310,920" fill="none" stroke="#5b5b55" stroke-width="1.6" marker-start="url(#many)" marker-end="url(#one)"><title>treat_sup→treatments</title></polyline>
+<polyline points="1640,920 1690,920" fill="none" stroke="#5b5b55" stroke-width="1.6" marker-start="url(#many)" marker-end="url(#one)"><title>treat_sup→supplies</title></polyline>
+<polyline points="1360,1100 1220,1100 1220,1030" fill="none" stroke="#5b5b55" stroke-width="1.6" marker-start="url(#many)" marker-end="url(#one)"><title>recs→treatments (origen)</title></polyline>
+<polyline points="1360,1150 1170,1150 1170,1030" fill="none" stroke="#5b5b55" stroke-width="1.6" marker-start="url(#many)" marker-end="url(#one)"><title>recs→treatments (recomendado)</title></polyline>
+<polyline points="760,1150 760,1110 510,1110 510,1070" fill="none" stroke="#5b5b55" stroke-width="1.6" marker-start="url(#many)" marker-end="url(#one)"><title>appointments→professionals</title></polyline>
+<polyline points="920,1150 920,1110 1110,1110 1110,1030" fill="none" stroke="#5b5b55" stroke-width="1.6" marker-start="url(#many)" marker-end="url(#one)"><title>appointments→treatments</title></polyline>
+<polyline points="700,1250 180,1250 180,1470" fill="none" stroke="#5b5b55" stroke-width="1.6" marker-start="url(#many)" marker-end="url(#one)"><title>appointments→patients</title></polyline>
+<polyline points="840,1520 840,1370" fill="none" stroke="#5b5b55" stroke-width="1.6" marker-start="url(#many)" marker-end="url(#one)"><title>reminders→appointments</title></polyline>
+<polyline points="700,1620 320,1620" fill="none" stroke="#5b5b55" stroke-width="1.6" marker-start="url(#many)" marker-end="url(#one)"><title>reminders→patients</title></polyline>
+<polyline points="980,1620 1360,1620" fill="none" stroke="#5b5b55" stroke-width="1.6" marker-start="url(#many)" marker-end="url(#one)"><title>reminders→alerts</title></polyline>
+<polyline points="1420,1470 1420,1290 980,1290" fill="none" stroke="#5b5b55" stroke-width="1.6" marker-start="url(#many)" marker-end="url(#one)"><title>alerts→appointments</title></polyline>
+<polyline points="1500,1810 1500,1870 110,1870 110,1730" fill="none" stroke="#5b5b55" stroke-width="1.6" marker-start="url(#many)" marker-end="url(#one)"><title>alerts→patients</title></polyline>
+<polyline points="1640,1520 1830,1520 1830,1070" fill="none" stroke="#5b5b55" stroke-width="1.6" marker-start="url(#many)" marker-end="url(#one)"><title>alerts→supplies</title></polyline>
+<g><rect x="40" y="100" width="280" height="100" rx="8" fill="#ffffff" stroke="#a39e90" stroke-width="1.4" stroke-dasharray="6 4"/>
+<path d="M40 108 a8 8 0 0 1 8 -8 h264 a8 8 0 0 1 8 8 v24 h-280 z" fill="#a39e90"/>
+<text x="52" y="121" font-size="14" font-weight="700" fill="#ffffff">auth.users</text>
+<rect x="52" y="136" width="23" height="14" rx="3" fill="#3e6259"/>
+<text x="63.5" y="147" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK</text>
+<text x="102" y="147" font-size="12.5" font-weight="700" fill="#262622">id</text>
+<text x="308" y="147" font-size="11.5" fill="#8a857a" text-anchor="end">uuid</text>
+<rect x="41" y="153" width="278" height="20" fill="#faf8f3"/>
+<text x="102" y="167" font-size="12.5" font-weight="400" fill="#262622">email</text>
+<text x="308" y="167" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="102" y="187" font-size="12.5" font-weight="400" fill="#262622">…</text>
+<text x="308" y="187" font-size="11.5" fill="#8a857a" text-anchor="end">tabla interna de Supabase Auth</text>
+</g>
+<g><rect x="40" y="260" width="280" height="220" rx="8" fill="#ffffff" stroke="#3e6259" stroke-width="1.4"/>
+<path d="M40 268 a8 8 0 0 1 8 -8 h264 a8 8 0 0 1 8 8 v24 h-280 z" fill="#3e6259"/>
+<text x="52" y="281" font-size="14" font-weight="700" fill="#ffffff">profiles</text>
+<rect x="52" y="296" width="44" height="14" rx="3" fill="#3e6259"/>
+<text x="74.0" y="307" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK FK</text>
+<text x="102" y="307" font-size="12.5" font-weight="700" fill="#262622">id</text>
+<text x="308" y="307" font-size="11.5" fill="#8a857a" text-anchor="end">uuid</text>
+<rect x="41" y="313" width="278" height="20" fill="#faf8f3"/>
+<text x="102" y="327" font-size="12.5" font-weight="400" fill="#262622">first_name</text>
+<text x="308" y="327" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="102" y="347" font-size="12.5" font-weight="400" fill="#262622">last_name</text>
+<text x="308" y="347" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="41" y="353" width="278" height="20" fill="#faf8f3"/>
+<text x="102" y="367" font-size="12.5" font-weight="400" fill="#262622">email</text>
+<text x="308" y="367" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="102" y="387" font-size="12.5" font-weight="400" fill="#262622">username</text>
+<text x="308" y="387" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="41" y="393" width="278" height="20" fill="#faf8f3"/>
+<rect x="52" y="396" width="23" height="14" rx="3" fill="#c97b2e"/>
+<text x="63.5" y="407" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK</text>
+<text x="102" y="407" font-size="12.5" font-weight="400" fill="#262622">role_id</text>
+<text x="308" y="407" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="52" y="416" width="23" height="14" rx="3" fill="#c97b2e"/>
+<text x="63.5" y="427" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK</text>
+<text x="102" y="427" font-size="12.5" font-weight="400" fill="#262622">professional_id</text>
+<text x="308" y="427" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="41" y="433" width="278" height="20" fill="#faf8f3"/>
+<text x="102" y="447" font-size="12.5" font-weight="400" fill="#262622">status</text>
+<text x="308" y="447" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="102" y="467" font-size="12.5" font-weight="400" fill="#262622">created_at</text>
+<text x="308" y="467" font-size="11.5" fill="#8a857a" text-anchor="end">timestamptz</text>
+</g>
+<g><rect x="370" y="260" width="280" height="140" rx="8" fill="#ffffff" stroke="#3e6259" stroke-width="1.4"/>
+<path d="M370 268 a8 8 0 0 1 8 -8 h264 a8 8 0 0 1 8 8 v24 h-280 z" fill="#3e6259"/>
+<text x="382" y="281" font-size="14" font-weight="700" fill="#ffffff">roles</text>
+<rect x="382" y="296" width="23" height="14" rx="3" fill="#3e6259"/>
+<text x="393.5" y="307" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK</text>
+<text x="432" y="307" font-size="12.5" font-weight="700" fill="#262622">id</text>
+<text x="638" y="307" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="371" y="313" width="278" height="20" fill="#faf8f3"/>
+<text x="432" y="327" font-size="12.5" font-weight="400" fill="#262622">name</text>
+<text x="638" y="327" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="432" y="347" font-size="12.5" font-weight="400" fill="#262622">description</text>
+<text x="638" y="347" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="371" y="353" width="278" height="20" fill="#faf8f3"/>
+<text x="432" y="367" font-size="12.5" font-weight="400" fill="#262622">is_custom</text>
+<text x="638" y="367" font-size="11.5" fill="#8a857a" text-anchor="end">boolean</text>
+<text x="432" y="387" font-size="12.5" font-weight="400" fill="#262622">created_at</text>
+<text x="638" y="387" font-size="11.5" fill="#8a857a" text-anchor="end">timestamptz</text>
+</g>
+<g><rect x="700" y="260" width="280" height="80" rx="8" fill="#ffffff" stroke="#3e6259" stroke-width="1.4"/>
+<path d="M700 268 a8 8 0 0 1 8 -8 h264 a8 8 0 0 1 8 8 v24 h-280 z" fill="#3e6259"/>
+<text x="712" y="281" font-size="14" font-weight="700" fill="#ffffff">role_permissions</text>
+<rect x="712" y="296" width="44" height="14" rx="3" fill="#3e6259"/>
+<text x="734.0" y="307" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK FK</text>
+<text x="762" y="307" font-size="12.5" font-weight="700" fill="#262622">role_id</text>
+<text x="968" y="307" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="701" y="313" width="278" height="20" fill="#faf8f3"/>
+<rect x="712" y="316" width="44" height="14" rx="3" fill="#3e6259"/>
+<text x="734.0" y="327" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK FK</text>
+<text x="762" y="327" font-size="12.5" font-weight="700" fill="#262622">permission_id</text>
+<text x="968" y="327" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+</g>
+<g><rect x="1030" y="260" width="280" height="120" rx="8" fill="#ffffff" stroke="#3e6259" stroke-width="1.4"/>
+<path d="M1030 268 a8 8 0 0 1 8 -8 h264 a8 8 0 0 1 8 8 v24 h-280 z" fill="#3e6259"/>
+<text x="1042" y="281" font-size="14" font-weight="700" fill="#ffffff">permissions</text>
+<rect x="1042" y="296" width="23" height="14" rx="3" fill="#3e6259"/>
+<text x="1053.5" y="307" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK</text>
+<text x="1092" y="307" font-size="12.5" font-weight="700" fill="#262622">id</text>
+<text x="1298" y="307" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="1031" y="313" width="278" height="20" fill="#faf8f3"/>
+<text x="1092" y="327" font-size="12.5" font-weight="400" fill="#262622">code</text>
+<text x="1298" y="327" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="1092" y="347" font-size="12.5" font-weight="400" fill="#262622">module</text>
+<text x="1298" y="347" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="1031" y="353" width="278" height="20" fill="#faf8f3"/>
+<text x="1092" y="367" font-size="12.5" font-weight="400" fill="#262622">description</text>
+<text x="1298" y="367" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+</g>
+<g><rect x="370" y="470" width="280" height="240" rx="8" fill="#ffffff" stroke="#3e6259" stroke-width="1.4"/>
+<path d="M370 478 a8 8 0 0 1 8 -8 h264 a8 8 0 0 1 8 8 v24 h-280 z" fill="#3e6259"/>
+<text x="382" y="491" font-size="14" font-weight="700" fill="#ffffff">account_invitations</text>
+<rect x="382" y="506" width="23" height="14" rx="3" fill="#3e6259"/>
+<text x="393.5" y="517" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK</text>
+<text x="432" y="517" font-size="12.5" font-weight="700" fill="#262622">id</text>
+<text x="638" y="517" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="371" y="523" width="278" height="20" fill="#faf8f3"/>
+<text x="432" y="537" font-size="12.5" font-weight="400" fill="#262622">email</text>
+<text x="638" y="537" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="382" y="546" width="23" height="14" rx="3" fill="#c97b2e"/>
+<text x="393.5" y="557" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK</text>
+<text x="432" y="557" font-size="12.5" font-weight="400" fill="#262622">role_id</text>
+<text x="638" y="557" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="371" y="563" width="278" height="20" fill="#faf8f3"/>
+<rect x="382" y="566" width="23" height="14" rx="3" fill="#c97b2e"/>
+<text x="393.5" y="577" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK</text>
+<text x="432" y="577" font-size="12.5" font-weight="400" fill="#262622">professional_id</text>
+<text x="638" y="577" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<text x="432" y="597" font-size="12.5" font-weight="400" fill="#262622">token</text>
+<text x="638" y="597" font-size="11.5" fill="#8a857a" text-anchor="end">uuid</text>
+<rect x="371" y="603" width="278" height="20" fill="#faf8f3"/>
+<text x="432" y="617" font-size="12.5" font-weight="400" fill="#262622">status</text>
+<text x="638" y="617" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="382" y="626" width="30" height="14" rx="3" fill="#a39e90"/>
+<text x="397.0" y="637" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK*</text>
+<text x="432" y="637" font-size="12.5" font-weight="400" fill="#262622">created_by</text>
+<text x="638" y="637" font-size="11.5" fill="#8a857a" text-anchor="end">uuid</text>
+<rect x="371" y="643" width="278" height="20" fill="#faf8f3"/>
+<text x="432" y="657" font-size="12.5" font-weight="400" fill="#262622">created_at</text>
+<text x="638" y="657" font-size="11.5" fill="#8a857a" text-anchor="end">timestamptz</text>
+<text x="432" y="677" font-size="12.5" font-weight="400" fill="#262622">expires_at</text>
+<text x="638" y="677" font-size="11.5" fill="#8a857a" text-anchor="end">timestamptz</text>
+<rect x="371" y="683" width="278" height="20" fill="#faf8f3"/>
+<text x="432" y="697" font-size="12.5" font-weight="400" fill="#262622">used_at</text>
+<text x="638" y="697" font-size="11.5" fill="#8a857a" text-anchor="end">timestamptz</text>
+</g>
+<g><rect x="1360" y="100" width="280" height="200" rx="8" fill="#ffffff" stroke="#3e6259" stroke-width="1.4"/>
+<path d="M1360 108 a8 8 0 0 1 8 -8 h264 a8 8 0 0 1 8 8 v24 h-280 z" fill="#3e6259"/>
+<text x="1372" y="121" font-size="14" font-weight="700" fill="#ffffff">workspace</text>
+<rect x="1372" y="136" width="23" height="14" rx="3" fill="#3e6259"/>
+<text x="1383.5" y="147" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK</text>
+<text x="1422" y="147" font-size="12.5" font-weight="700" fill="#262622">id</text>
+<text x="1628" y="147" font-size="11.5" fill="#8a857a" text-anchor="end">int</text>
+<rect x="1361" y="153" width="278" height="20" fill="#faf8f3"/>
+<text x="1422" y="167" font-size="12.5" font-weight="400" fill="#262622">name</text>
+<text x="1628" y="167" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="1422" y="187" font-size="12.5" font-weight="400" fill="#262622">activity_type</text>
+<text x="1628" y="187" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="1361" y="193" width="278" height="20" fill="#faf8f3"/>
+<text x="1422" y="207" font-size="12.5" font-weight="400" fill="#262622">business_email</text>
+<text x="1628" y="207" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="1422" y="227" font-size="12.5" font-weight="400" fill="#262622">business_phone</text>
+<text x="1628" y="227" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="1361" y="233" width="278" height="20" fill="#faf8f3"/>
+<text x="1422" y="247" font-size="12.5" font-weight="400" fill="#262622">address</text>
+<text x="1628" y="247" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="1422" y="267" font-size="12.5" font-weight="400" fill="#262622">allow_appointment_overlap</text>
+<text x="1628" y="267" font-size="11.5" fill="#8a857a" text-anchor="end">boolean</text>
+<rect x="1361" y="273" width="278" height="20" fill="#faf8f3"/>
+<text x="1422" y="287" font-size="12.5" font-weight="400" fill="#262622">updated_at</text>
+<text x="1628" y="287" font-size="11.5" fill="#8a857a" text-anchor="end">timestamptz</text>
+</g>
+<g><rect x="1360" y="340" width="280" height="140" rx="8" fill="#ffffff" stroke="#3e6259" stroke-width="1.4"/>
+<path d="M1360 348 a8 8 0 0 1 8 -8 h264 a8 8 0 0 1 8 8 v24 h-280 z" fill="#3e6259"/>
+<text x="1372" y="361" font-size="14" font-weight="700" fill="#ffffff">workspace_schedule_ranges</text>
+<rect x="1372" y="376" width="23" height="14" rx="3" fill="#3e6259"/>
+<text x="1383.5" y="387" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK</text>
+<text x="1422" y="387" font-size="12.5" font-weight="700" fill="#262622">id</text>
+<text x="1628" y="387" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="1361" y="393" width="278" height="20" fill="#faf8f3"/>
+<text x="1422" y="407" font-size="12.5" font-weight="400" fill="#262622">day_of_week</text>
+<text x="1628" y="407" font-size="11.5" fill="#8a857a" text-anchor="end">int</text>
+<text x="1422" y="427" font-size="12.5" font-weight="400" fill="#262622">opening_time</text>
+<text x="1628" y="427" font-size="11.5" fill="#8a857a" text-anchor="end">time</text>
+<rect x="1361" y="433" width="278" height="20" fill="#faf8f3"/>
+<text x="1422" y="447" font-size="12.5" font-weight="400" fill="#262622">closing_time</text>
+<text x="1628" y="447" font-size="11.5" fill="#8a857a" text-anchor="end">time</text>
+<text x="1422" y="467" font-size="12.5" font-weight="400" fill="#262622">is_active</text>
+<text x="1628" y="467" font-size="11.5" fill="#8a857a" text-anchor="end">boolean</text>
+</g>
+<g><rect x="1690" y="600" width="365" height="140" rx="8" fill="#ffffff" stroke="#3e6259" stroke-width="1.4"/>
+<path d="M1690 608 a8 8 0 0 1 8 -8 h349 a8 8 0 0 1 8 8 v24 h-365 z" fill="#3e6259"/>
+<text x="1702" y="621" font-size="14" font-weight="700" fill="#ffffff">alert_rules</text>
+<rect x="1702" y="636" width="23" height="14" rx="3" fill="#3e6259"/>
+<text x="1713.5" y="647" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK</text>
+<text x="1752" y="647" font-size="12.5" font-weight="700" fill="#262622">id</text>
+<text x="2043" y="647" font-size="11.5" fill="#8a857a" text-anchor="end">int</text>
+<rect x="1691" y="653" width="363" height="20" fill="#faf8f3"/>
+<text x="1752" y="667" font-size="12.5" font-weight="400" fill="#262622">upcoming_appointment_days</text>
+<text x="2043" y="667" font-size="11.5" fill="#8a857a" text-anchor="end">int</text>
+<text x="1752" y="687" font-size="12.5" font-weight="400" fill="#262622">low_stock_alert_enabled</text>
+<text x="2043" y="687" font-size="11.5" fill="#8a857a" text-anchor="end">boolean</text>
+<rect x="1691" y="693" width="363" height="20" fill="#faf8f3"/>
+<text x="1752" y="707" font-size="12.5" font-weight="400" fill="#262622">upcoming_appointment_alert_enabled</text>
+<text x="2043" y="707" font-size="11.5" fill="#8a857a" text-anchor="end">boolean</text>
+<text x="1752" y="727" font-size="12.5" font-weight="400" fill="#262622">administrative_alert_enabled</text>
+<text x="2043" y="727" font-size="11.5" fill="#8a857a" text-anchor="end">boolean</text>
+</g>
+<g><rect x="1690" y="100" width="280" height="240" rx="8" fill="#ffffff" stroke="#3e6259" stroke-width="1.4"/>
+<path d="M1690 108 a8 8 0 0 1 8 -8 h264 a8 8 0 0 1 8 8 v24 h-280 z" fill="#3e6259"/>
+<text x="1702" y="121" font-size="14" font-weight="700" fill="#ffffff">operational_reports</text>
+<rect x="1702" y="136" width="23" height="14" rx="3" fill="#3e6259"/>
+<text x="1713.5" y="147" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK</text>
+<text x="1752" y="147" font-size="12.5" font-weight="700" fill="#262622">id</text>
+<text x="1958" y="147" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="1691" y="153" width="278" height="20" fill="#faf8f3"/>
+<text x="1752" y="167" font-size="12.5" font-weight="400" fill="#262622">created_at</text>
+<text x="1958" y="167" font-size="11.5" fill="#8a857a" text-anchor="end">timestamptz</text>
+<rect x="1702" y="176" width="30" height="14" rx="3" fill="#a39e90"/>
+<text x="1717.0" y="187" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK*</text>
+<text x="1752" y="187" font-size="12.5" font-weight="400" fill="#262622">generated_by</text>
+<text x="1958" y="187" font-size="11.5" fill="#8a857a" text-anchor="end">uuid</text>
+<rect x="1691" y="193" width="278" height="20" fill="#faf8f3"/>
+<text x="1752" y="207" font-size="12.5" font-weight="400" fill="#262622">period_from</text>
+<text x="1958" y="207" font-size="11.5" fill="#8a857a" text-anchor="end">date</text>
+<text x="1752" y="227" font-size="12.5" font-weight="400" fill="#262622">period_to</text>
+<text x="1958" y="227" font-size="11.5" fill="#8a857a" text-anchor="end">date</text>
+<rect x="1691" y="233" width="278" height="20" fill="#faf8f3"/>
+<text x="1752" y="247" font-size="12.5" font-weight="400" fill="#262622">total_revenue</text>
+<text x="1958" y="247" font-size="11.5" fill="#8a857a" text-anchor="end">numeric</text>
+<text x="1752" y="267" font-size="12.5" font-weight="400" fill="#262622">completed_appointments</text>
+<text x="1958" y="267" font-size="11.5" fill="#8a857a" text-anchor="end">int</text>
+<rect x="1691" y="273" width="278" height="20" fill="#faf8f3"/>
+<text x="1752" y="287" font-size="12.5" font-weight="400" fill="#262622">active_patients</text>
+<text x="1958" y="287" font-size="11.5" fill="#8a857a" text-anchor="end">int</text>
+<text x="1752" y="307" font-size="12.5" font-weight="400" fill="#262622">occupancy_by_professional</text>
+<text x="1958" y="307" font-size="11.5" fill="#8a857a" text-anchor="end">jsonb</text>
+<rect x="1691" y="313" width="278" height="20" fill="#faf8f3"/>
+<text x="1752" y="327" font-size="12.5" font-weight="400" fill="#262622">performance_by_treatment</text>
+<text x="1958" y="327" font-size="11.5" fill="#8a857a" text-anchor="end">jsonb</text>
+</g>
+<g><rect x="1690" y="380" width="280" height="180" rx="8" fill="#ffffff" stroke="#3e6259" stroke-width="1.4"/>
+<path d="M1690 388 a8 8 0 0 1 8 -8 h264 a8 8 0 0 1 8 8 v24 h-280 z" fill="#3e6259"/>
+<text x="1702" y="401" font-size="14" font-weight="700" fill="#ffffff">stock_exports</text>
+<rect x="1702" y="416" width="23" height="14" rx="3" fill="#3e6259"/>
+<text x="1713.5" y="427" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK</text>
+<text x="1752" y="427" font-size="12.5" font-weight="700" fill="#262622">id</text>
+<text x="1958" y="427" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="1691" y="433" width="278" height="20" fill="#faf8f3"/>
+<text x="1752" y="447" font-size="12.5" font-weight="400" fill="#262622">created_at</text>
+<text x="1958" y="447" font-size="11.5" fill="#8a857a" text-anchor="end">timestamptz</text>
+<rect x="1702" y="456" width="30" height="14" rx="3" fill="#a39e90"/>
+<text x="1717.0" y="467" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK*</text>
+<text x="1752" y="467" font-size="12.5" font-weight="400" fill="#262622">generated_by</text>
+<text x="1958" y="467" font-size="11.5" fill="#8a857a" text-anchor="end">uuid</text>
+<rect x="1691" y="473" width="278" height="20" fill="#faf8f3"/>
+<text x="1752" y="487" font-size="12.5" font-weight="400" fill="#262622">low_stock_count</text>
+<text x="1958" y="487" font-size="11.5" fill="#8a857a" text-anchor="end">int</text>
+<text x="1752" y="507" font-size="12.5" font-weight="400" fill="#262622">total_supplies</text>
+<text x="1958" y="507" font-size="11.5" fill="#8a857a" text-anchor="end">int</text>
+<rect x="1691" y="513" width="278" height="20" fill="#faf8f3"/>
+<text x="1752" y="527" font-size="12.5" font-weight="400" fill="#262622">total_value</text>
+<text x="1958" y="527" font-size="11.5" fill="#8a857a" text-anchor="end">numeric</text>
+<text x="1752" y="547" font-size="12.5" font-weight="400" fill="#262622">snapshot</text>
+<text x="1958" y="547" font-size="11.5" fill="#8a857a" text-anchor="end">jsonb</text>
+</g>
+<g><rect x="2020" y="100" width="280" height="220" rx="8" fill="#ffffff" stroke="#3e6259" stroke-width="1.4"/>
+<path d="M2020 108 a8 8 0 0 1 8 -8 h264 a8 8 0 0 1 8 8 v24 h-280 z" fill="#3e6259"/>
+<text x="2032" y="121" font-size="14" font-weight="700" fill="#ffffff">contact_inquiries</text>
+<rect x="2032" y="136" width="23" height="14" rx="3" fill="#3e6259"/>
+<text x="2043.5" y="147" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK</text>
+<text x="2082" y="147" font-size="12.5" font-weight="700" fill="#262622">id</text>
+<text x="2288" y="147" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="2021" y="153" width="278" height="20" fill="#faf8f3"/>
+<text x="2082" y="167" font-size="12.5" font-weight="400" fill="#262622">created_at</text>
+<text x="2288" y="167" font-size="11.5" fill="#8a857a" text-anchor="end">timestamptz</text>
+<text x="2082" y="187" font-size="12.5" font-weight="400" fill="#262622">full_name</text>
+<text x="2288" y="187" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="2021" y="193" width="278" height="20" fill="#faf8f3"/>
+<text x="2082" y="207" font-size="12.5" font-weight="400" fill="#262622">email</text>
+<text x="2288" y="207" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="2082" y="227" font-size="12.5" font-weight="400" fill="#262622">phone</text>
+<text x="2288" y="227" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="2021" y="233" width="278" height="20" fill="#faf8f3"/>
+<text x="2082" y="247" font-size="12.5" font-weight="400" fill="#262622">activity_type</text>
+<text x="2288" y="247" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="2082" y="267" font-size="12.5" font-weight="400" fill="#262622">reason</text>
+<text x="2288" y="267" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="2021" y="273" width="278" height="20" fill="#faf8f3"/>
+<text x="2082" y="287" font-size="12.5" font-weight="400" fill="#262622">message</text>
+<text x="2288" y="287" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="2082" y="307" font-size="12.5" font-weight="400" fill="#262622">status</text>
+<text x="2288" y="307" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+</g>
+<g><rect x="370" y="850" width="280" height="220" rx="8" fill="#ffffff" stroke="#3e6259" stroke-width="1.4"/>
+<path d="M370 858 a8 8 0 0 1 8 -8 h264 a8 8 0 0 1 8 8 v24 h-280 z" fill="#3e6259"/>
+<text x="382" y="871" font-size="14" font-weight="700" fill="#ffffff">professionals</text>
+<rect x="382" y="886" width="23" height="14" rx="3" fill="#3e6259"/>
+<text x="393.5" y="897" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK</text>
+<text x="432" y="897" font-size="12.5" font-weight="700" fill="#262622">id</text>
+<text x="638" y="897" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="371" y="903" width="278" height="20" fill="#faf8f3"/>
+<text x="432" y="917" font-size="12.5" font-weight="400" fill="#262622">first_name</text>
+<text x="638" y="917" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="432" y="937" font-size="12.5" font-weight="400" fill="#262622">last_name</text>
+<text x="638" y="937" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="371" y="943" width="278" height="20" fill="#faf8f3"/>
+<text x="432" y="957" font-size="12.5" font-weight="400" fill="#262622">document_id</text>
+<text x="638" y="957" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="432" y="977" font-size="12.5" font-weight="400" fill="#262622">license_number</text>
+<text x="638" y="977" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="371" y="983" width="278" height="20" fill="#faf8f3"/>
+<text x="432" y="997" font-size="12.5" font-weight="400" fill="#262622">phone</text>
+<text x="638" y="997" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="432" y="1017" font-size="12.5" font-weight="400" fill="#262622">email</text>
+<text x="638" y="1017" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="371" y="1023" width="278" height="20" fill="#faf8f3"/>
+<text x="432" y="1037" font-size="12.5" font-weight="400" fill="#262622">specialty</text>
+<text x="638" y="1037" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="432" y="1057" font-size="12.5" font-weight="400" fill="#262622">status</text>
+<text x="638" y="1057" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+</g>
+<g><rect x="700" y="880" width="280" height="80" rx="8" fill="#ffffff" stroke="#3e6259" stroke-width="1.4"/>
+<path d="M700 888 a8 8 0 0 1 8 -8 h264 a8 8 0 0 1 8 8 v24 h-280 z" fill="#3e6259"/>
+<text x="712" y="901" font-size="14" font-weight="700" fill="#ffffff">professional_treatments</text>
+<rect x="712" y="916" width="44" height="14" rx="3" fill="#3e6259"/>
+<text x="734.0" y="927" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK FK</text>
+<text x="762" y="927" font-size="12.5" font-weight="700" fill="#262622">professional_id</text>
+<text x="968" y="927" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="701" y="933" width="278" height="20" fill="#faf8f3"/>
+<rect x="712" y="936" width="44" height="14" rx="3" fill="#3e6259"/>
+<text x="734.0" y="947" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK FK</text>
+<text x="762" y="947" font-size="12.5" font-weight="700" fill="#262622">treatment_id</text>
+<text x="968" y="947" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+</g>
+<g><rect x="1030" y="850" width="280" height="180" rx="8" fill="#ffffff" stroke="#3e6259" stroke-width="1.4"/>
+<path d="M1030 858 a8 8 0 0 1 8 -8 h264 a8 8 0 0 1 8 8 v24 h-280 z" fill="#3e6259"/>
+<text x="1042" y="871" font-size="14" font-weight="700" fill="#ffffff">treatments</text>
+<rect x="1042" y="886" width="23" height="14" rx="3" fill="#3e6259"/>
+<text x="1053.5" y="897" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK</text>
+<text x="1092" y="897" font-size="12.5" font-weight="700" fill="#262622">id</text>
+<text x="1298" y="897" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="1031" y="903" width="278" height="20" fill="#faf8f3"/>
+<text x="1092" y="917" font-size="12.5" font-weight="400" fill="#262622">name</text>
+<text x="1298" y="917" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="1092" y="937" font-size="12.5" font-weight="400" fill="#262622">description</text>
+<text x="1298" y="937" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="1031" y="943" width="278" height="20" fill="#faf8f3"/>
+<text x="1092" y="957" font-size="12.5" font-weight="400" fill="#262622">duration_minutes</text>
+<text x="1298" y="957" font-size="11.5" fill="#8a857a" text-anchor="end">int</text>
+<text x="1092" y="977" font-size="12.5" font-weight="400" fill="#262622">price</text>
+<text x="1298" y="977" font-size="11.5" fill="#8a857a" text-anchor="end">numeric</text>
+<rect x="1031" y="983" width="278" height="20" fill="#faf8f3"/>
+<text x="1092" y="997" font-size="12.5" font-weight="400" fill="#262622">category</text>
+<text x="1298" y="997" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="1092" y="1017" font-size="12.5" font-weight="400" fill="#262622">status</text>
+<text x="1298" y="1017" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+</g>
+<g><rect x="1360" y="880" width="280" height="120" rx="8" fill="#ffffff" stroke="#3e6259" stroke-width="1.4"/>
+<path d="M1360 888 a8 8 0 0 1 8 -8 h264 a8 8 0 0 1 8 8 v24 h-280 z" fill="#3e6259"/>
+<text x="1372" y="901" font-size="14" font-weight="700" fill="#ffffff">treatment_supplies</text>
+<rect x="1372" y="916" width="23" height="14" rx="3" fill="#3e6259"/>
+<text x="1383.5" y="927" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK</text>
+<text x="1422" y="927" font-size="12.5" font-weight="700" fill="#262622">id</text>
+<text x="1628" y="927" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="1361" y="933" width="278" height="20" fill="#faf8f3"/>
+<rect x="1372" y="936" width="23" height="14" rx="3" fill="#c97b2e"/>
+<text x="1383.5" y="947" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK</text>
+<text x="1422" y="947" font-size="12.5" font-weight="400" fill="#262622">treatment_id</text>
+<text x="1628" y="947" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="1372" y="956" width="23" height="14" rx="3" fill="#c97b2e"/>
+<text x="1383.5" y="967" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK</text>
+<text x="1422" y="967" font-size="12.5" font-weight="400" fill="#262622">supply_id</text>
+<text x="1628" y="967" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="1361" y="973" width="278" height="20" fill="#faf8f3"/>
+<text x="1422" y="987" font-size="12.5" font-weight="400" fill="#262622">quantity</text>
+<text x="1628" y="987" font-size="11.5" fill="#8a857a" text-anchor="end">int</text>
+</g>
+<g><rect x="1690" y="850" width="280" height="220" rx="8" fill="#ffffff" stroke="#3e6259" stroke-width="1.4"/>
+<path d="M1690 858 a8 8 0 0 1 8 -8 h264 a8 8 0 0 1 8 8 v24 h-280 z" fill="#3e6259"/>
+<text x="1702" y="871" font-size="14" font-weight="700" fill="#ffffff">supplies</text>
+<rect x="1702" y="886" width="23" height="14" rx="3" fill="#3e6259"/>
+<text x="1713.5" y="897" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK</text>
+<text x="1752" y="897" font-size="12.5" font-weight="700" fill="#262622">id</text>
+<text x="1958" y="897" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="1691" y="903" width="278" height="20" fill="#faf8f3"/>
+<text x="1752" y="917" font-size="12.5" font-weight="400" fill="#262622">name</text>
+<text x="1958" y="917" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="1752" y="937" font-size="12.5" font-weight="400" fill="#262622">description</text>
+<text x="1958" y="937" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="1691" y="943" width="278" height="20" fill="#faf8f3"/>
+<text x="1752" y="957" font-size="12.5" font-weight="400" fill="#262622">current_stock</text>
+<text x="1958" y="957" font-size="11.5" fill="#8a857a" text-anchor="end">int</text>
+<text x="1752" y="977" font-size="12.5" font-weight="400" fill="#262622">min_stock</text>
+<text x="1958" y="977" font-size="11.5" fill="#8a857a" text-anchor="end">int</text>
+<rect x="1691" y="983" width="278" height="20" fill="#faf8f3"/>
+<text x="1752" y="997" font-size="12.5" font-weight="400" fill="#262622">unit</text>
+<text x="1958" y="997" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="1752" y="1017" font-size="12.5" font-weight="400" fill="#262622">category</text>
+<text x="1958" y="1017" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="1691" y="1023" width="278" height="20" fill="#faf8f3"/>
+<text x="1752" y="1037" font-size="12.5" font-weight="400" fill="#262622">price</text>
+<text x="1958" y="1037" font-size="11.5" fill="#8a857a" text-anchor="end">numeric</text>
+<text x="1752" y="1057" font-size="12.5" font-weight="400" fill="#262622">status</text>
+<text x="1958" y="1057" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+</g>
+<g><rect x="1360" y="1060" width="280" height="140" rx="8" fill="#ffffff" stroke="#3e6259" stroke-width="1.4"/>
+<path d="M1360 1068 a8 8 0 0 1 8 -8 h264 a8 8 0 0 1 8 8 v24 h-280 z" fill="#3e6259"/>
+<text x="1372" y="1081" font-size="14" font-weight="700" fill="#ffffff">treatment_recommendations</text>
+<rect x="1372" y="1096" width="23" height="14" rx="3" fill="#3e6259"/>
+<text x="1383.5" y="1107" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK</text>
+<text x="1422" y="1107" font-size="12.5" font-weight="700" fill="#262622">id</text>
+<text x="1628" y="1107" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="1361" y="1113" width="278" height="20" fill="#faf8f3"/>
+<rect x="1372" y="1116" width="23" height="14" rx="3" fill="#c97b2e"/>
+<text x="1383.5" y="1127" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK</text>
+<text x="1422" y="1127" font-size="12.5" font-weight="400" fill="#262622">treatment_origin_id</text>
+<text x="1628" y="1127" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="1372" y="1136" width="23" height="14" rx="3" fill="#c97b2e"/>
+<text x="1383.5" y="1147" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK</text>
+<text x="1422" y="1147" font-size="12.5" font-weight="400" fill="#262622">treatment_recommended_id</text>
+<text x="1628" y="1147" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="1361" y="1153" width="278" height="20" fill="#faf8f3"/>
+<text x="1422" y="1167" font-size="12.5" font-weight="400" fill="#262622">relation_sequence</text>
+<text x="1628" y="1167" font-size="11.5" fill="#8a857a" text-anchor="end">int</text>
+<text x="1422" y="1187" font-size="12.5" font-weight="400" fill="#262622">created_at</text>
+<text x="1628" y="1187" font-size="11.5" fill="#8a857a" text-anchor="end">timestamptz</text>
+</g>
+<g><rect x="700" y="1150" width="280" height="220" rx="8" fill="#ffffff" stroke="#3e6259" stroke-width="1.4"/>
+<path d="M700 1158 a8 8 0 0 1 8 -8 h264 a8 8 0 0 1 8 8 v24 h-280 z" fill="#3e6259"/>
+<text x="712" y="1171" font-size="14" font-weight="700" fill="#ffffff">appointments</text>
+<rect x="712" y="1186" width="23" height="14" rx="3" fill="#3e6259"/>
+<text x="723.5" y="1197" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK</text>
+<text x="762" y="1197" font-size="12.5" font-weight="700" fill="#262622">id</text>
+<text x="968" y="1197" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="701" y="1203" width="278" height="20" fill="#faf8f3"/>
+<rect x="712" y="1206" width="23" height="14" rx="3" fill="#c97b2e"/>
+<text x="723.5" y="1217" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK</text>
+<text x="762" y="1217" font-size="12.5" font-weight="400" fill="#262622">patient_id</text>
+<text x="968" y="1217" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="712" y="1226" width="23" height="14" rx="3" fill="#c97b2e"/>
+<text x="723.5" y="1237" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK</text>
+<text x="762" y="1237" font-size="12.5" font-weight="400" fill="#262622">professional_id</text>
+<text x="968" y="1237" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="701" y="1243" width="278" height="20" fill="#faf8f3"/>
+<rect x="712" y="1246" width="23" height="14" rx="3" fill="#c97b2e"/>
+<text x="723.5" y="1257" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK</text>
+<text x="762" y="1257" font-size="12.5" font-weight="400" fill="#262622">treatment_id</text>
+<text x="968" y="1257" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<text x="762" y="1277" font-size="12.5" font-weight="400" fill="#262622">date</text>
+<text x="968" y="1277" font-size="11.5" fill="#8a857a" text-anchor="end">date</text>
+<rect x="701" y="1283" width="278" height="20" fill="#faf8f3"/>
+<text x="762" y="1297" font-size="12.5" font-weight="400" fill="#262622">start_time</text>
+<text x="968" y="1297" font-size="11.5" fill="#8a857a" text-anchor="end">time</text>
+<text x="762" y="1317" font-size="12.5" font-weight="400" fill="#262622">end_time</text>
+<text x="968" y="1317" font-size="11.5" fill="#8a857a" text-anchor="end">time</text>
+<rect x="701" y="1323" width="278" height="20" fill="#faf8f3"/>
+<text x="762" y="1337" font-size="12.5" font-weight="400" fill="#262622">status</text>
+<text x="968" y="1337" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="762" y="1357" font-size="12.5" font-weight="400" fill="#262622">notes</text>
+<text x="968" y="1357" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+</g>
+<g><rect x="40" y="1470" width="280" height="260" rx="8" fill="#ffffff" stroke="#3e6259" stroke-width="1.4"/>
+<path d="M40 1478 a8 8 0 0 1 8 -8 h264 a8 8 0 0 1 8 8 v24 h-280 z" fill="#3e6259"/>
+<text x="52" y="1491" font-size="14" font-weight="700" fill="#ffffff">patients</text>
+<rect x="52" y="1506" width="23" height="14" rx="3" fill="#3e6259"/>
+<text x="63.5" y="1517" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK</text>
+<text x="102" y="1517" font-size="12.5" font-weight="700" fill="#262622">id</text>
+<text x="308" y="1517" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="41" y="1523" width="278" height="20" fill="#faf8f3"/>
+<text x="102" y="1537" font-size="12.5" font-weight="400" fill="#262622">first_name</text>
+<text x="308" y="1537" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="102" y="1557" font-size="12.5" font-weight="400" fill="#262622">last_name</text>
+<text x="308" y="1557" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="41" y="1563" width="278" height="20" fill="#faf8f3"/>
+<text x="102" y="1577" font-size="12.5" font-weight="400" fill="#262622">document_id</text>
+<text x="308" y="1577" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="102" y="1597" font-size="12.5" font-weight="400" fill="#262622">birth_date</text>
+<text x="308" y="1597" font-size="11.5" fill="#8a857a" text-anchor="end">date</text>
+<rect x="41" y="1603" width="278" height="20" fill="#faf8f3"/>
+<text x="102" y="1617" font-size="12.5" font-weight="400" fill="#262622">phone</text>
+<text x="308" y="1617" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="102" y="1637" font-size="12.5" font-weight="400" fill="#262622">email</text>
+<text x="308" y="1637" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="41" y="1643" width="278" height="20" fill="#faf8f3"/>
+<text x="102" y="1657" font-size="12.5" font-weight="400" fill="#262622">address</text>
+<text x="308" y="1657" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="102" y="1677" font-size="12.5" font-weight="400" fill="#262622">registered_at</text>
+<text x="308" y="1677" font-size="11.5" fill="#8a857a" text-anchor="end">date</text>
+<rect x="41" y="1683" width="278" height="20" fill="#faf8f3"/>
+<text x="102" y="1697" font-size="12.5" font-weight="400" fill="#262622">status</text>
+<text x="308" y="1697" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="102" y="1717" font-size="12.5" font-weight="400" fill="#262622">internal_notes</text>
+<text x="308" y="1717" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+</g>
+<g><rect x="700" y="1520" width="280" height="240" rx="8" fill="#ffffff" stroke="#3e6259" stroke-width="1.4"/>
+<path d="M700 1528 a8 8 0 0 1 8 -8 h264 a8 8 0 0 1 8 8 v24 h-280 z" fill="#3e6259"/>
+<text x="712" y="1541" font-size="14" font-weight="700" fill="#ffffff">reminders</text>
+<rect x="712" y="1556" width="23" height="14" rx="3" fill="#3e6259"/>
+<text x="723.5" y="1567" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK</text>
+<text x="762" y="1567" font-size="12.5" font-weight="700" fill="#262622">id</text>
+<text x="968" y="1567" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="701" y="1573" width="278" height="20" fill="#faf8f3"/>
+<rect x="712" y="1576" width="23" height="14" rx="3" fill="#c97b2e"/>
+<text x="723.5" y="1587" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK</text>
+<text x="762" y="1587" font-size="12.5" font-weight="400" fill="#262622">operational_alert_id</text>
+<text x="968" y="1587" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="712" y="1596" width="23" height="14" rx="3" fill="#c97b2e"/>
+<text x="723.5" y="1607" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK</text>
+<text x="762" y="1607" font-size="12.5" font-weight="400" fill="#262622">patient_id</text>
+<text x="968" y="1607" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="701" y="1613" width="278" height="20" fill="#faf8f3"/>
+<rect x="712" y="1616" width="23" height="14" rx="3" fill="#c97b2e"/>
+<text x="723.5" y="1627" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK</text>
+<text x="762" y="1627" font-size="12.5" font-weight="400" fill="#262622">appointment_id</text>
+<text x="968" y="1627" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<text x="762" y="1647" font-size="12.5" font-weight="400" fill="#262622">channel</text>
+<text x="968" y="1647" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="701" y="1653" width="278" height="20" fill="#faf8f3"/>
+<text x="762" y="1667" font-size="12.5" font-weight="400" fill="#262622">subject</text>
+<text x="968" y="1667" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="762" y="1687" font-size="12.5" font-weight="400" fill="#262622">message</text>
+<text x="968" y="1687" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="701" y="1693" width="278" height="20" fill="#faf8f3"/>
+<text x="762" y="1707" font-size="12.5" font-weight="400" fill="#262622">delivery_status</text>
+<text x="968" y="1707" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="712" y="1716" width="30" height="14" rx="3" fill="#a39e90"/>
+<text x="727.0" y="1727" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK*</text>
+<text x="762" y="1727" font-size="12.5" font-weight="400" fill="#262622">created_by</text>
+<text x="968" y="1727" font-size="11.5" fill="#8a857a" text-anchor="end">uuid</text>
+<rect x="701" y="1733" width="278" height="20" fill="#faf8f3"/>
+<text x="762" y="1747" font-size="12.5" font-weight="400" fill="#262622">sent_at</text>
+<text x="968" y="1747" font-size="11.5" fill="#8a857a" text-anchor="end">timestamptz</text>
+</g>
+<g><rect x="1360" y="1470" width="280" height="340" rx="8" fill="#ffffff" stroke="#3e6259" stroke-width="1.4"/>
+<path d="M1360 1478 a8 8 0 0 1 8 -8 h264 a8 8 0 0 1 8 8 v24 h-280 z" fill="#3e6259"/>
+<text x="1372" y="1491" font-size="14" font-weight="700" fill="#ffffff">operational_alerts</text>
+<rect x="1372" y="1506" width="23" height="14" rx="3" fill="#3e6259"/>
+<text x="1383.5" y="1517" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK</text>
+<text x="1422" y="1517" font-size="12.5" font-weight="700" fill="#262622">id</text>
+<text x="1628" y="1517" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="1361" y="1523" width="278" height="20" fill="#faf8f3"/>
+<text x="1422" y="1537" font-size="12.5" font-weight="400" fill="#262622">type</text>
+<text x="1628" y="1537" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="1422" y="1557" font-size="12.5" font-weight="400" fill="#262622">priority</text>
+<text x="1628" y="1557" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="1361" y="1563" width="278" height="20" fill="#faf8f3"/>
+<text x="1422" y="1577" font-size="12.5" font-weight="400" fill="#262622">title</text>
+<text x="1628" y="1577" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="1422" y="1597" font-size="12.5" font-weight="400" fill="#262622">detail</text>
+<text x="1628" y="1597" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="1361" y="1603" width="278" height="20" fill="#faf8f3"/>
+<text x="1422" y="1617" font-size="12.5" font-weight="400" fill="#262622">status</text>
+<text x="1628" y="1617" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<text x="1422" y="1637" font-size="12.5" font-weight="400" fill="#262622">source_key</text>
+<text x="1628" y="1637" font-size="11.5" fill="#8a857a" text-anchor="end">text</text>
+<rect x="1361" y="1643" width="278" height="20" fill="#faf8f3"/>
+<rect x="1372" y="1646" width="23" height="14" rx="3" fill="#c97b2e"/>
+<text x="1383.5" y="1657" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK</text>
+<text x="1422" y="1657" font-size="12.5" font-weight="400" fill="#262622">supply_id</text>
+<text x="1628" y="1657" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="1372" y="1666" width="23" height="14" rx="3" fill="#c97b2e"/>
+<text x="1383.5" y="1677" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK</text>
+<text x="1422" y="1677" font-size="12.5" font-weight="400" fill="#262622">appointment_id</text>
+<text x="1628" y="1677" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="1361" y="1683" width="278" height="20" fill="#faf8f3"/>
+<rect x="1372" y="1686" width="23" height="14" rx="3" fill="#c97b2e"/>
+<text x="1383.5" y="1697" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK</text>
+<text x="1422" y="1697" font-size="12.5" font-weight="400" fill="#262622">patient_id</text>
+<text x="1628" y="1697" font-size="11.5" fill="#8a857a" text-anchor="end">bigint</text>
+<rect x="1372" y="1706" width="30" height="14" rx="3" fill="#a39e90"/>
+<text x="1387.0" y="1717" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK*</text>
+<text x="1422" y="1717" font-size="12.5" font-weight="400" fill="#262622">created_by</text>
+<text x="1628" y="1717" font-size="11.5" fill="#8a857a" text-anchor="end">uuid</text>
+<rect x="1361" y="1723" width="278" height="20" fill="#faf8f3"/>
+<text x="1422" y="1737" font-size="12.5" font-weight="400" fill="#262622">created_at</text>
+<text x="1628" y="1737" font-size="11.5" fill="#8a857a" text-anchor="end">timestamptz</text>
+<rect x="1372" y="1746" width="30" height="14" rx="3" fill="#a39e90"/>
+<text x="1387.0" y="1757" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK*</text>
+<text x="1422" y="1757" font-size="12.5" font-weight="400" fill="#262622">managed_by</text>
+<text x="1628" y="1757" font-size="11.5" fill="#8a857a" text-anchor="end">uuid</text>
+<rect x="1361" y="1763" width="278" height="20" fill="#faf8f3"/>
+<text x="1422" y="1777" font-size="12.5" font-weight="400" fill="#262622">managed_at</text>
+<text x="1628" y="1777" font-size="11.5" fill="#8a857a" text-anchor="end">timestamptz</text>
+<text x="1422" y="1797" font-size="12.5" font-weight="400" fill="#262622">resolved_at</text>
+<text x="1628" y="1797" font-size="11.5" fill="#8a857a" text-anchor="end">timestamptz</text>
+</g>
+<line x1="40" y1="1950" x2="90" y2="1950" stroke="#5b5b55" stroke-width="1.6" marker-start="url(#many)" marker-end="url(#one)"/>
+<rect x="30" y="1938" width="10" height="24" fill="#5b5b55" opacity="0.12"/><rect x="90" y="1938" width="10" height="24" fill="#5b5b55" opacity="0.12"/>
+<text x="100" y="1954" font-size="12.5" fill="#262622">muchos a uno (la pata de gallo va en la tabla que tiene la FK)</text>
+<rect x="510" y="1939" width="23" height="14" rx="3" fill="#3e6259"/><text x="521.5" y="1950" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">PK</text>
+<text x="540" y="1954" font-size="12.5" fill="#262622">clave primaria</text>
+<rect x="650" y="1939" width="23" height="14" rx="3" fill="#c97b2e"/><text x="661.5" y="1950" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK</text>
+<text x="680" y="1954" font-size="12.5" fill="#262622">clave foránea</text>
+<rect x="790" y="1939" width="30" height="14" rx="3" fill="#a39e90"/><text x="805" y="1950" font-size="9.5" font-weight="700" fill="#fff" text-anchor="middle">FK*</text>
+<text x="827" y="1954" font-size="12.5" fill="#262622">usuario que hizo la acción (referencia a auth.users; no se dibuja para no cruzar líneas)</text>
+<text x="40" y="1980" font-size="12" fill="#6f6b60">workspace y alert_rules son tablas de una sola fila (configuración del centro). auth.users la administra Supabase Auth; profiles la extiende 1 a 1.</text>
+</svg>
