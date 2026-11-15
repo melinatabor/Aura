@@ -1,130 +1,343 @@
 @use '../../styles/variables' as *;
 
+$time-col: 64px;
+
+// Resumen de la semana
+.schedule-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+  margin-bottom: $space-4;
+}
+
+.schedule-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  font-size: 13px;
+  color: $color-text-muted;
+
+  strong {
+    color: $color-text;
+    font-size: 15px;
+  }
+
+  .schedule-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  &--confirmado .schedule-dot {
+    background: $color-success;
+  }
+
+  &--pendiente .schedule-dot {
+    background: $color-accent;
+  }
+
+  &--realizado .schedule-dot {
+    background: #8a9a92;
+  }
+
+  &--cancelado .schedule-dot {
+    background: $color-danger;
+  }
+}
+
+// Barra de navegación
+.schedule-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-3;
+  margin-bottom: $space-4;
+}
+
 .schedule-week-nav {
   display: flex;
   align-items: center;
-  gap: $space-3;
-  font-size: 13px;
-}
-
-.schedule-grid {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(150px, 1fr));
-  gap: $space-3;
-  overflow-x: auto;
-}
-
-.schedule-day {
-  background: $color-surface;
-  border: 1px solid $color-border;
-  border-radius: $radius-md;
-  min-height: 320px;
-  display: flex;
-  flex-direction: column;
-}
-
-.schedule-day-today {
-  border-color: $color-primary;
-  box-shadow: 0 0 0 1px $color-primary;
-}
-
-.schedule-day-header {
-  display: flex;
-  flex-direction: column;
-  padding: $space-3;
-  border-bottom: 1px solid $color-border;
-  font-size: 12px;
-  color: $color-text-muted;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-
-  strong {
-    font-size: 18px;
-    color: $color-text;
-    text-transform: none;
-  }
-}
-
-.schedule-day-body {
-  padding: $space-2;
-  display: flex;
-  flex-direction: column;
   gap: $space-2;
-  flex: 1;
 }
 
-.schedule-empty {
-  font-size: 12px;
-  color: $color-text-muted;
-  text-align: center;
-  padding: $space-4 0;
-}
-
-.schedule-appointment-card {
-  text-align: left;
-  border: none;
+.schedule-icon-btn {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: $radius-sm;
-  padding: $space-2 $space-3;
+  border: 1px solid $color-border;
+  background: $color-surface;
+  color: $color-text;
   cursor: pointer;
-  background: $color-info-bg;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  font-size: 12px;
+  transition: background-color 0.15s ease;
 
-  strong {
-    font-size: 13px;
-  }
-
-  // Solo lectura (rol sin "schedule.manage"): sin el aspecto atenuado de :disabled
-  &:disabled {
-    cursor: default;
-    color: inherit;
-  }
-
-  &.status-confirmado {
-    background: $color-success-bg;
-  }
-
-  &.status-pendiente {
-    background: $color-warning-bg;
-  }
-
-  &.status-cancelado {
-    background: $color-neutral-bg;
-    opacity: 0.7;
-  }
-
-  &.status-realizado {
+  &:hover {
     background: $color-surface-alt;
   }
 }
 
-.schedule-appointment-time {
-  font-weight: 700;
-  color: $color-text-muted;
-}
+.schedule-range {
+  margin-left: $space-2;
+  font-size: 16px;
 
-.schedule-appointment-treatment {
-  color: $color-text-muted;
-}
-
-.schedule-appointment-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 4px;
-}
-
-.schedule-appointment-cancel {
-  font-size: 11px;
-  color: $color-danger;
-  font-weight: 600;
-  text-decoration: underline;
-}
-
-@media (max-width: 1000px) {
-  .schedule-grid {
-    grid-template-columns: repeat(7, minmax(140px, 1fr));
+  &::first-letter {
+    text-transform: uppercase;
   }
+}
+
+// Calendario
+.schedule-calendar {
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-sm;
+  overflow: hidden;
+}
+
+.schedule-calendar-scroll {
+  overflow-x: auto;
+}
+
+.schedule-head,
+.schedule-body {
+  display: grid;
+  grid-template-columns: $time-col repeat(7, minmax(130px, 1fr));
+  min-width: 960px;
+}
+
+.schedule-head {
+  background: $color-surface;
+  border-bottom: 1px solid $color-border;
+}
+
+.schedule-head-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: $space-3 0;
+  border-left: 1px solid $color-border;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $color-text-muted;
+
+  strong {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 17px;
+    letter-spacing: 0;
+    color: $color-text;
+  }
+
+  &.is-today {
+    color: $color-primary;
+
+    strong {
+      background: $color-primary;
+      color: $color-text-inverse;
+    }
+  }
+
+  &.is-closed {
+    opacity: 0.5;
+  }
+}
+
+.schedule-body {
+  position: relative;
+}
+
+.schedule-hours {
+  position: relative;
+}
+
+.schedule-hour {
+  position: relative;
+  border-top: 1px solid transparent;
+
+  span {
+    position: absolute;
+    top: -8px;
+    right: 10px;
+    font-size: 11px;
+    color: $color-text-muted;
+  }
+
+  &:first-child span {
+    display: none;
+  }
+}
+
+.schedule-col {
+  position: relative;
+  border-left: 1px solid $color-border;
+
+  &.is-today {
+    background: rgba($color-primary, 0.035);
+  }
+
+  &.is-closed {
+    background: repeating-linear-gradient(
+      135deg,
+      transparent,
+      transparent 8px,
+      rgba($color-border, 0.45) 8px,
+      rgba($color-border, 0.45) 9px
+    );
+  }
+}
+
+.schedule-slot {
+  border-top: 1px solid $color-border;
+
+  &:first-child {
+    border-top: none;
+  }
+}
+
+.schedule-now {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: $color-danger;
+  z-index: 3;
+  pointer-events: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: -3px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $color-danger;
+  }
+}
+
+// Turnos
+.schedule-event {
+  position: absolute;
+  margin-left: 2px;
+  border-radius: 8px;
+  border-left: 4px solid $color-info;
+  background: $color-info-bg;
+  overflow: hidden;
+  z-index: 2;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+
+  &:hover {
+    box-shadow: $shadow-md;
+    transform: translateY(-1px);
+    z-index: 4;
+  }
+
+  &.status-confirmado {
+    background: #e3f0e7;
+    border-left-color: $color-success;
+  }
+
+  &.status-pendiente {
+    background: #fbefdc;
+    border-left-color: $color-accent;
+  }
+
+  &.status-realizado {
+    background: #eceee8;
+    border-left-color: #8a9a92;
+    color: $color-text-muted;
+  }
+
+  &.status-cancelado {
+    background: repeating-linear-gradient(135deg, #f3eeee, #f3eeee 6px, #ede5e5 6px, #ede5e5 12px);
+    border-left-color: $color-danger;
+    opacity: 0.75;
+
+    strong {
+      text-decoration: line-through;
+    }
+  }
+}
+
+.schedule-event-main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  text-align: left;
+  padding: 5px 24px 5px 8px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: 11.5px;
+  cursor: pointer;
+  overflow: hidden;
+
+  strong {
+    font-size: 12.5px;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &:disabled {
+    cursor: default;
+    color: inherit;
+  }
+}
+
+.schedule-event-time {
+  font-weight: 700;
+  font-size: 11px;
+  opacity: 0.75;
+  white-space: nowrap;
+}
+
+.schedule-event-sub {
+  opacity: 0.8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.schedule-event-cancel {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 6px;
+  background: rgba($color-danger, 0.12);
+  color: $color-danger;
+  cursor: pointer;
+
+  &:hover {
+    background: $color-danger;
+    color: #fff;
+  }
+}
+
+.schedule-event:hover .schedule-event-cancel,
+.schedule-event:focus-within .schedule-event-cancel {
+  display: inline-flex;
 }
