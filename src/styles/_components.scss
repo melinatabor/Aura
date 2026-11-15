@@ -719,3 +719,52 @@ input[placeholder^='Buscar']:not([type='checkbox']):not([type='radio']) {
     animation: none;
   }
 }
+
+// Skeletons de carga
+.skeleton {
+  display: block;
+  border-radius: 8px;
+  background: linear-gradient(90deg, $color-surface-alt 25%, #fbf9f3 50%, $color-surface-alt 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s linear infinite;
+
+  &--light {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.14) 25%, rgba(255, 255, 255, 0.28) 50%, rgba(255, 255, 255, 0.14) 75%);
+    background-size: 200% 100%;
+  }
+}
+
+.skeleton-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skeleton-row {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-2 0;
+}
+
+.skeleton-kpi {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+
+  .skeleton-stack {
+    flex: 1;
+  }
+}
+
+@keyframes skeleton-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}

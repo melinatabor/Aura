@@ -52,6 +52,57 @@ function KpiCard({ icon: Icon, label, value, hint, tone = 'green' }) {
   )
 }
 
+// Esqueleto con la misma estructura del panel mientras llegan los datos.
+function DashboardSkeleton() {
+  return (
+    <div className="dashboard-page" aria-busy="true" aria-label="Cargando el panel">
+      <section className="dashboard-hero dashboard-hero--skeleton">
+        <div className="skeleton-stack">
+          <span className="skeleton skeleton--light" style={{ width: 150, height: 22, borderRadius: 999 }} />
+          <span className="skeleton skeleton--light" style={{ width: 'min(360px, 70vw)', height: 34 }} />
+          <span className="skeleton skeleton--light" style={{ width: 'min(480px, 80vw)', height: 14 }} />
+        </div>
+        <div className="dashboard-hero-actions">
+          <span className="skeleton skeleton--light" style={{ width: 130, height: 40, borderRadius: 12 }} />
+          <span className="skeleton skeleton--light" style={{ width: 130, height: 40, borderRadius: 12 }} />
+        </div>
+      </section>
+
+      <div className="kpi-grid">
+        {[0, 1, 2, 3].map((i) => (
+          <div key={i} className="aura-card skeleton-kpi">
+            <span className="skeleton" style={{ width: 44, height: 44, borderRadius: 14 }} />
+            <div className="skeleton-stack">
+              <span className="skeleton" style={{ width: '60%', height: 12 }} />
+              <span className="skeleton" style={{ width: '40%', height: 28 }} />
+              <span className="skeleton" style={{ width: '50%', height: 10 }} />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="dashboard-columns">
+        {[0, 1].map((col) => (
+          <section key={col} className="aura-card">
+            <span className="skeleton" style={{ width: 160, height: 18, marginBottom: 20 }} />
+            <div className="skeleton-stack">
+              {[0, 1, 2, 3, 4].map((row) => (
+                <div key={row} className="skeleton-row">
+                  <span className="skeleton" style={{ width: 38, height: 38, borderRadius: '50%' }} />
+                  <div className="skeleton-stack" style={{ flex: 1 }}>
+                    <span className="skeleton" style={{ width: `${70 - row * 6}%`, height: 12 }} />
+                    <span className="skeleton" style={{ width: `${45 - row * 3}%`, height: 10 }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function Dashboard() {
   const { user, can } = useAuth()
   const [data, setData] = useState(null)
@@ -79,7 +130,7 @@ export default function Dashboard() {
     }
   }, [canSeeReports])
 
-  if (!data) return null
+  if (!data) return <DashboardSkeleton />
 
   const { patients, appointments, treatments, alerts, professionals, workspace, scores, trend } = data
   const today = todayISO()
