@@ -7,7 +7,7 @@ import {
   Package,
   Bell,
   BarChart3,
-  BrainCircuit,
+  Sparkles,
   UserCog,
   Settings,
   Plus,
@@ -24,7 +24,7 @@ const ITEMS = [
   { to: '/app/supplies', label: 'Insumos', icon: Package, permission: 'supplies.view' },
   { to: '/app/alerts', label: 'Alertas', icon: Bell, permission: 'alerts.view' },
   { to: '/app/reports', label: 'Reportes', icon: BarChart3, permission: 'reports.view' },
-  { to: '/app/ai-scoring', label: 'AI Patient Scoring', icon: BrainCircuit, permission: 'scoring.view' },
+  { to: '/app/ai-scoring', label: 'AI Patient Scoring', icon: Sparkles, permission: 'scoring.view' },
   { to: '/app/employees', label: 'Empleados y roles', icon: UserCog, permission: 'employees.manage' },
   { to: '/app/settings', label: 'Configuración', icon: Settings, permission: 'settings.manage' },
 ]

@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Mail, MessageCircle, Clock, MapPin } from 'lucide-react'
+import { Mail, Clock, MapPin } from 'lucide-react'
+import WhatsAppIcon from '../../components/Icons/WhatsAppIcon'
+import useReveal from '../../hooks/useReveal'
 import * as contactInquiriesService from '../../bll/contactInquiriesService'
 import './Contact.scss'
 
@@ -8,6 +10,7 @@ const ACTIVITY_TYPES = ['Profesional independiente', 'Centro estético', 'Equipo
 const REASONS = ['Información de la solución', 'Soporte técnico', 'Consulta comercial', 'Otro']
 
 export default function Contact() {
+  const ref = useReveal()
   const navigate = useNavigate()
   const [form, setForm] = useState({
     name: '',
@@ -39,8 +42,9 @@ export default function Contact() {
   }
 
   return (
-    <div className="contact-page">
+    <div className="contact-page" ref={ref}>
       <header className="contact-hero">
+        <span className="contact-kicker">Hablemos</span>
         <h1>Contactanos</h1>
         <p>
           Dejanos tus datos y contanos qué necesitás para organizar en tu centro o actividad profesional. El equipo
@@ -49,7 +53,7 @@ export default function Contact() {
       </header>
 
       <div className="contact-grid">
-        <form className="aura-card contact-form" onSubmit={handleSubmit}>
+        <form className="aura-card contact-form reveal" onSubmit={handleSubmit}>
           <h2>Envianos tu consulta</h2>
           <div className="form-row">
             <div className="form-group">
@@ -122,7 +126,7 @@ export default function Contact() {
           </button>
         </form>
 
-        <aside className="aura-card contact-info">
+        <aside className="aura-card contact-info reveal" style={{ transitionDelay: '150ms' }}>
           <h2>También podés contactarnos por</h2>
           <ul>
             <li>
@@ -135,8 +139,8 @@ export default function Contact() {
               </div>
             </li>
             <li>
-              <span className="contact-info-icon">
-                <MessageCircle size={18} strokeWidth={1.75} />
+              <span className="contact-info-icon contact-info-icon--wa">
+                <WhatsAppIcon size={18} />
               </span>
               <div>
                 <strong>WhatsApp</strong>
@@ -165,7 +169,7 @@ export default function Contact() {
         </aside>
       </div>
 
-      <p className="contact-disclaimer">
+      <p className="contact-disclaimer reveal">
         Al enviar el formulario se compartirán tus datos para el uso interno de nuestro centro de atención estética. El
         equipo de Aura se pondrá en contacto para brindarte información sobre el estado de tu consulta.
       </p>

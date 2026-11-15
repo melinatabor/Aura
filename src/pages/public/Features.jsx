@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { Calendar, FolderOpen, FileText, Bell, Star, MessageCircle, Flower2, Package, BarChart3 } from 'lucide-react'
+import { Calendar, FolderOpen, FileText, Bell, Star, Sparkles, Flower2, Package, BarChart3 } from 'lucide-react'
+import useReveal from '../../hooks/useReveal'
 import './Features.scss'
 
 const GROUPS = [
@@ -18,7 +19,7 @@ const GROUPS = [
     items: [
       { icon: Bell, title: 'Alertas de seguimiento', description: 'Detectá pacientes que no reservan turnos hace tiempo o insumos que se están agotando.' },
       { icon: Star, title: 'Priorización de clientes', description: 'Clasificá clientes según criterios operativos: seguimiento, vínculo y frecuencia de turno.' },
-      { icon: MessageCircle, title: 'Asistente de recomendación', description: 'Sugerencias orientadas para programar contactos y proponer mensajes de seguimiento.' },
+      { icon: Sparkles, title: 'Asistente de recomendación', description: 'Sugerencias orientadas para programar contactos y proponer mensajes de seguimiento.' },
     ],
   },
   {
@@ -33,10 +34,14 @@ const GROUPS = [
 ]
 
 export default function Features() {
+  const ref = useReveal()
   return (
-    <div className="features-page">
+    <div className="features-page" ref={ref}>
       <header className="features-hero">
-        <h1>Funcionalidades para ordenar la atención estética</h1>
+        <span className="features-kicker">Funcionalidades</span>
+        <h1>
+          Todo para ordenar la <em>atención estética</em>
+        </h1>
         <p>
           Aura reúne las herramientas necesarias para gestionar turnos, clientes, tratamientos y seguimientos dentro
           de un mismo entorno de trabajo.
@@ -45,11 +50,13 @@ export default function Features() {
 
       {GROUPS.map((group) => (
         <section key={group.title} className="features-group">
+          <div className="reveal">
           <h2>{group.title}</h2>
           <p className="features-group-desc">{group.description}</p>
+          </div>
           <div className="features-grid">
-            {group.items.map((item) => (
-              <div key={item.title} className="aura-card feature-card">
+            {group.items.map((item, i) => (
+              <div key={item.title} className="aura-card feature-card reveal" style={{ transitionDelay: `${i * 110}ms` }}>
                 <div className="feature-icon">
                   <item.icon size={20} strokeWidth={1.75} />
                 </div>
@@ -61,10 +68,10 @@ export default function Features() {
         </section>
       ))}
 
-      <section className="features-cta">
+      <section className="features-cta reveal">
         <h2>¿Listo para transformar tu estética?</h2>
         <p>Empezá a gestionar tu centro con la suscripción que más se ajuste a tu operación.</p>
-        <Link to="/activate-account" className="btn btn-secondary">
+        <Link to="/activate-account" className="btn features-cta-btn">
           Solicitar demo
         </Link>
       </section>

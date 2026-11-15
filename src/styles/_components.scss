@@ -475,3 +475,57 @@
   font-size: 13px;
   font-weight: 500;
 }
+
+// Aparición al hacer scroll (ver hooks/useReveal) — usada por las páginas públicas
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+
+  &.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes page-rise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+// Brillitos de IA (íconos Sparkles): titilan suavemente
+.lucide-sparkles {
+  animation: sparkle-twinkle 3.2s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes sparkle-twinkle {
+  0%,
+  100% {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+  45% {
+    transform: scale(1.18) rotate(8deg);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(0.94) rotate(-4deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lucide-sparkles {
+    animation: none;
+  }
+}

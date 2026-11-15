@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { BrainCircuit, MessageSquareText, Check } from 'lucide-react'
+import { Sparkles, MessageSquareText, Check } from 'lucide-react'
 import useCountUp from '../../hooks/useCountUp'
 import Badge from '../../components/Badge/Badge.jsx'
 import StatCard from '../../components/StatCard/StatCard.jsx'
@@ -21,7 +21,7 @@ function AiInsightCell({ insight, onGenerate, onView }) {
   if (status === 'idle') {
     return (
       <button type="button" className="scoring-ai-generate-btn scoring-ai-generate-btn--sm" onClick={onGenerate}>
-        <BrainCircuit size={14} /> Generar con IA
+        <Sparkles size={14} /> Generar con IA
       </button>
     )
   }
@@ -238,7 +238,7 @@ export default function AIPatientScoring() {
           onClick={handleBulkGenerate}
           disabled={bulkGenerating || pendingBulkCount === 0}
         >
-          <BrainCircuit size={15} />
+          <Sparkles size={15} />
           {bulkGenerating ? 'Generando recomendaciones...' : 'Generar recomendaciones de los prioritarios'}
         </button>
       </div>
@@ -297,7 +297,7 @@ export default function AIPatientScoring() {
             </div>
             <AiRecommendation summary={viewingInsight.summary} actions={viewingInsight.actions} />
             <span className="scoring-ai-modal-footnote">
-              <BrainCircuit size={13} /> Generado por IA (Google Gemini)
+              <Sparkles size={13} /> Generado por IA (Google Gemini)
             </span>
           </div>
         </Modal>
