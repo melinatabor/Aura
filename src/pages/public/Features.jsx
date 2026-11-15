@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Calendar, FolderOpen, FileText, Bell, Star, Sparkles, Flower2, Package, BarChart3 } from 'lucide-react'
+import { Calendar, FolderOpen, FileText, Bell, Star, Sparkles, Flower2, Package, BarChart3, ArrowRight } from 'lucide-react'
 import useReveal from '../../hooks/useReveal'
 import './Features.scss'
 
@@ -36,11 +36,11 @@ const GROUPS = [
 export default function Features() {
   const ref = useReveal()
   return (
-    <div className="features-page" ref={ref}>
-      <header className="features-hero">
-        <span className="features-kicker">Funcionalidades</span>
+    <div className="features-page pub-page" ref={ref}>
+      <header className="pub-hero">
+        <span className="pub-kicker">Funcionalidades</span>
         <h1>
-          Todo para ordenar la <em>atención estética</em>
+          Todo para ordenar la <em className="pub-gradient">atención estética</em>
         </h1>
         <p>
           Aura reúne las herramientas necesarias para gestionar turnos, clientes, tratamientos y seguimientos dentro
@@ -50,15 +50,19 @@ export default function Features() {
 
       {GROUPS.map((group) => (
         <section key={group.title} className="features-group">
-          <div className="reveal">
-          <h2>{group.title}</h2>
-          <p className="features-group-desc">{group.description}</p>
+          <div className="pub-head reveal">
+            <h2>{group.title}</h2>
+            <p>{group.description}</p>
           </div>
-          <div className="features-grid">
+          <div className="pub-grid-3">
             {group.items.map((item, i) => (
-              <div key={item.title} className="aura-card feature-card reveal" style={{ transitionDelay: `${i * 110}ms` }}>
-                <div className="feature-icon">
-                  <item.icon size={20} strokeWidth={1.75} />
+              <div
+                key={item.title}
+                className="pub-card feature-card reveal"
+                style={{ transitionDelay: `${i * 110}ms` }}
+              >
+                <div className="pub-icon">
+                  <item.icon size={22} strokeWidth={1.75} />
                 </div>
                 <h3>{item.title}</h3>
                 <p>{item.description}</p>
@@ -68,12 +72,14 @@ export default function Features() {
         </section>
       ))}
 
-      <section className="features-cta reveal">
+      <section className="pub-cta reveal">
         <h2>¿Listo para transformar tu estética?</h2>
         <p>Empezá a gestionar tu centro con la suscripción que más se ajuste a tu operación.</p>
-        <Link to="/activate-account" className="btn features-cta-btn">
-          Solicitar demo
-        </Link>
+        <div className="pub-cta-actions">
+          <Link to="/activate-account" className="pub-btn-light">
+            Solicitar demo <ArrowRight size={16} />
+          </Link>
+        </div>
       </section>
     </div>
   )

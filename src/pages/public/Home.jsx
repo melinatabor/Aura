@@ -15,6 +15,7 @@ import {
   Settings2,
   Rocket,
   CircleCheck,
+  ShieldCheck,
 } from 'lucide-react'
 import useReveal from '../../hooks/useReveal'
 import './Home.scss'
@@ -48,17 +49,15 @@ const MARQUEE = ['Agenda de turnos', 'Fichas de clientes', 'Tratamientos', 'Cont
 export default function Home() {
   const ref = useReveal()
   return (
-    <div className="home-page" ref={ref}>
-      <div className="home-blob home-blob--a" />
-      <div className="home-blob home-blob--b" />
+    <div className="home-page pub-page" ref={ref}>
 
       <section className="home-hero">
         <div className="home-hero-copy">
-          <span className="home-eyebrow">
+          <span className="pub-kicker home-eyebrow">
             <span className="home-eyebrow-dot" /> Gestión inteligente para bienestar y estética
           </span>
           <h1>
-            Cada cliente, cada turno y cada seguimiento, <em>en un solo lugar</em>
+            Cada cliente, cada turno y cada seguimiento, <em className="pub-gradient">en un solo lugar</em>
           </h1>
           <p>
             AURA es la plataforma web para centros estéticos y profesionales independientes que organiza turnos,
@@ -139,9 +138,11 @@ export default function Home() {
         </div>
       </div>
 
-      <section className="home-section home-problem reveal">
-        <span className="home-kicker">El problema</span>
-        <h2>Menos información dispersa. Más continuidad en la atención.</h2>
+      <section className="home-problem reveal">
+        <div className="pub-head">
+          <span className="pub-eyebrow">El problema</span>
+          <h2>Menos información dispersa. Más continuidad en la atención.</h2>
+        </div>
         <p>
           En la gestión diaria de un centro estético, la información suele quedar repartida entre agendas, mensajes,
           notas internas y registros sueltos. Con AURA, cada turno, cada tratamiento y cada alerta queda conectado
@@ -149,14 +150,14 @@ export default function Home() {
         </p>
       </section>
 
-      <section className="home-section">
-        <div className="reveal">
-          <span className="home-kicker">Todo conectado</span>
+      <section>
+        <div className="pub-head reveal">
+          <span className="pub-eyebrow">Todo conectado</span>
           <h2>Una plataforma, todo el flujo de atención</h2>
         </div>
         <div className="home-bento">
-          <article className="home-bento-card home-bento-card--wide reveal">
-            <span className="home-bento-icon">
+          <article className="pub-card home-bento-card home-bento-card--wide reveal">
+            <span className="pub-icon">
               <CalendarCheck size={20} />
             </span>
             <h3>Agenda sin cruces</h3>
@@ -164,39 +165,46 @@ export default function Home() {
             <div className="home-mini-cal" aria-hidden="true">
               {[0, 1, 2, 3, 4].map((d) => (
                 <div key={d} className="home-mini-cal-col">
-                  <i style={{ '--h': `${30 + ((d * 17) % 40)}%`, '--t': `${(d * 13) % 30}%` }} />
-                  <i style={{ '--h': `${20 + ((d * 11) % 25)}%`, '--t': `${55 + ((d * 7) % 20)}%` }} />
+                  <i style={{ '--h': `${24 + ((d * 7) % 14)}%`, '--t': `${(d * 9) % 14}%` }} />
+                  <i style={{ '--h': `${20 + ((d * 5) % 16)}%`, '--t': '58%' }} />
                 </div>
               ))}
             </div>
           </article>
-          <article className="home-bento-card reveal" style={{ transitionDelay: '100ms' }}>
-            <span className="home-bento-icon">
+          <article className="pub-card home-bento-card reveal" style={{ transitionDelay: '100ms' }}>
+            <span className="pub-icon">
               <FolderOpen size={20} />
             </span>
             <h3>Ficha del cliente</h3>
             <p>Historial, notas y recomendaciones de cada persona, siempre a mano.</p>
           </article>
-          <article className="home-bento-card reveal" style={{ transitionDelay: '150ms' }}>
-            <span className="home-bento-icon">
+          <article className="pub-card home-bento-card reveal" style={{ transitionDelay: '150ms' }}>
+            <span className="pub-icon">
               <Package size={20} />
             </span>
             <h3>Insumos y stock</h3>
             <p>Alertas cuando un producto llega al mínimo.</p>
           </article>
-          <article className="home-bento-card reveal" style={{ transitionDelay: '200ms' }}>
-            <span className="home-bento-icon">
+          <article className="pub-card home-bento-card reveal" style={{ transitionDelay: '200ms' }}>
+            <span className="pub-icon">
               <BarChart3 size={20} />
             </span>
             <h3>Reportes</h3>
             <p>Turnos, clientes y consumo, exportables en un clic.</p>
+          </article>
+          <article className="pub-card home-bento-card reveal" style={{ transitionDelay: '250ms' }}>
+            <span className="pub-icon">
+              <ShieldCheck size={20} />
+            </span>
+            <h3>Roles y permisos</h3>
+            <p>Cada persona del equipo ve solo lo que le corresponde.</p>
           </article>
         </div>
       </section>
 
       <section className="home-ai reveal">
         <div className="home-ai-copy">
-          <span className="home-kicker home-kicker--light">AI Patient Scoring</span>
+          <span className="home-ai-kicker">AI Patient Scoring</span>
           <h2>Sabé a quién contactar hoy</h2>
           <p>
             AURA puntúa a cada cliente según recencia, frecuencia y confiabilidad con una fórmula transparente, y un
@@ -229,9 +237,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-section">
-        <div className="reveal">
-          <span className="home-kicker">Cómo empezar</span>
+      <section>
+        <div className="pub-head reveal">
+          <span className="pub-eyebrow">Cómo empezar</span>
           <h2>En tres pasos estás operando</h2>
         </div>
         <ol className="home-steps">
@@ -248,19 +256,19 @@ export default function Home() {
         </ol>
       </section>
 
-      <section className="home-section">
-        <div className="reveal">
-          <span className="home-kicker">Para quién es</span>
+      <section>
+        <div className="pub-head reveal">
+          <span className="pub-eyebrow">Para quién es</span>
           <h2>Pensado para quienes gestionan atención estética</h2>
         </div>
-        <div className="home-profiles">
+        <div className="pub-grid-3">
           {PROFILES.map((profile, index) => (
             <div
               key={profile.title}
-              className="aura-card home-profile-card reveal"
+              className="pub-card home-profile-card reveal"
               style={{ transitionDelay: `${index * 120}ms` }}
             >
-              <div className="home-profile-icon">
+              <div className="pub-icon home-profile-icon">
                 <profile.icon size={22} strokeWidth={1.75} />
               </div>
               <h3>{profile.title}</h3>
@@ -270,17 +278,17 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-cta reveal">
+      <section className="pub-cta reveal">
         <h2>Ordená el seguimiento de tus clientes desde una misma plataforma</h2>
         <p>
           Creá tu espacio de trabajo, configurá tus horarios y comenzá a gestionar turnos, fichas y seguimientos con
           una estructura clara para uso diario.
         </p>
-        <div className="home-hero-actions">
-          <Link to="/activate-account" className="btn home-cta-primary home-btn-lg">
+        <div className="pub-cta-actions">
+          <Link to="/activate-account" className="pub-btn-light">
             Crear cuenta profesional <ArrowRight size={16} />
           </Link>
-          <Link to="/contact" className="btn home-cta-ghost home-btn-lg">
+          <Link to="/contact" className="pub-btn-ghost">
             Enviar consulta
           </Link>
         </div>

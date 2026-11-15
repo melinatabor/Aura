@@ -42,10 +42,12 @@ export default function Contact() {
   }
 
   return (
-    <div className="contact-page" ref={ref}>
-      <header className="contact-hero">
-        <span className="contact-kicker">Hablemos</span>
-        <h1>Contactanos</h1>
+    <div className="contact-page pub-page" ref={ref}>
+      <header className="pub-hero">
+        <span className="pub-kicker">Contacto</span>
+        <h1>
+          Hablemos de tu <em className="pub-gradient">centro</em>
+        </h1>
         <p>
           Dejanos tus datos y contanos qué necesitás para organizar en tu centro o actividad profesional. El equipo
           de Aura podrá responder tu consulta y coordinar entre nosotros.
