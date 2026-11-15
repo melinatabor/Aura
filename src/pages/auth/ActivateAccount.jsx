@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext.jsx'
 import * as invitationsService from '../../bll/invitationsService'
+import AuthAside from '../../components/AuthAside/AuthAside.jsx'
+import PasswordInput from '../../components/PasswordInput/PasswordInput.jsx'
 import './Auth.scss'
 
 export default function ActivateAccount() {
@@ -52,6 +54,7 @@ export default function ActivateAccount() {
   if (submitted) {
     return (
       <div className="auth-page">
+      <AuthAside />
         <div className="aura-card auth-card" style={{ textAlign: 'center' }}>
           <div className="modal-confirm-icon icon-success">✓</div>
           <h1>{invitation ? '¡Cuenta creada!' : 'Cuenta registrada'}</h1>
@@ -70,8 +73,9 @@ export default function ActivateAccount() {
 
   return (
     <div className="auth-page">
+      <AuthAside />
       <div className="aura-card auth-card">
-        <h1>Crear cuenta profesional</h1>
+        <h1>Crear cuenta</h1>
         <p className="auth-subtitle">
           {invitation ? `Te invitaron a sumarte a Aura con el rol ${invitation.roleName}.` : 'Activá tu espacio de trabajo en Aura'}
         </p>
@@ -120,9 +124,8 @@ export default function ActivateAccount() {
           </div>
           <div className="form-group">
             <label htmlFor="activationPassword">Contraseña</label>
-            <input
+            <PasswordInput
               id="activationPassword"
-              type="password"
               required
               minLength={6}
               placeholder="••••••••"

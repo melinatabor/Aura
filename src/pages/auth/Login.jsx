@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { InactiveAccountError, useAuth } from '../../context/AuthContext.jsx'
+import AuthAside from '../../components/AuthAside/AuthAside.jsx'
+import PasswordInput from '../../components/PasswordInput/PasswordInput.jsx'
 import './Auth.scss'
 
 export default function Login() {
@@ -33,6 +35,7 @@ export default function Login() {
 
   return (
     <div className="auth-page">
+      <AuthAside />
       <div className="aura-card auth-card">
         <h1>Iniciar sesión</h1>
         <p className="auth-subtitle">Gestión inteligente para bienestar y estética</p>
@@ -50,9 +53,8 @@ export default function Login() {
           </div>
           <div className="form-group">
             <label htmlFor="password">Contraseña</label>
-            <input
+            <PasswordInput
               id="password"
-              type="password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}

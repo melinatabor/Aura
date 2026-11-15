@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../../dal/supabaseClient'
 import { useAuth } from '../../context/AuthContext.jsx'
+import AuthAside from '../../components/AuthAside/AuthAside.jsx'
+import PasswordInput from '../../components/PasswordInput/PasswordInput.jsx'
 import './Auth.scss'
 
 const STEPS = ['Correo', 'Código', 'Contraseña']
@@ -92,6 +94,7 @@ export default function ForgotPassword() {
   if (done) {
     return (
       <div className="auth-page">
+      <AuthAside />
         <div className="aura-card auth-card" style={{ textAlign: 'center' }}>
           <div className="modal-confirm-icon icon-success">✓</div>
           <h1>Contraseña actualizada</h1>
@@ -106,6 +109,7 @@ export default function ForgotPassword() {
 
   return (
     <div className="auth-page">
+      <AuthAside />
       <div className="aura-card auth-card">
         <h1>Recuperar contraseña</h1>
         <p className="auth-subtitle">
@@ -171,9 +175,8 @@ export default function ForgotPassword() {
           <form onSubmit={handleUpdate}>
             <div className="form-group">
               <label htmlFor="newPassword">Nueva contraseña</label>
-              <input
+              <PasswordInput
                 id="newPassword"
-                type="password"
                 required
                 minLength={8}
                 maxLength={64}
@@ -185,9 +188,8 @@ export default function ForgotPassword() {
             </div>
             <div className="form-group">
               <label htmlFor="confirmPassword">Confirmar nueva contraseña</label>
-              <input
+              <PasswordInput
                 id="confirmPassword"
-                type="password"
                 required
                 maxLength={64}
                 placeholder="••••••••"
