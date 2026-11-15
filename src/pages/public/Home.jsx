@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Sparkles, Building2, Users } from 'lucide-react'
+import useReveal from '../../hooks/useReveal'
 import './Home.scss'
 
 const PROFILES = [
@@ -21,8 +22,9 @@ const PROFILES = [
 ]
 
 export default function Home() {
+  const ref = useReveal()
   return (
-    <div className="home-page">
+    <div className="home-page" ref={ref}>
       <section className="home-hero">
         <div className="home-hero-copy">
           <h1>Centralizá la atención y el seguimiento de tus clientes</h1>
@@ -48,7 +50,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-section home-problem">
+      <section className="home-section home-problem reveal">
         <h2>El problema que resuelve Aura</h2>
         <p className="home-problem-lead">Menos información dispersa. Más continuidad en la atención.</p>
         <p>
@@ -60,11 +62,11 @@ export default function Home() {
         </p>
       </section>
 
-      <section className="home-section">
+      <section className="home-section reveal">
         <h2>Pensado para quienes gestionan atención estética</h2>
         <div className="home-profiles">
-          {PROFILES.map((profile) => (
-            <div key={profile.title} className="aura-card home-profile-card">
+          {PROFILES.map((profile, index) => (
+            <div key={profile.title} className="aura-card home-profile-card reveal" style={{ transitionDelay: `${index * 120}ms` }}>
               <div className="home-profile-icon">
                 <profile.icon size={22} strokeWidth={1.75} />
               </div>
@@ -75,7 +77,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-section home-cta">
+      <section className="home-section home-cta reveal">
         <h2>Ordená el seguimiento de tus clientes desde una misma plataforma</h2>
         <p>
           Creá tu espacio de trabajo, configurá tus horarios y comenzá a gestionar turnos, fichas y seguimientos con

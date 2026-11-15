@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Users, CalendarCheck, CalendarDays, Wallet, Plus, Bell, Sparkles } from 'lucide-react'
+import { Users, CalendarCheck, CalendarDays, Wallet, Plus, Bell, BrainCircuit } from 'lucide-react'
 import Badge from '../../components/Badge/Badge.jsx'
 import EmptyState from '../../components/EmptyState/EmptyState.jsx'
 import DonutChart from '../../components/DonutChart/DonutChart.jsx'
@@ -291,7 +291,7 @@ export default function Dashboard() {
           <section className="aura-card">
             <div className="page-header-row">
               <h2 className="section-title">
-                <Sparkles size={15} className="dashboard-title-icon" /> Clientes más valiosos
+                <BrainCircuit size={15} className="dashboard-title-icon" /> Clientes más valiosos
               </h2>
               <Link to="/app/ai-scoring" className="btn btn-ghost btn-sm">
                 AI Patient Scoring

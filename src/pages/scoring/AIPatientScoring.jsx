@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { BrainCircuit, MessageSquareText, Check } from 'lucide-react'
+import useCountUp from '../../hooks/useCountUp'
 import Badge from '../../components/Badge/Badge.jsx'
 import StatCard from '../../components/StatCard/StatCard.jsx'
 import DonutChart from '../../components/DonutChart/DonutChart.jsx'
@@ -19,12 +21,21 @@ function AiInsightCell({ insight, onGenerate, onView }) {
   if (status === 'idle') {
     return (
       <button type="button" className="scoring-ai-generate-btn scoring-ai-generate-btn--sm" onClick={onGenerate}>
-        ✨ Generar con IA
+        <BrainCircuit size={14} /> Generar con IA
       </button>
     )
   }
   if (status === 'loading') {
-    return <span className="scoring-ai-loading">Generando...</span>
+    return (
+      <span className="scoring-ai-loading">
+        <span className="ai-dots">
+          <i />
+          <i />
+          <i />
+        </span>
+        Generando
+      </span>
+    )
   }
   if (status === 'error') {
     return (
@@ -38,7 +49,7 @@ function AiInsightCell({ insight, onGenerate, onView }) {
   }
   return (
     <button type="button" className="scoring-ai-view-btn" onClick={onView}>
-      💬 Ver recomendación
+      <MessageSquareText size={14} /> Ver recomendación
     </button>
   )
 }
@@ -51,7 +62,9 @@ function AiRecommendation({ summary, actions }) {
         <ul className="scoring-recommendation-actions">
           {actions.map((action) => (
             <li key={action}>
-              <span className="scoring-recommendation-check">✓</span>
+              <span className="scoring-recommendation-check">
+                <Check size={12} strokeWidth={3} />
+              </span>
               {action}
             </li>
           ))}
@@ -66,9 +79,19 @@ function HeroInsight({ insight, onRetry }) {
 
   if (status === 'loading') {
     return (
-      <p className="scoring-hero-insight-text scoring-hero-insight-text--loading">
-        Generando la recomendación con IA...
-      </p>
+      <div className="ai-thinking" role="status">
+        <span className="ai-thinking-label">
+          Analizando el historial
+          <span className="ai-dots">
+            <i />
+            <i />
+            <i />
+          </span>
+        </span>
+        <span className="ai-skeleton" />
+        <span className="ai-skeleton" style={{ width: '85%' }} />
+        <span className="ai-skeleton" style={{ width: '60%' }} />
+      </div>
     )
   }
   if (status === 'error') {
@@ -104,6 +127,7 @@ export default function AIPatientScoring() {
 
   const average = rows.length ? Math.round(rows.reduce((sum, r) => sum + r.score, 0) / rows.length) : 0
   const heroRow = rows[0]
+  const heroScore = useCountUp(heroRow?.score ?? 0)
 
   const priorityData = ['Alta', 'Media', 'Baja'].map((priority) => ({
     label: priority,
@@ -163,7 +187,9 @@ export default function AIPatientScoring() {
 
       {heroRow && (
         <section className="scoring-hero">
-          <span className="scoring-hero-tag">✨ Cliente prioritario de hoy</span>
+          <span className="scoring-hero-tag">
+            <span className="ai-pulse" /> Cliente prioritario de hoy
+          </span>
           <div className="scoring-hero-body">
             <div className="scoring-hero-main">
               <h2>
@@ -171,7 +197,9 @@ export default function AIPatientScoring() {
               </h2>
               <div className="scoring-hero-meta">
                 <Badge variant={PRIORITY_VARIANT[heroRow.priority]}>{heroRow.priority}</Badge>
-                <span className="scoring-hero-score">{heroRow.score}/100</span>
+                <span className="scoring-hero-score">
+                  <strong>{heroScore}</strong>/100
+                </span>
               </div>
               <ScoreBreakdown breakdown={heroRow.breakdown} weights={SCORE_WEIGHTS} />
             </div>
@@ -210,7 +238,8 @@ export default function AIPatientScoring() {
           onClick={handleBulkGenerate}
           disabled={bulkGenerating || pendingBulkCount === 0}
         >
-          {bulkGenerating ? 'Generando recomendaciones...' : `✨ Generar recomendaciones de los prioritarios`}
+          <BrainCircuit size={15} />
+          {bulkGenerating ? 'Generando recomendaciones...' : 'Generar recomendaciones de los prioritarios'}
         </button>
       </div>
 
@@ -267,7 +296,9 @@ export default function AIPatientScoring() {
               <span className="scoring-ai-modal-score">Puntaje: {viewingRow.score}/100</span>
             </div>
             <AiRecommendation summary={viewingInsight.summary} actions={viewingInsight.actions} />
-            <span className="scoring-ai-modal-footnote">✨ Generado por IA (Google Gemini)</span>
+            <span className="scoring-ai-modal-footnote">
+              <BrainCircuit size={13} /> Generado por IA (Google Gemini)
+            </span>
           </div>
         </Modal>
       )}
