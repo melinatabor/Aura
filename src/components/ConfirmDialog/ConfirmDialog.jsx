@@ -1,3 +1,7 @@
+import { useEffect } from 'react'
+import { createPortal } from 'react-dom'
+import { AlertTriangle, Check } from 'lucide-react'
+
 export default function ConfirmDialog({
   title,
   message,
@@ -7,23 +11,34 @@ export default function ConfirmDialog({
   onConfirm,
   onCancel,
 }) {
-  return (
+  useEffect(() => {
+    function onKeyDown(e) {
+      if (e.key === 'Escape') onCancel()
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [onCancel])
+
+  return createPortal(
     <div className="modal-overlay" onMouseDown={(e) => e.target === e.currentTarget && onCancel()}>
-      <div className="modal-box" style={{ textAlign: 'center' }}>
-        <div className={`modal-confirm-icon ${tone === 'danger' ? 'icon-danger' : 'icon-success'}`}>
-          {tone === 'danger' ? '⚠' : '✓'}
-        </div>
-        <h2 style={{ marginBottom: 8 }}>{title}</h2>
-        <p style={{ color: '#6f6b60', marginBottom: 24 }}>{message}</p>
-        <div className="form-actions" style={{ justifyContent: 'center' }}>
-          <button type="button" className="btn btn-secondary" onClick={onCancel}>
-            {cancelLabel}
-          </button>
-          <button type="button" className={`btn ${tone === 'danger' ? 'btn-danger' : 'btn-primary'}`} onClick={onConfirm}>
-            {confirmLabel}
-          </button>
+      <div className="modal-box modal-confirm" role="alertdialog" aria-modal="true" aria-label={title}>
+        <div className="modal-body">
+          <div className={`modal-confirm-icon ${tone === 'danger' ? 'icon-danger' : 'icon-success'}`}>
+            {tone === 'danger' ? <AlertTriangle size={24} /> : <Check size={24} strokeWidth={3} />}
+          </div>
+          <h2>{title}</h2>
+          <p>{message}</p>
+          <div className="form-actions">
+            <button type="button" className="btn btn-secondary" onClick={onCancel}>
+              {cancelLabel}
+            </button>
+            <button type="button" className={`btn ${tone === 'danger' ? 'btn-danger' : 'btn-primary'}`} onClick={onConfirm}>
+              {confirmLabel}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }
