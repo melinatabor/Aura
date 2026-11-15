@@ -1,6 +1,6 @@
 import * as appointmentsDal from '../dal/appointmentsDal'
 import { toAppointment, toAppointmentRow } from '../mappers/appointmentMapper'
-import { todayISO } from './apiClient'
+import { todayISO } from './dates'
 
 export async function getAll() {
   const rows = await appointmentsDal.getAll()
@@ -20,13 +20,6 @@ export async function getByDateRange(from, to) {
 export async function getToday() {
   const today = todayISO()
   return getByDateRange(today, today)
-}
-
-export async function getUpcoming(days) {
-  const today = todayISO()
-  const limit = todayISO(days)
-  const rows = await getByDateRange(today, limit)
-  return rows.filter((a) => a.status !== 'Cancelado')
 }
 
 export async function create(data) {

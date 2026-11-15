@@ -5,12 +5,15 @@ import EmptyState from '../../components/EmptyState/EmptyState.jsx'
 import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog.jsx'
 import TreatmentFormModal from './TreatmentFormModal.jsx'
 import NewTreatmentModal from './NewTreatmentModal.jsx'
+import { useAuth } from '../../context/AuthContext.jsx'
 import * as treatmentsService from '../../bll/treatmentsService'
 import './Treatments.scss'
 
 const priceFormatter = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 })
 
 export default function TreatmentCatalog() {
+  const { can } = useAuth()
+  const canManage = can('treatments.manage')
   const [treatments, setTreatments] = useState([])
   const [search, setSearch] = useState('')
   const [newModal, setNewModal] = useState(false)
@@ -61,9 +64,11 @@ export default function TreatmentCatalog() {
           <h1>Catálogo de tratamientos</h1>
           <p>Administrá los tratamientos que ofrece el centro y su vinculación con insumos.</p>
         </div>
-        <button type="button" className="btn btn-primary" onClick={() => setNewModal(true)}>
-          + Nuevo tratamiento
-        </button>
+        {canManage && (
+          <button type="button" className="btn btn-primary" onClick={() => setNewModal(true)}>
+            + Nuevo tratamiento
+          </button>
+        )}
       </div>
 
       <div className="stat-grid">
@@ -107,14 +112,16 @@ export default function TreatmentCatalog() {
                     <Badge>{t.status}</Badge>
                   </td>
                   <td>
-                    <div className="table-actions">
-                      <button type="button" className="btn btn-secondary btn-sm" onClick={() => setEditing(t)}>
-                        Editar
-                      </button>
-                      <button type="button" className="btn btn-danger btn-sm" onClick={() => setToToggle(t)}>
-                        {t.status === 'Activo' ? 'Desactivar' : 'Activar'}
-                      </button>
-                    </div>
+                    {canManage && (
+                      <div className="table-actions">
+                        <button type="button" className="btn btn-secondary btn-sm" onClick={() => setEditing(t)}>
+                          Editar
+                        </button>
+                        <button type="button" className="btn btn-danger btn-sm" onClick={() => setToToggle(t)}>
+                          {t.status === 'Activo' ? 'Desactivar' : 'Activar'}
+                        </button>
+                      </div>
+                    )}
                   </td>
                 </tr>
               ))}

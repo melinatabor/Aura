@@ -5,14 +5,17 @@ import Badge from '../../components/Badge/Badge.jsx'
 import EmptyState from '../../components/EmptyState/EmptyState.jsx'
 import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog.jsx'
 import PatientFormModal from './PatientFormModal.jsx'
+import { useAuth } from '../../context/AuthContext.jsx'
 import * as patientsService from '../../bll/patientsService'
 
 export default function PatientList() {
+  const { can } = useAuth()
+  const canManage = can('patients.manage')
   const [searchParams, setSearchParams] = useSearchParams()
   const [patients, setPatients] = useState([])
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState('Todos')
-  const [modal, setModal] = useState(searchParams.get('new') === '1' ? { mode: 'create' } : null)
+  const [modal, setModal] = useState(searchParams.get('new') === '1' && canManage ? { mode: 'create' } : null)
   const [toDeactivate, setToDeactivate] = useState(null)
 
   async function reload() {
@@ -65,9 +68,11 @@ export default function PatientList() {
           <h1>Clientes</h1>
           <p>Gestioná el listado de pacientes y consultá su información de contacto.</p>
         </div>
-        <button type="button" className="btn btn-primary" onClick={() => setModal({ mode: 'create' })}>
-          + Nuevo cliente
-        </button>
+        {canManage && (
+          <button type="button" className="btn btn-primary" onClick={() => setModal({ mode: 'create' })}>
+            + Nuevo cliente
+          </button>
+        )}
       </div>
 
       <div className="stat-grid">
@@ -124,10 +129,12 @@ export default function PatientList() {
                       <Link to={`/app/patients/${p.id}`} className="btn btn-secondary btn-sm">
                         Ver
                       </Link>
-                      <button type="button" className="btn btn-secondary btn-sm" onClick={() => setModal({ mode: 'edit', patient: p })}>
-                        Editar
-                      </button>
-                      {p.status === 'Activo' ? (
+                      {canManage && (
+                        <button type="button" className="btn btn-secondary btn-sm" onClick={() => setModal({ mode: 'edit', patient: p })}>
+                          Editar
+                        </button>
+                      )}
+                      {!canManage ? null : p.status === 'Activo' ? (
                         <button type="button" className="btn btn-danger btn-sm" onClick={() => setToDeactivate(p)}>
                           Desactivar
                         </button>

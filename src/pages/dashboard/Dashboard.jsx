@@ -20,7 +20,7 @@ export default function Dashboard() {
         patientsService.getAll(),
         appointmentsService.getToday(),
         treatmentsService.getActive(),
-        alertsService.getAlerts(),
+        alertsService.getOpenAlerts(),
         professionalsService.getAll(),
       ])
       if (!active) return
@@ -117,12 +117,10 @@ export default function Dashboard() {
             <ul className="dashboard-alert-list">
               {alerts.slice(0, 5).map((alert) => (
                 <li key={alert.id}>
-                  <Badge variant={alert.severity === 'danger' ? 'danger' : alert.severity === 'warning' ? 'warning' : 'info'}>
-                    {alert.type}
-                  </Badge>
+                  <Badge>{alert.priority}</Badge>
                   <div>
                     <strong>{alert.title}</strong>
-                    <p>{alert.description}</p>
+                    <p>{alert.detail}</p>
                   </div>
                 </li>
               ))}

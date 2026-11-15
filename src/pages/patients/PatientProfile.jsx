@@ -4,19 +4,16 @@ import Badge from '../../components/Badge/Badge.jsx'
 import EmptyState from '../../components/EmptyState/EmptyState.jsx'
 import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog.jsx'
 import PatientFormModal from './PatientFormModal.jsx'
+import { useAuth } from '../../context/AuthContext.jsx'
 import * as patientsService from '../../bll/patientsService'
 import * as appointmentsService from '../../bll/appointmentsService'
 import * as treatmentsService from '../../bll/treatmentsService'
 import * as professionalsService from '../../bll/professionalsService'
+import * as scoringService from '../../bll/scoringService'
 import './PatientProfile.scss'
 
-const RECOMMENDATIONS = [
-  'Seguir tratamiento',
-  'Priorizar contacto',
-  'Recomendación de seguimiento',
-]
-
 export default function PatientProfile() {
+  const { can } = useAuth()
   const { id } = useParams()
   const navigate = useNavigate()
   const [patient, setPatient] = useState(null)
@@ -24,20 +21,29 @@ export default function PatientProfile() {
   const [treatments, setTreatments] = useState([])
   const [professionals, setProfessionals] = useState([])
   const [notes, setNotes] = useState('')
+  const [notesSaved, setNotesSaved] = useState(false)
+  const [score, setScore] = useState(null)
+  const [suggestions, setSuggestions] = useState([])
   const [editing, setEditing] = useState(false)
   const [deactivating, setDeactivating] = useState(false)
 
   async function load() {
-    const [p, a, t, pr] = await Promise.all([
+    const [p, a, t, pr, s] = await Promise.all([
       patientsService.getById(id),
       appointmentsService.getAll(),
       treatmentsService.getAll(),
       professionalsService.getAll(),
+      scoringService.getScoreFor(Number(id)),
     ])
+    const own = a.filter((appointment) => appointment.patientId === Number(id))
+    const doneTreatmentIds = [...new Set(own.filter((x) => x.status === 'Realizado').map((x) => x.treatmentId))]
     setPatient(p)
-    setAppointments(a.filter((appointment) => appointment.patientId === Number(id)))
+    setNotes(p?.internalNotes ?? '')
+    setAppointments(own)
     setTreatments(t)
     setProfessionals(pr)
+    setScore(s)
+    setSuggestions(await treatmentsService.getSuggestionsFor(doneTreatmentIds))
   }
 
   useEffect(() => {
@@ -66,6 +72,13 @@ export default function PatientProfile() {
     load()
   }
 
+  async function handleSaveNotes() {
+    await patientsService.updateNotes(patient.id, notes)
+    setPatient((prev) => ({ ...prev, internalNotes: notes }))
+    setNotesSaved(true)
+    setTimeout(() => setNotesSaved(false), 2000)
+  }
+
   async function handleDeactivate() {
     await patientsService.setStatus(patient.id, 'Inactivo')
     setDeactivating(false)
@@ -81,14 +94,16 @@ export default function PatientProfile() {
             {patient.firstName} {patient.lastName} · <Badge>{patient.status}</Badge>
           </p>
         </div>
-        <div className="table-actions">
-          <button type="button" className="btn btn-secondary" onClick={() => setEditing(true)}>
-            Editar cliente
-          </button>
-          <button type="button" className="btn btn-danger" onClick={() => setDeactivating(true)}>
-            Desactivar cliente
-          </button>
-        </div>
+        {can('patients.manage') && (
+          <div className="table-actions">
+            <button type="button" className="btn btn-secondary" onClick={() => setEditing(true)}>
+              Editar cliente
+            </button>
+            <button type="button" className="btn btn-danger" onClick={() => setDeactivating(true)}>
+              Desactivar cliente
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="profile-grid">
@@ -182,18 +197,57 @@ export default function PatientProfile() {
               rows={4}
               placeholder="Escribí una nota interna sobre este cliente..."
               value={notes}
+              readOnly={!can('patients.manage')}
               onChange={(e) => setNotes(e.target.value)}
             />
+            {can('patients.manage') && (
+              <div className="form-actions" style={{ marginTop: 12 }}>
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-sm"
+                  disabled={notes === patient.internalNotes && !notesSaved}
+                  onClick={handleSaveNotes}
+                >
+                  {notesSaved ? '¡Guardado!' : 'Guardar nota'}
+                </button>
+              </div>
+            )}
           </section>
         </div>
 
         <aside className="aura-card profile-recommendations">
           <h2 className="section-title">Recomendaciones AURA</h2>
-          <ul>
-            {RECOMMENDATIONS.map((r) => (
-              <li key={r}>{r}</li>
-            ))}
-          </ul>
+          {score && (
+            <div className="profile-score">
+              <div className="profile-score-header">
+                <span>Prioridad</span>
+                <Badge>{score.priority}</Badge>
+              </div>
+              <strong>{score.score}/100</strong>
+              <p>{score.reason}</p>
+              {can('scoring.view') && (
+                <Link to="/app/ai-scoring" className="btn btn-ghost btn-sm">
+                  Ver en AI Patient Scoring
+                </Link>
+              )}
+            </div>
+          )}
+
+          <h3 className="profile-subtitle">Tratamientos para ofrecerle</h3>
+          {suggestions.length === 0 ? (
+            <p className="field-hint">
+              No hay sugerencias: todavía no tiene tratamientos realizados con recomendaciones asociadas.
+            </p>
+          ) : (
+            <ul>
+              {suggestions.map(({ treatment, because }) => (
+                <li key={treatment.id}>
+                  <strong>{treatment.name}</strong>
+                  {because && <span>Suele combinarse con {because.name}</span>}
+                </li>
+              ))}
+            </ul>
+          )}
         </aside>
       </div>
 

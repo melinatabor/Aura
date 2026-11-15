@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import Badge from '../../components/Badge/Badge.jsx'
 import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog.jsx'
 import AppointmentFormModal from './AppointmentFormModal.jsx'
+import { useAuth } from '../../context/AuthContext.jsx'
 import * as appointmentsService from '../../bll/appointmentsService'
 import * as patientsService from '../../bll/patientsService'
 import * as professionalsService from '../../bll/professionalsService'
@@ -24,14 +25,16 @@ function toISO(date) {
 }
 
 export default function Schedule() {
+  const { user, can } = useAuth()
+  const canManage = can('schedule.manage')
   const [searchParams, setSearchParams] = useSearchParams()
   const [weekOffset, setWeekOffset] = useState(0)
   const [appointments, setAppointments] = useState([])
   const [patients, setPatients] = useState([])
   const [professionals, setProfessionals] = useState([])
   const [treatments, setTreatments] = useState([])
-  const [professionalFilter, setProfessionalFilter] = useState('Todos')
-  const [modal, setModal] = useState(searchParams.get('new') === '1' ? { mode: 'create' } : null)
+  const [professionalFilter, setProfessionalFilter] = useState(user.professionalId ? String(user.professionalId) : 'Todos')
+  const [modal, setModal] = useState(searchParams.get('new') === '1' && canManage ? { mode: 'create' } : null)
   const [toCancel, setToCancel] = useState(null)
 
   const days = useMemo(() => {
@@ -106,9 +109,11 @@ export default function Schedule() {
           <h1>Agenda</h1>
           <p>Consultá y gestioná los turnos agendados, organizados por semana.</p>
         </div>
-        <button type="button" className="btn btn-primary" onClick={() => setModal({ mode: 'create' })}>
-          + Nuevo turno
-        </button>
+        {canManage && (
+          <button type="button" className="btn btn-primary" onClick={() => setModal({ mode: 'create' })}>
+            + Nuevo turno
+          </button>
+        )}
       </div>
 
       <div className="list-toolbar">
@@ -128,7 +133,7 @@ export default function Schedule() {
           <option value="Todos">Todos los profesionales</option>
           {professionals.map((p) => (
             <option key={p.id} value={p.id}>
-              {p.firstName} {p.lastName}
+              {p.id === user.professionalId ? 'Mis turnos' : `${p.firstName} ${p.lastName}`}
             </option>
           ))}
         </select>
@@ -152,6 +157,7 @@ export default function Schedule() {
                     key={a.id}
                     type="button"
                     className={`schedule-appointment-card status-${a.status.toLowerCase()}`}
+                    disabled={!canManage}
                     onClick={() => setModal({ mode: 'edit', appointment: a })}
                   >
                     <span className="schedule-appointment-time">
@@ -161,7 +167,7 @@ export default function Schedule() {
                     <span className="schedule-appointment-treatment">{treatmentName(a.treatmentId)}</span>
                     <div className="schedule-appointment-footer">
                       <Badge>{a.status}</Badge>
-                      {a.status !== 'Cancelado' && (
+                      {canManage && a.status !== 'Cancelado' && (
                         <span
                           className="schedule-appointment-cancel"
                           role="button"

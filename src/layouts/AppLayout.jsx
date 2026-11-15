@@ -13,7 +13,7 @@ const TITLES = [
   { prefix: '/app/reports', title: 'Reportes operativos' },
   { prefix: '/app/ai-scoring', title: 'AI Patient Scoring' },
   { prefix: '/app/employees', title: 'Empleados y roles' },
-  { prefix: '/app/settings', title: 'Configuración operativa' },
+  { prefix: '/app/settings', title: 'Configuración' },
 ]
 
 function resolveTitle(pathname) {
@@ -33,8 +33,8 @@ export default function AppLayout() {
           <Outlet />
         </div>
         <p className="app-layout-footnote">
-          Clientes, Tratamientos, Insumos, Empleados, Agenda, Reportes y AI Patient Scoring ya trabajan con datos
-          reales persistidos en Supabase.
+          Todos los módulos trabajan con datos reales en Supabase, con permisos por rol aplicados también en la base de
+          datos.
         </p>
       </div>
     </div>

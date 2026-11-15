@@ -4,6 +4,7 @@ import * as patientsService from '../../bll/patientsService'
 import * as professionalsService from '../../bll/professionalsService'
 import * as treatmentsService from '../../bll/treatmentsService'
 import * as appointmentsService from '../../bll/appointmentsService'
+import * as workspaceService from '../../bll/workspaceService'
 
 const STATUSES = ['Pendiente', 'Confirmado', 'Realizado', 'Cancelado']
 
@@ -11,10 +12,19 @@ function todayISO() {
   return new Date().toISOString().slice(0, 10)
 }
 
+function addMinutes(time, minutes) {
+  const [h, m] = time.split(':').map(Number)
+  const total = Math.min(h * 60 + m + minutes, 23 * 60 + 59)
+  return `${String(Math.floor(total / 60)).padStart(2, '0')}:${String(total % 60).padStart(2, '0')}`
+}
+
 export default function AppointmentFormModal({ appointment, suggestedDate, onSave, onClose }) {
   const [patients, setPatients] = useState([])
   const [professionals, setProfessionals] = useState([])
   const [treatments, setTreatments] = useState([])
+  const [assignments, setAssignments] = useState({})
+  const [ranges, setRanges] = useState([])
+  const [allowOverlap, setAllowOverlap] = useState(false)
   const [error, setError] = useState('')
   const [form, setForm] = useState(
     appointment ?? {
@@ -30,13 +40,51 @@ export default function AppointmentFormModal({ appointment, suggestedDate, onSav
   )
 
   useEffect(() => {
-    patientsService.getAll().then((list) => setPatients(list.filter((p) => p.status === 'Activo')))
-    professionalsService.getActive().then(setProfessionals)
-    treatmentsService.getActive().then(setTreatments)
+    Promise.all([
+      patientsService.getAll(),
+      professionalsService.getActive(),
+      treatmentsService.getActive(),
+      professionalsService.getTreatmentAssignments(),
+      workspaceService.getScheduleRanges(),
+      workspaceService.get(),
+    ]).then(([pa, pr, tr, as, ra, ws]) => {
+      setPatients(pa.filter((p) => p.status === 'Activo'))
+      setProfessionals(pr)
+      setTreatments(tr)
+      setAssignments(as)
+      setRanges(ra)
+      setAllowOverlap(ws.allowAppointmentOverlap)
+    })
   }, [])
 
+  const treatmentId = Number(form.treatmentId)
+  const treatmentUnchanged = appointment && treatmentId === appointment.treatmentId
+  // Solo los profesionales que realizan el tratamiento elegido. Al editar un
+  // turno viejo se mantiene su profesional aunque no esté asignado, para no
+  // obligar a cambiarlo solo por actualizar el estado.
+  const availableProfessionals = professionals.filter(
+    (p) =>
+      (assignments[p.id] ?? []).includes(treatmentId) ||
+      (treatmentUnchanged && p.id === appointment.professionalId),
+  )
+
+  function durationOf(id) {
+    return treatments.find((t) => t.id === Number(id))?.durationMinutes
+  }
+
   function handleChange(field, value) {
-    setForm((prev) => ({ ...prev, [field]: value }))
+    setForm((prev) => {
+      const next = { ...prev, [field]: value }
+      if (field === 'treatmentId' || field === 'startTime') {
+        const duration = durationOf(next.treatmentId)
+        if (duration) next.endTime = addMinutes(next.startTime, duration)
+      }
+      if (field === 'treatmentId') {
+        const stillValid = (assignments[next.professionalId] ?? []).includes(Number(value))
+        if (!stillValid) next.professionalId = ''
+      }
+      return next
+    })
   }
 
   async function handleSubmit(e) {
@@ -48,17 +96,35 @@ export default function AppointmentFormModal({ appointment, suggestedDate, onSav
       return
     }
 
-    const overlaps = await appointmentsService.hasOverlap({
-      professionalId: form.professionalId,
-      date: form.date,
-      startTime: form.startTime,
-      endTime: form.endTime,
-      excludeId: appointment?.id,
-    })
+    // Las reglas de horario aplican al agendar o reprogramar; si solo se
+    // cambia el estado de un turno existente, no se vuelven a evaluar.
+    const rescheduled =
+      !appointment ||
+      form.date !== appointment.date ||
+      form.startTime !== appointment.startTime ||
+      form.endTime !== appointment.endTime ||
+      Number(form.professionalId) !== appointment.professionalId
 
-    if (overlaps) {
-      setError('El profesional ya tiene un turno asignado en ese horario.')
-      return
+    if (rescheduled && form.status !== 'Cancelado') {
+      const hoursProblem = workspaceService.checkOpeningHours(ranges, form)
+      if (hoursProblem) {
+        setError(hoursProblem)
+        return
+      }
+
+      if (!allowOverlap) {
+        const overlaps = await appointmentsService.hasOverlap({
+          professionalId: form.professionalId,
+          date: form.date,
+          startTime: form.startTime,
+          endTime: form.endTime,
+          excludeId: appointment?.id,
+        })
+        if (overlaps) {
+          setError('El profesional ya tiene un turno asignado en ese horario.')
+          return
+        }
+      }
     }
 
     onSave({
@@ -85,26 +151,35 @@ export default function AppointmentFormModal({ appointment, suggestedDate, onSav
         </div>
         <div className="form-row">
           <div className="form-group">
-            <label htmlFor="professionalId">Profesional</label>
-            <select id="professionalId" required value={form.professionalId} onChange={(e) => handleChange('professionalId', e.target.value)}>
-              <option value="">Seleccionar...</option>
-              {professionals.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.firstName} {p.lastName}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="form-group">
             <label htmlFor="treatmentId">Tratamiento</label>
             <select id="treatmentId" required value={form.treatmentId} onChange={(e) => handleChange('treatmentId', e.target.value)}>
               <option value="">Seleccionar...</option>
               {treatments.map((t) => (
                 <option key={t.id} value={t.id}>
-                  {t.name}
+                  {t.name} ({t.durationMinutes} min)
                 </option>
               ))}
             </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="professionalId">Profesional</label>
+            <select
+              id="professionalId"
+              required
+              disabled={!form.treatmentId}
+              value={form.professionalId}
+              onChange={(e) => handleChange('professionalId', e.target.value)}
+            >
+              <option value="">{form.treatmentId ? 'Seleccionar...' : 'Elegí el tratamiento primero'}</option>
+              {availableProfessionals.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.firstName} {p.lastName}
+                </option>
+              ))}
+            </select>
+            {form.treatmentId && availableProfessionals.length === 0 && (
+              <span className="field-error">Ningún profesional activo realiza este tratamiento.</span>
+            )}
           </div>
         </div>
         <div className="form-row">
@@ -131,6 +206,7 @@ export default function AppointmentFormModal({ appointment, suggestedDate, onSav
           <div className="form-group">
             <label htmlFor="endTime">Hora fin</label>
             <input id="endTime" type="time" required value={form.endTime} onChange={(e) => handleChange('endTime', e.target.value)} />
+            <span className="field-hint">Se calcula con la duración del tratamiento.</span>
           </div>
         </div>
         <div className="form-group">

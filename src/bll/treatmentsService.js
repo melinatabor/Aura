@@ -56,6 +56,21 @@ export async function getRecommendationsForTreatment(treatmentId) {
     .filter(Boolean)
 }
 
+// Para la ficha de un cliente: tratamientos que suelen combinarse con los que
+// ya se hizo y que todavía no probó.
+export async function getSuggestionsFor(doneTreatmentIds) {
+  const [relations, allTreatments] = await Promise.all([treatmentRecommendationsDal.getAll(), getActive()])
+  const suggestions = new Map()
+  relations
+    .filter((r) => doneTreatmentIds.includes(r.treatment_origin_id) && !doneTreatmentIds.includes(r.treatment_recommended_id))
+    .forEach((r) => {
+      const treatment = allTreatments.find((t) => t.id === r.treatment_recommended_id)
+      const because = allTreatments.find((t) => t.id === r.treatment_origin_id)
+      if (treatment && !suggestions.has(treatment.id)) suggestions.set(treatment.id, { treatment, because })
+    })
+  return [...suggestions.values()]
+}
+
 export async function setRecommendationsForTreatment(treatmentId, recommendedIds) {
   await treatmentRecommendationsDal.replaceForTreatment(treatmentId, recommendedIds)
   return true

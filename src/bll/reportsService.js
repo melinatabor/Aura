@@ -1,4 +1,4 @@
-import { resolveAsync, todayISO } from './apiClient'
+import { todayISO } from './dates'
 import * as appointmentsService from './appointmentsService'
 import * as treatmentsService from './treatmentsService'
 import * as professionalsService from './professionalsService'
@@ -38,13 +38,13 @@ export async function getReports() {
     }
   })
 
-  return resolveAsync({
+  return {
     totalRevenue: revenue,
     completedAppointments: completedAppointments.length,
     activePatients: patients.filter((p) => p.status === 'Activo').length,
     occupancyByProfessional,
     performanceByTreatment,
-  })
+  }
 }
 
 // Guarda una foto del reporte actual como registro consultable (unifica
@@ -80,5 +80,5 @@ export async function getRevenueTrend(days = 14) {
       .reduce((sum, a) => sum + (treatmentById[a.treatmentId]?.price ?? 0), 0)
     series.push({ date: iso, value })
   }
-  return resolveAsync(series)
+  return series
 }

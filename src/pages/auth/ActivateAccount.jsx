@@ -1,14 +1,34 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext.jsx'
+import * as invitationsService from '../../bll/invitationsService'
 import './Auth.scss'
 
 export default function ActivateAccount() {
   const { signup } = useAuth()
+  const [searchParams] = useSearchParams()
+  const token = searchParams.get('token')
+  const [invitation, setInvitation] = useState(null)
+  const [invitationError, setInvitationError] = useState('')
   const [form, setForm] = useState({ firstName: '', lastName: '', username: '', email: '', password: '' })
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
+
+  useEffect(() => {
+    if (!token) return
+    invitationsService
+      .getByToken(token)
+      .then((found) => {
+        if (!found) {
+          setInvitationError('El enlace de invitación ya se usó, venció o fue cancelado. Pedile uno nuevo al administrador.')
+          return
+        }
+        setInvitation(found)
+        setForm((prev) => ({ ...prev, email: found.email }))
+      })
+      .catch(() => setInvitationError('No pudimos validar el enlace de invitación.'))
+  }, [token])
 
   function handleChange(field, value) {
     setForm((prev) => ({ ...prev, [field]: value }))
@@ -19,7 +39,7 @@ export default function ActivateAccount() {
     setError('')
     setSubmitting(true)
     try {
-      await signup(form)
+      await signup({ ...form, invitationToken: invitation ? token : null })
       setSubmitted(true)
     } catch (err) {
       setError('No pudimos crear la cuenta. El usuario o el email ya existen, o la contraseña tiene menos de 6 caracteres.')
@@ -33,9 +53,11 @@ export default function ActivateAccount() {
       <div className="auth-page">
         <div className="aura-card auth-card" style={{ textAlign: 'center' }}>
           <div className="modal-confirm-icon icon-success">✓</div>
-          <h1>Activación de cuenta</h1>
+          <h1>{invitation ? '¡Cuenta creada!' : 'Cuenta registrada'}</h1>
           <p className="auth-subtitle">
-            Te enviamos un correo con el enlace de activación. Confirmá tu cuenta para poder iniciar sesión.
+            {invitation
+              ? `Ya podés iniciar sesión con tu usuario o tu email. Vas a entrar con el rol ${invitation.roleName}.`
+              : 'Tu cuenta quedó pendiente de aprobación. Cuando un administrador la active, vas a poder iniciar sesión.'}
           </p>
           <Link to="/login" className="btn btn-primary auth-submit">
             Ir a iniciar sesión
@@ -49,7 +71,16 @@ export default function ActivateAccount() {
     <div className="auth-page">
       <div className="aura-card auth-card">
         <h1>Crear cuenta profesional</h1>
-        <p className="auth-subtitle">Activá tu espacio de trabajo en Aura</p>
+        <p className="auth-subtitle">
+          {invitation ? `Te invitaron a sumarte a Aura con el rol ${invitation.roleName}.` : 'Activá tu espacio de trabajo en Aura'}
+        </p>
+
+        {invitationError && <p className="field-error">{invitationError}</p>}
+        {!token && (
+          <p className="field-hint" style={{ marginBottom: 16 }}>
+            Sin un enlace de invitación, la cuenta queda pendiente hasta que un administrador la apruebe.
+          </p>
+        )}
 
         <form onSubmit={handleSubmit}>
           <div className="form-row">
@@ -81,8 +112,10 @@ export default function ActivateAccount() {
               required
               placeholder="nombre@ejemplo.com"
               value={form.email}
+              disabled={Boolean(invitation)}
               onChange={(e) => handleChange('email', e.target.value)}
             />
+            {invitation && <span className="field-hint">Es el email al que se envió la invitación.</span>}
           </div>
           <div className="form-group">
             <label htmlFor="activationPassword">Contraseña</label>

@@ -5,6 +5,15 @@ const STATUS_VARIANT = {
   Inactivo: 'neutral',
   Pendiente: 'warning',
   Cancelado: 'danger',
+  Usada: 'success',
+  Cancelada: 'neutral',
+  Vencida: 'danger',
+  Activa: 'warning',
+  Atendida: 'info',
+  Resuelta: 'success',
+  Alta: 'danger',
+  Media: 'warning',
+  Baja: 'neutral',
 }
 
 export default function Badge({ children, variant }) {

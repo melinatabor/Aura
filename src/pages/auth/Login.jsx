@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { useAuth } from '../../context/AuthContext.jsx'
+import { InactiveAccountError, useAuth } from '../../context/AuthContext.jsx'
 import './Auth.scss'
 
 export default function Login() {
@@ -21,7 +21,11 @@ export default function Login() {
       const destination = location.state?.from?.pathname ?? '/app/dashboard'
       navigate(destination, { replace: true })
     } catch (err) {
-      setError('No pudimos iniciar sesión. Revisá el usuario/email y la contraseña.')
+      setError(
+        err instanceof InactiveAccountError
+          ? 'Tu cuenta todavía no está activa. Un administrador tiene que habilitarla desde "Empleados y roles".'
+          : 'No pudimos iniciar sesión. Revisá el usuario/email y la contraseña.',
+      )
     } finally {
       setSubmitting(false)
     }

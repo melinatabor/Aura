@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import Modal from '../../components/Modal/Modal.jsx'
 
-const ROLES = ['Administrador', 'Operador']
-
-export default function EmployeeFormModal({ employee, onSave, onClose }) {
+export default function EmployeeFormModal({ employee, roles, professionals, linkedProfessionalIds, isSelf, onSave, onClose }) {
   const [form, setForm] = useState({ ...employee })
+  const selectedRole = roles.find((r) => r.id === Number(form.roleId))
+  const availableProfessionals = professionals.filter(
+    (p) => p.id === employee.professionalId || !linkedProfessionalIds.includes(p.id),
+  )
 
   function handleChange(field, value) {
     setForm((prev) => ({ ...prev, [field]: value }))
@@ -12,7 +14,12 @@ export default function EmployeeFormModal({ employee, onSave, onClose }) {
 
   function handleSubmit(e) {
     e.preventDefault()
-    onSave({ firstName: form.firstName, lastName: form.lastName, role: form.role })
+    onSave({
+      firstName: form.firstName,
+      lastName: form.lastName,
+      roleId: Number(form.roleId),
+      professionalId: form.professionalId ? Number(form.professionalId) : null,
+    })
   }
 
   return (
@@ -29,28 +36,34 @@ export default function EmployeeFormModal({ employee, onSave, onClose }) {
           </div>
         </div>
         <div className="form-group">
-          <label htmlFor="username">Usuario</label>
-          <input id="username" value={form.username || ''} disabled />
-        </div>
-        <div className="form-group">
           <label htmlFor="email">Email</label>
           <input id="email" type="email" value={form.email} disabled />
-          <span className="field-hint">El email de acceso se define al crear la cuenta y no se puede editar acá.</span>
+          <span className="field-hint">El email y el usuario se definen al crear la cuenta.</span>
         </div>
         <div className="form-group">
-          <label htmlFor="role">Rol asignado</label>
-          <select id="role" value={form.role} onChange={(e) => handleChange('role', e.target.value)}>
-            {ROLES.map((r) => (
-              <option key={r} value={r}>
-                {r}
+          <label htmlFor="roleId">Rol asignado</label>
+          <select id="roleId" value={form.roleId} disabled={isSelf} onChange={(e) => handleChange('roleId', e.target.value)}>
+            {roles.map((r) => (
+              <option key={r.id} value={r.id}>
+                {r.name}
               </option>
             ))}
           </select>
           <span className="field-hint">
-            {form.role === 'Administrador'
-              ? 'Acceso completo: gestión de pacientes, profesionales, tratamientos, insumos, turnos y reglas de alerta.'
-              : 'Acceso operativo: gestión de pacientes y turnos, consulta de tratamientos, profesionales y alertas.'}
+            {isSelf ? 'No podés cambiar tu propio rol (evita quedarte sin acceso por error).' : selectedRole?.description}
           </span>
+        </div>
+        <div className="form-group">
+          <label htmlFor="professionalId">Profesional vinculado</label>
+          <select id="professionalId" value={form.professionalId ?? ''} onChange={(e) => handleChange('professionalId', e.target.value)}>
+            <option value="">Ninguno</option>
+            {availableProfessionals.map((p) => (
+              <option key={p.id} value={p.id}>
+                {p.firstName} {p.lastName}
+              </option>
+            ))}
+          </select>
+          <span className="field-hint">Si la cuenta es de un profesional, la agenda le muestra sus turnos por defecto.</span>
         </div>
         <div className="form-actions">
           <button type="button" className="btn btn-secondary" onClick={onClose}>

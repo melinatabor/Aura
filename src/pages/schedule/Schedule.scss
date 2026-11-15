@@ -76,6 +76,12 @@
     font-size: 13px;
   }
 
+  // Solo lectura (rol sin "schedule.manage"): sin el aspecto atenuado de :disabled
+  &:disabled {
+    cursor: default;
+    color: inherit;
+  }
+
   &.status-confirmado {
     background: $color-success-bg;
   }

@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import PublicLayout from './layouts/PublicLayout.jsx'
 import AppLayout from './layouts/AppLayout.jsx'
 import RequireAuth from './components/RequireAuth/RequireAuth.jsx'
+import RequirePermission from './components/RequirePermission/RequirePermission.jsx'
 
 import Home from './pages/public/Home.jsx'
 import Features from './pages/public/Features.jsx'
@@ -24,6 +25,10 @@ import EmployeesRoles from './pages/employees/EmployeesRoles.jsx'
 import OperationalSettings from './pages/settings/OperationalSettings.jsx'
 import NotFound from './pages/NotFound.jsx'
 
+function guarded(code, element) {
+  return <RequirePermission code={code}>{element}</RequirePermission>
+}
+
 export default function AppRoutes() {
   return (
     <Routes>
@@ -38,17 +43,17 @@ export default function AppRoutes() {
 
       <Route element={<RequireAuth />}>
         <Route element={<AppLayout />}>
-          <Route path="/app/dashboard" element={<Dashboard />} />
-          <Route path="/app/schedule" element={<Schedule />} />
-          <Route path="/app/patients" element={<PatientList />} />
-          <Route path="/app/patients/:id" element={<PatientProfile />} />
-          <Route path="/app/treatments" element={<TreatmentCatalog />} />
-          <Route path="/app/supplies" element={<SupplyControl />} />
-          <Route path="/app/alerts" element={<Alerts />} />
-          <Route path="/app/reports" element={<OperationalReports />} />
-          <Route path="/app/ai-scoring" element={<AIPatientScoring />} />
-          <Route path="/app/employees" element={<EmployeesRoles />} />
-          <Route path="/app/settings" element={<OperationalSettings />} />
+          <Route path="/app/dashboard" element={guarded('dashboard.view', <Dashboard />)} />
+          <Route path="/app/schedule" element={guarded('schedule.view', <Schedule />)} />
+          <Route path="/app/patients" element={guarded('patients.view', <PatientList />)} />
+          <Route path="/app/patients/:id" element={guarded('patients.view', <PatientProfile />)} />
+          <Route path="/app/treatments" element={guarded('treatments.view', <TreatmentCatalog />)} />
+          <Route path="/app/supplies" element={guarded('supplies.view', <SupplyControl />)} />
+          <Route path="/app/alerts" element={guarded('alerts.view', <Alerts />)} />
+          <Route path="/app/reports" element={guarded('reports.view', <OperationalReports />)} />
+          <Route path="/app/ai-scoring" element={guarded('scoring.view', <AIPatientScoring />)} />
+          <Route path="/app/employees" element={guarded('employees.manage', <EmployeesRoles />)} />
+          <Route path="/app/settings" element={guarded('settings.manage', <OperationalSettings />)} />
         </Route>
       </Route>
 

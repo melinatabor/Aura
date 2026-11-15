@@ -2,6 +2,12 @@ import { supabase } from './supabaseClient'
 
 const TABLE = 'treatment_recommendations'
 
+export async function getAll() {
+  const { data, error } = await supabase.from(TABLE).select('*')
+  if (error) throw error
+  return data
+}
+
 export async function getForTreatment(treatmentOriginId) {
   const { data, error } = await supabase.from(TABLE).select('*').eq('treatment_origin_id', treatmentOriginId)
   if (error) throw error

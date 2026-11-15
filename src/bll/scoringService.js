@@ -76,6 +76,11 @@ export async function getScores() {
     .sort((a, b) => b.score - a.score)
 }
 
+export async function getScoreFor(patientId) {
+  const scores = await getScores()
+  return scores.find((s) => s.patientId === patientId) ?? null
+}
+
 // El puntaje sigue siendo la fórmula (determinística, explicable, gratis);
 // esto genera además una recomendación en lenguaje natural con un modelo de
 // IA real (Google Gemini), a pedido, vía una Supabase Edge Function que guarda la

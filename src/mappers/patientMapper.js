@@ -10,6 +10,7 @@ export function toPatient(row) {
     address: row.address,
     registeredAt: row.registered_at,
     status: row.status,
+    internalNotes: row.internal_notes ?? '',
   }
 }
 

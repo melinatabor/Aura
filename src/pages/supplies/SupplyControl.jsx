@@ -12,7 +12,8 @@ const priceFormatter = new Intl.NumberFormat('es-AR', { style: 'currency', curre
 const dateFormatter = new Intl.DateTimeFormat('es-AR', { dateStyle: 'short', timeStyle: 'short' })
 
 export default function SupplyControl() {
-  const { user } = useAuth()
+  const { user, can } = useAuth()
+  const canManage = can('supplies.manage')
   const [supplies, setSupplies] = useState([])
   const [search, setSearch] = useState('')
   const [modal, setModal] = useState(null)
@@ -70,14 +71,16 @@ export default function SupplyControl() {
           <h1>Insumos</h1>
           <p>Controlá el stock de productos utilizados en los tratamientos del centro.</p>
         </div>
-        <div className="table-actions">
-          <button type="button" className="btn btn-secondary" onClick={handleExport} disabled={exporting}>
-            {exporting ? 'Exportando...' : 'Exportar stock'}
-          </button>
-          <button type="button" className="btn btn-primary" onClick={() => setModal({ mode: 'create' })}>
-            + Nuevo insumo
-          </button>
-        </div>
+        {canManage && (
+          <div className="table-actions">
+            <button type="button" className="btn btn-secondary" onClick={handleExport} disabled={exporting}>
+              {exporting ? 'Exportando...' : 'Exportar stock'}
+            </button>
+            <button type="button" className="btn btn-primary" onClick={() => setModal({ mode: 'create' })}>
+              + Nuevo insumo
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="stat-grid">
@@ -122,11 +125,13 @@ export default function SupplyControl() {
                     </td>
                     <td>{low ? <Badge variant="danger">Stock bajo</Badge> : <Badge>{s.status}</Badge>}</td>
                     <td>
-                      <div className="table-actions">
-                        <button type="button" className="btn btn-secondary btn-sm" onClick={() => setModal({ mode: 'edit', supply: s })}>
-                          Editar
-                        </button>
-                      </div>
+                      {canManage && (
+                        <div className="table-actions">
+                          <button type="button" className="btn btn-secondary btn-sm" onClick={() => setModal({ mode: 'edit', supply: s })}>
+                            Editar
+                          </button>
+                        </div>
+                      )}
                     </td>
                   </tr>
                 )

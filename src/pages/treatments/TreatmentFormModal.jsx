@@ -63,9 +63,9 @@ export default function TreatmentFormModal({ treatment, onSave, onClose }) {
 
         <div className="form-group">
           <label>Tratamientos recomendados junto con este</label>
-          <div className="tratamiento-insumos-picker">
+          <div className="treatment-supplies-picker">
             {otherTreatments.map((t) => (
-              <label key={t.id} className="tratamiento-insumo-check">
+              <label key={t.id} className="treatment-supply-check">
                 <input type="checkbox" checked={selectedIds.includes(t.id)} onChange={() => toggleRecommended(t.id)} />
                 {t.name}
               </label>

@@ -16,7 +16,7 @@ const dateFormatter = new Intl.DateTimeFormat('es-AR', { dateStyle: 'short', tim
 const TREATMENT_COLORS = ['#1f8a5c', '#c1652c', '#6a3fa0', '#c99a1e', '#b23a5c', '#356fa5']
 
 export default function OperationalReports() {
-  const { user } = useAuth()
+  const { user, can } = useAuth()
   const [reports, setReports] = useState(null)
   const [history, setHistory] = useState([])
   const [trend, setTrend] = useState(null)
@@ -65,9 +65,11 @@ export default function OperationalReports() {
           <h1>Reportes operativos</h1>
           <p>Consultá turnos, tratamientos y desempeño del equipo con los datos actuales del sistema.</p>
         </div>
-        <button type="button" className="btn btn-primary" onClick={handleExport} disabled={exporting}>
-          {exporting ? 'Exportando...' : 'Exportar reporte'}
-        </button>
+        {can('reports.export') && (
+          <button type="button" className="btn btn-primary" onClick={handleExport} disabled={exporting}>
+            {exporting ? 'Exportando...' : 'Exportar reporte'}
+          </button>
+        )}
       </div>
 
       <div className="stat-grid">

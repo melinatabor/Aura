@@ -21,6 +21,10 @@ export async function update(id, data) {
   return toPatient(row)
 }
 
+export async function updateNotes(id, internalNotes) {
+  await patientsDal.update(id, { internal_notes: internalNotes })
+}
+
 export async function setStatus(id, status) {
   await patientsDal.update(id, { status })
   return true

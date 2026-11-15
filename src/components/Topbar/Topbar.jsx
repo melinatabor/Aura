@@ -17,7 +17,10 @@ export default function Topbar({ title }) {
         <h1>{title}</h1>
       </div>
       <div className="topbar-user">
-        <span>Hola, {user?.name ?? 'María'}</span>
+        <span>
+          Hola, {user?.name}
+          {user?.roleName && <span className="topbar-role">{user.roleName}</span>}
+        </span>
         <button type="button" className="btn btn-ghost btn-sm" onClick={handleLogout}>
           Cerrar sesión
         </button>
