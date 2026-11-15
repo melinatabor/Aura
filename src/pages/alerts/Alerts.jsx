@@ -1,3 +1,4 @@
+import { AlertTriangle, Bell, Clock } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import StatCard from '../../components/StatCard/StatCard.jsx'
@@ -111,9 +112,9 @@ export default function Alerts() {
       </div>
 
       <div className="stat-grid">
-        <StatCard label="Alertas abiertas" value={openAlerts.length} />
-        <StatCard label="Prioridad alta" value={highPriority} hint={highPriority > 0 ? 'Atender primero' : 'Nada urgente'} />
-        <StatCard label="En seguimiento" value={inProgress} hint="Atendidas, esperando resolución" />
+        <StatCard label="Alertas abiertas" icon={Bell} value={openAlerts.length} />
+        <StatCard label="Prioridad alta" icon={AlertTriangle} value={highPriority} hint={highPriority > 0 ? 'Atender primero' : 'Nada urgente'} />
+        <StatCard label="En seguimiento" icon={Clock} value={inProgress} hint="Atendidas, esperando resolución" />
       </div>
 
       <div className="page-tabs" role="tablist" style={{ marginTop: 24 }}>

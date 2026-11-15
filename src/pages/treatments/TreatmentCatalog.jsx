@@ -1,3 +1,4 @@
+import { CircleCheck, Flower2, Wallet } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import StatCard from '../../components/StatCard/StatCard.jsx'
 import Badge from '../../components/Badge/Badge.jsx'
@@ -72,10 +73,10 @@ export default function TreatmentCatalog() {
       </div>
 
       <div className="stat-grid">
-        <StatCard label="Tratamientos totales" value={treatments.length} />
-        <StatCard label="Activos" value={active.length} />
+        <StatCard label="Tratamientos totales" icon={Flower2} value={treatments.length} />
+        <StatCard label="Activos" icon={CircleCheck} value={active.length} />
         <StatCard
-          label="Precio promedio"
+          label="Precio promedio" icon={Wallet}
           value={active.length ? priceFormatter.format(active.reduce((s, t) => s + t.price, 0) / active.length) : '—'}
         />
       </div>

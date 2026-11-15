@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Sparkles, MessageSquareText, Check } from 'lucide-react'
+import { Check, Gauge, MessageSquareText, Sparkles, TrendingUp, Users } from 'lucide-react'
 import useCountUp from '../../hooks/useCountUp'
 import Badge from '../../components/Badge/Badge.jsx'
 import StatCard from '../../components/StatCard/StatCard.jsx'
@@ -220,9 +220,9 @@ export default function AIPatientScoring() {
       </div>
 
       <div className="stat-grid">
-        <StatCard label="Clientes evaluados" value={rows.length} />
-        <StatCard label="Puntaje promedio" value={average} />
-        <StatCard label="Prioridad alta" value={rows.filter((r) => r.priority === 'Alta').length} />
+        <StatCard label="Clientes evaluados" icon={Users} value={rows.length} />
+        <StatCard label="Puntaje promedio" icon={Gauge} value={average} />
+        <StatCard label="Prioridad alta" icon={TrendingUp} value={rows.filter((r) => r.priority === 'Alta').length} />
       </div>
 
       <section className="aura-card scoring-chart-card">

@@ -1,3 +1,4 @@
+import { UserCheck, UserX, Users } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import StatCard from '../../components/StatCard/StatCard.jsx'
@@ -76,9 +77,9 @@ export default function PatientList() {
       </div>
 
       <div className="stat-grid">
-        <StatCard label="Clientes totales" value={patients.length} />
-        <StatCard label="Clientes activos" value={active} />
-        <StatCard label="Clientes inactivos" value={inactive} />
+        <StatCard label="Clientes totales" icon={Users} value={patients.length} />
+        <StatCard label="Clientes activos" icon={UserCheck} value={active} />
+        <StatCard label="Clientes inactivos" icon={UserX} value={inactive} />
       </div>
 
       <div className="list-toolbar">

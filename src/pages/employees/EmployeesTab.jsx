@@ -1,3 +1,4 @@
+import { UserCheck, UserX, Users } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import Badge from '../../components/Badge/Badge.jsx'
 import StatCard from '../../components/StatCard/StatCard.jsx'
@@ -50,9 +51,9 @@ export default function EmployeesTab() {
   return (
     <>
       <div className="stat-grid">
-        <StatCard label="Empleados" value={employees.length} />
-        <StatCard label="Activos" value={employees.length - pending} />
-        <StatCard label="Inactivos o pendientes" value={pending} hint={pending > 0 ? 'Revisá si hay que activarlos' : 'Nada pendiente'} />
+        <StatCard label="Empleados" icon={Users} value={employees.length} />
+        <StatCard label="Activos" icon={UserCheck} value={employees.length - pending} />
+        <StatCard label="Inactivos o pendientes" icon={UserX} value={pending} hint={pending > 0 ? 'Revisá si hay que activarlos' : 'Nada pendiente'} />
       </div>
 
       {employees.length === 0 ? (

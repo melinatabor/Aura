@@ -1,3 +1,4 @@
+import { CalendarCheck, Users, Wallet } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import StatCard from '../../components/StatCard/StatCard.jsx'
 import Modal from '../../components/Modal/Modal.jsx'
@@ -73,9 +74,9 @@ export default function OperationalReports() {
       </div>
 
       <div className="stat-grid">
-        <StatCard label="Ingresos por turnos realizados" value={priceFormatter.format(reports.totalRevenue)} />
-        <StatCard label="Turnos realizados" value={reports.completedAppointments} />
-        <StatCard label="Clientes activos" value={reports.activePatients} />
+        <StatCard label="Ingresos por turnos realizados" icon={Wallet} value={priceFormatter.format(reports.totalRevenue)} />
+        <StatCard label="Turnos realizados" icon={CalendarCheck} value={reports.completedAppointments} />
+        <StatCard label="Clientes activos" icon={Users} value={reports.activePatients} />
       </div>
 
       <div className="reports-columns">

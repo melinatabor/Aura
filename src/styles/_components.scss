@@ -7,7 +7,7 @@
   justify-content: center;
   gap: $space-2;
   padding: 10px 18px;
-  border-radius: $radius-md;
+  border-radius: 12px;
   border: 1px solid transparent;
   font-size: 14px;
   font-weight: 600;
@@ -45,6 +45,8 @@
 
   &:hover:not(:disabled) {
     background: $color-surface-alt;
+    border-color: $color-primary-light;
+    transform: translateY(-1px);
   }
 }
 
@@ -110,16 +112,47 @@
     border-color: darken($color-border, 6%);
   }
 
+  animation: page-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+
+  .stat-icon {
+    position: absolute;
+    top: $space-4;
+    right: $space-4;
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    background: $color-success-bg;
+    color: $color-primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+  }
+
+  &:hover .stat-icon {
+    background: $color-primary;
+    color: $color-text-inverse;
+    transform: rotate(-6deg) scale(1.08);
+  }
+
   .stat-label {
     font-size: 13px;
     color: $color-text-muted;
     margin-bottom: $space-1;
+    padding-right: 44px;
   }
 
   .stat-value {
-    font-size: 28px;
-    font-weight: 700;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
     color: $color-text;
+    font-variant-numeric: tabular-nums;
   }
 
   .stat-hint {
@@ -207,6 +240,34 @@
   tbody tr:hover {
     background: rgba($color-surface-alt, 0.7);
   }
+
+  // Las filas aparecen en cascada al cargar
+  tbody tr {
+    animation: page-rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+    @for $i from 1 through 12 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{0.03 * $i}s;
+      }
+    }
+  }
+}
+
+.stat-grid > .stat-card:nth-child(2) {
+  animation-delay: 0.07s;
+}
+
+.stat-grid > .stat-card:nth-child(3) {
+  animation-delay: 0.14s;
+}
+
+// Buscadores: lupa dentro del campo
+input.search-input:not([type='checkbox']):not([type='radio']),
+input[placeholder^='Buscar']:not([type='checkbox']):not([type='radio']) {
+  padding-left: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%236f6b60' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 13px center;
 }
 
 .table-actions {
@@ -301,15 +362,18 @@
 .page-header {
   margin-bottom: $space-5;
 
+  animation: page-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+
   h1 {
-    font-size: 26px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.025em;
   }
 
   p {
     color: $color-text-muted;
     margin-top: $space-1;
+    font-size: 15px;
   }
 }
 
@@ -526,6 +590,14 @@
 
 @media (prefers-reduced-motion: reduce) {
   .lucide-sparkles {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stat-card,
+  .aura-table tbody tr,
+  .page-header {
     animation: none;
   }
 }

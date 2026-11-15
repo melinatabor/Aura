@@ -1,3 +1,4 @@
+import { AlertTriangle, Package, Wallet } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import StatCard from '../../components/StatCard/StatCard.jsx'
 import Badge from '../../components/Badge/Badge.jsx'
@@ -84,9 +85,9 @@ export default function SupplyControl() {
       </div>
 
       <div className="stat-grid">
-        <StatCard label="Insumos registrados" value={supplies.length} />
-        <StatCard label="Con stock bajo" value={lowStock.length} hint={lowStock.length > 0 ? 'Requieren reposición' : 'Todo en orden'} />
-        <StatCard label="Valor de stock estimado" value={priceFormatter.format(totalValue)} />
+        <StatCard label="Insumos registrados" icon={Package} value={supplies.length} />
+        <StatCard label="Con stock bajo" icon={AlertTriangle} value={lowStock.length} hint={lowStock.length > 0 ? 'Requieren reposición' : 'Todo en orden'} />
+        <StatCard label="Valor de stock estimado" icon={Wallet} value={priceFormatter.format(totalValue)} />
       </div>
 
       <div className="list-toolbar">

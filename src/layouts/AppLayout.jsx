@@ -34,10 +34,6 @@ export default function AppLayout() {
         <div className="app-layout-content">
           <Outlet />
         </div>
-        <p className="app-layout-footnote">
-          Todos los módulos trabajan con datos reales en Supabase, con permisos por rol aplicados también en la base de
-          datos.
-        </p>
       </div>
     </div>
   )
