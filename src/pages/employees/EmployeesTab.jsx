@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import Badge from '../../components/Badge/Badge.jsx'
 import StatCard from '../../components/StatCard/StatCard.jsx'
 import EmptyState from '../../components/EmptyState/EmptyState.jsx'
+import TableSkeleton from '../../components/TableSkeleton/TableSkeleton.jsx'
 import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog.jsx'
 import EmployeeFormModal from './EmployeeFormModal.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
@@ -13,6 +14,7 @@ import * as professionalsService from '../../bll/professionalsService'
 export default function EmployeesTab() {
   const { user } = useAuth()
   const [employees, setEmployees] = useState([])
+  const [loaded, setLoaded] = useState(false)
   const [roles, setRoles] = useState([])
   const [professionals, setProfessionals] = useState([])
   const [editing, setEditing] = useState(null)
@@ -23,6 +25,7 @@ export default function EmployeesTab() {
     setEmployees(e)
     setRoles(r)
     setProfessionals(p)
+    setLoaded(true)
   }
 
   useEffect(() => {
@@ -56,7 +59,11 @@ export default function EmployeesTab() {
         <StatCard label="Inactivos o pendientes" icon={UserX} value={pending} hint={pending > 0 ? 'Revisá si hay que activarlos' : 'Nada pendiente'} />
       </div>
 
-      {employees.length === 0 ? (
+      {!loaded ? (
+        <div style={{ marginTop: 24 }}>
+          <TableSkeleton columns={7} />
+        </div>
+      ) : employees.length === 0 ? (
         <EmptyState
           title="Todavía no hay empleados registrados"
           description="Generá una invitación desde la pestaña Invitaciones y compartí el enlace."

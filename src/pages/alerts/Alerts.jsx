@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import StatCard from '../../components/StatCard/StatCard.jsx'
 import Badge from '../../components/Badge/Badge.jsx'
 import EmptyState from '../../components/EmptyState/EmptyState.jsx'
+import TableSkeleton from '../../components/TableSkeleton/TableSkeleton.jsx'
 import ReminderModal from './ReminderModal.jsx'
 import AdministrativeAlertModal from './AdministrativeAlertModal.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
@@ -28,6 +29,7 @@ export default function Alerts() {
   const canManage = can('alerts.manage')
   const [tab, setTab] = useState('open')
   const [openAlerts, setOpenAlerts] = useState([])
+  const [loaded, setLoaded] = useState(false)
   const [resolvedAlerts, setResolvedAlerts] = useState([])
   const [reminders, setReminders] = useState([])
   const [patients, setPatients] = useState([])
@@ -52,6 +54,7 @@ export default function Alerts() {
     setPatients(p)
     setTreatments(t)
     setCenterName(workspace.name)
+    setLoaded(true)
   }
 
   useEffect(() => {
@@ -178,7 +181,9 @@ export default function Alerts() {
             )}
           </div>
 
-          {visibleAlerts.length === 0 ? (
+          {!loaded ? (
+            <TableSkeleton columns={6} />
+          ) : visibleAlerts.length === 0 ? (
             <EmptyState
               title={tab === 'open' ? 'No hay alertas abiertas' : 'Todavía no hay alertas resueltas'}
               description={tab === 'open' ? 'Cuando se detecte una situación relevante, aparecerá acá.' : undefined}

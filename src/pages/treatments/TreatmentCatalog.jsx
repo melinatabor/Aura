@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import StatCard from '../../components/StatCard/StatCard.jsx'
 import Badge from '../../components/Badge/Badge.jsx'
 import EmptyState from '../../components/EmptyState/EmptyState.jsx'
+import TableSkeleton from '../../components/TableSkeleton/TableSkeleton.jsx'
 import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog.jsx'
 import TreatmentFormModal from './TreatmentFormModal.jsx'
 import NewTreatmentModal from './NewTreatmentModal.jsx'
@@ -16,6 +17,7 @@ export default function TreatmentCatalog() {
   const { can } = useAuth()
   const canManage = can('treatments.manage')
   const [treatments, setTreatments] = useState([])
+  const [loaded, setLoaded] = useState(false)
   const [search, setSearch] = useState('')
   const [newModal, setNewModal] = useState(false)
   const [editing, setEditing] = useState(null)
@@ -23,6 +25,7 @@ export default function TreatmentCatalog() {
 
   async function reload() {
     setTreatments(await treatmentsService.getAll())
+    setLoaded(true)
   }
 
   useEffect(() => {
@@ -85,7 +88,9 @@ export default function TreatmentCatalog() {
         <input className="search-input" placeholder="Buscar tratamiento..." value={search} onChange={(e) => setSearch(e.target.value)} />
       </div>
 
-      {filtered.length === 0 ? (
+      {!loaded ? (
+        <TableSkeleton columns={6} />
+      ) : filtered.length === 0 ? (
         <EmptyState title="No hay tratamientos que coincidan con la búsqueda" />
       ) : (
         <div className="aura-table-wrap">

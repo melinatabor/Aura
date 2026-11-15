@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import StatCard from '../../components/StatCard/StatCard.jsx'
 import Badge from '../../components/Badge/Badge.jsx'
 import EmptyState from '../../components/EmptyState/EmptyState.jsx'
+import TableSkeleton from '../../components/TableSkeleton/TableSkeleton.jsx'
 import Modal from '../../components/Modal/Modal.jsx'
 import SupplyFormModal from './SupplyFormModal.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
@@ -16,6 +17,7 @@ export default function SupplyControl() {
   const { user, can } = useAuth()
   const canManage = can('supplies.manage')
   const [supplies, setSupplies] = useState([])
+  const [loaded, setLoaded] = useState(false)
   const [search, setSearch] = useState('')
   const [modal, setModal] = useState(null)
   const [history, setHistory] = useState([])
@@ -24,6 +26,7 @@ export default function SupplyControl() {
 
   async function reload() {
     setSupplies(await suppliesService.getAll())
+    setLoaded(true)
   }
 
   async function loadHistory() {
@@ -94,7 +97,9 @@ export default function SupplyControl() {
         <input className="search-input" placeholder="Buscar insumo..." value={search} onChange={(e) => setSearch(e.target.value)} />
       </div>
 
-      {filtered.length === 0 ? (
+      {!loaded ? (
+        <TableSkeleton columns={6} />
+      ) : filtered.length === 0 ? (
         <EmptyState title="No hay insumos que coincidan con la búsqueda" />
       ) : (
         <div className="aura-table-wrap">

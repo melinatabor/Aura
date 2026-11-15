@@ -768,3 +768,15 @@ input[placeholder^='Buscar']:not([type='checkbox']):not([type='radio']) {
     animation: none;
   }
 }
+
+.table-skeleton {
+  td,
+  th {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  tbody tr:hover {
+    background: transparent;
+  }
+}

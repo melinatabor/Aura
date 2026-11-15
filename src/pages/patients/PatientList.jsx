@@ -4,6 +4,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import StatCard from '../../components/StatCard/StatCard.jsx'
 import Badge from '../../components/Badge/Badge.jsx'
 import EmptyState from '../../components/EmptyState/EmptyState.jsx'
+import TableSkeleton from '../../components/TableSkeleton/TableSkeleton.jsx'
 import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog.jsx'
 import PatientFormModal from './PatientFormModal.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
@@ -14,6 +15,7 @@ export default function PatientList() {
   const canManage = can('patients.manage')
   const [searchParams, setSearchParams] = useSearchParams()
   const [patients, setPatients] = useState([])
+  const [loaded, setLoaded] = useState(false)
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState('Todos')
   const [modal, setModal] = useState(searchParams.get('new') === '1' && canManage ? { mode: 'create' } : null)
@@ -21,6 +23,7 @@ export default function PatientList() {
 
   async function reload() {
     setPatients(await patientsService.getAll())
+    setLoaded(true)
   }
 
   useEffect(() => {
@@ -96,7 +99,9 @@ export default function PatientList() {
         </select>
       </div>
 
-      {filtered.length === 0 ? (
+      {!loaded ? (
+        <TableSkeleton columns={6} />
+      ) : filtered.length === 0 ? (
         <EmptyState title="No hay clientes que coincidan con la búsqueda" />
       ) : (
         <div className="aura-table-wrap">
