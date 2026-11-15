@@ -11,9 +11,11 @@
   color: $color-text-muted;
 }
 
-.employees-treatments-cell {
-  max-width: 280px;
+.aura-table .employees-treatments-cell {
+  min-width: 220px;
+  max-width: 320px;
   font-size: 13px;
+  white-space: normal;
 }
 
 .roles-matrix {

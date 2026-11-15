@@ -202,7 +202,7 @@ export default function Alerts() {
                         <Badge>{alert.priority}</Badge>
                       </td>
                       <td>{alert.type}</td>
-                      <td>
+                      <td className="alerts-detail-cell">
                         <strong>{alert.title}</strong>
                         <p className="alerts-detail">{alert.detail}</p>
                       </td>

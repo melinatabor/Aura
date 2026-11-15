@@ -1,5 +1,12 @@
 @use '../../styles/variables' as *;
 
+.aura-table .alerts-detail-cell,
+.aura-table .alerts-message-cell {
+  white-space: normal;
+  min-width: 240px;
+  max-width: 420px;
+}
+
 .alerts-detail {
   margin: 2px 0 0;
   font-size: 12px;
@@ -7,7 +14,6 @@
 }
 
 .alerts-message-cell {
-  max-width: 420px;
   font-size: 13px;
   color: $color-text-muted;
 }

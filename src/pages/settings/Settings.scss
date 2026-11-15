@@ -23,17 +23,19 @@
 
 .settings-schedule-row {
   display: grid;
-  grid-template-columns: 110px 1fr auto 1fr;
+  grid-template-columns: 92px minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  gap: $space-2;
+  gap: 6px;
 
   input[type='time'] {
-    padding: 6px 8px;
+    width: 100%;
+    min-width: 0;
+    padding: 6px 4px;
     border: 1px solid $color-border;
     border-radius: $radius-sm;
     background: $color-surface;
     color: $color-text;
-    min-width: 0;
+    font-size: 13px;
   }
 
   &.is-closed input[type='time'] {

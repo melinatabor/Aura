@@ -12,6 +12,9 @@ import * as professionalsService from '../../bll/professionalsService'
 import * as scoringService from '../../bll/scoringService'
 import './PatientProfile.scss'
 
+// Igual que en AI Patient Scoring: prioridad alta = cliente valioso (verde)
+const PRIORITY_VARIANT = { Alta: 'success', Media: 'warning', Baja: 'danger' }
+
 export default function PatientProfile() {
   const { can } = useAuth()
   const { id } = useParams()
@@ -221,7 +224,7 @@ export default function PatientProfile() {
             <div className="profile-score">
               <div className="profile-score-header">
                 <span>Prioridad</span>
-                <Badge>{score.priority}</Badge>
+                <Badge variant={PRIORITY_VARIANT[score.priority]}>{score.priority}</Badge>
               </div>
               <strong>{score.score}/100</strong>
               <p>{score.reason}</p>
