@@ -12,18 +12,15 @@
 }
 
 .app-layout-content {
-  padding: $space-6 $space-6 $space-5;
-  max-width: 1240px;
-  margin: 0 auto;
+  padding: $space-6 clamp($space-5, 3vw, $space-8) $space-5;
+  width: 100%;
   animation: page-enter 0.35s ease both;
 }
 
 .app-layout-footnote {
-  padding: 0 $space-6 $space-6;
+  padding: 0 clamp($space-5, 3vw, $space-8) $space-6;
   font-size: 12px;
   color: $color-text-muted;
-  max-width: 1240px;
-  margin: 0 auto;
   text-align: center;
 }
 
