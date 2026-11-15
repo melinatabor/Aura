@@ -1,0 +1,70 @@
+@use '../../styles/variables' as *;
+
+.welcome-page {
+  max-width: 760px;
+}
+
+.welcome-hero {
+  text-align: center;
+  margin-bottom: $space-5;
+
+  h1 {
+    font-size: 22px;
+    margin-bottom: $space-2;
+  }
+
+  p {
+    color: $color-text-muted;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}
+
+.welcome-steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  margin-bottom: $space-5;
+}
+
+.welcome-step {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+
+  &.is-done {
+    background: $color-success-bg;
+    border-color: transparent;
+  }
+}
+
+.welcome-step-number {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-surface-alt;
+  color: $color-primary;
+  font-weight: 700;
+
+  .is-done & {
+    background: $color-success;
+    color: $color-text-inverse;
+  }
+}
+
+.welcome-step-body {
+  flex: 1;
+
+  p {
+    margin: 2px 0;
+    font-size: 13px;
+    color: $color-text-muted;
+  }
+}

@@ -23,6 +23,11 @@ import OperationalReports from './pages/reports/OperationalReports.jsx'
 import AIPatientScoring from './pages/scoring/AIPatientScoring.jsx'
 import EmployeesRoles from './pages/employees/EmployeesRoles.jsx'
 import OperationalSettings from './pages/settings/OperationalSettings.jsx'
+import ForgotPassword from './pages/auth/ForgotPassword.jsx'
+import Terms from './pages/public/Terms.jsx'
+import Privacy from './pages/public/Privacy.jsx'
+import InitialSetup from './pages/setup/InitialSetup.jsx'
+import Welcome from './pages/setup/Welcome.jsx'
 import NotFound from './pages/NotFound.jsx'
 
 function guarded(code, element) {
@@ -39,6 +44,9 @@ export default function AppRoutes() {
         <Route path="/contact/confirmation" element={<ContactConfirmation />} />
         <Route path="/login" element={<Login />} />
         <Route path="/activate-account" element={<ActivateAccount />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
       </Route>
 
       <Route element={<RequireAuth />}>
@@ -54,6 +62,8 @@ export default function AppRoutes() {
           <Route path="/app/ai-scoring" element={guarded('scoring.view', <AIPatientScoring />)} />
           <Route path="/app/employees" element={guarded('employees.manage', <EmployeesRoles />)} />
           <Route path="/app/settings" element={guarded('settings.manage', <OperationalSettings />)} />
+          <Route path="/app/initial-setup" element={guarded('settings.manage', <InitialSetup />)} />
+          <Route path="/app/welcome" element={guarded('settings.manage', <Welcome />)} />
         </Route>
       </Route>
 

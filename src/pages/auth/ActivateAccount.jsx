@@ -14,6 +14,7 @@ export default function ActivateAccount() {
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const [accepted, setAccepted] = useState(false)
 
   useEffect(() => {
     if (!token) return
@@ -129,8 +130,15 @@ export default function ActivateAccount() {
               onChange={(e) => handleChange('password', e.target.value)}
             />
           </div>
+          <label className="auth-terms">
+            <input type="checkbox" required checked={accepted} onChange={(e) => setAccepted(e.target.checked)} />
+            <span>
+              Acepto los <Link to="/terms" target="_blank">términos y condiciones</Link> y la{' '}
+              <Link to="/privacy" target="_blank">política de privacidad</Link>.
+            </span>
+          </label>
           {error && <p className="field-error">{error}</p>}
-          <button type="submit" className="btn btn-primary auth-submit" disabled={submitting}>
+          <button type="submit" className="btn btn-primary auth-submit" disabled={submitting || !accepted}>
             {submitting ? 'Creando cuenta...' : 'Crear cuenta'}
           </button>
         </form>

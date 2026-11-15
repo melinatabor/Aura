@@ -64,3 +64,23 @@
     grid-template-columns: 1fr;
   }
 }
+
+.dashboard-setup-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-4;
+  flex-wrap: wrap;
+  margin-bottom: $space-5;
+  padding: $space-4 $space-5;
+  border: 1px solid $color-border;
+  border-left: 4px solid $color-accent;
+  border-radius: $radius-lg;
+  background: $color-warning-bg;
+
+  p {
+    margin-top: 2px;
+    font-size: 13px;
+    color: $color-text-muted;
+  }
+}

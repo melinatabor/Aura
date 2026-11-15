@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import './Footer.scss'
 
 export default function Footer() {
@@ -5,10 +6,8 @@ export default function Footer() {
     <footer className="public-footer">
       <span>AURA © 2026. Todos los derechos reservados.</span>
       <div className="public-footer-links">
-        <span>Aviso legal</span>
-        <span>Privacidad</span>
-        <span>Cookies</span>
-        <span>Términos</span>
+        <Link to="/privacy">Privacidad</Link>
+        <Link to="/terms">Términos y condiciones</Link>
       </div>
     </footer>
   )

@@ -6,6 +6,7 @@ export function toWorkspace(row) {
     businessPhone: row.business_phone,
     address: row.address,
     allowAppointmentOverlap: row.allow_appointment_overlap,
+    setupCompleted: row.setup_completed ?? false,
   }
 }
 
@@ -17,6 +18,7 @@ export function toWorkspaceRow(workspace) {
     business_phone: workspace.businessPhone,
     address: workspace.address,
     allow_appointment_overlap: workspace.allowAppointmentOverlap,
+    ...(workspace.setupCompleted === true ? { setup_completed: workspace.setupCompleted } : {}),
   }
 }
 

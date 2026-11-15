@@ -63,6 +63,9 @@ export default function Login() {
           <button type="submit" className="btn btn-primary auth-submit" disabled={submitting}>
             {submitting ? 'Ingresando...' : 'Iniciar sesión'}
           </button>
+          <p className="auth-footer" style={{ marginTop: 12 }}>
+            <Link to="/forgot-password">¿Olvidaste tu contraseña?</Link>
+          </p>
         </form>
 
         <p className="auth-footer">

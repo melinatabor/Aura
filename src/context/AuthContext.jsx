@@ -89,6 +89,27 @@ export function AuthProvider({ children }) {
     await supabase.auth.signOut()
   }
 
+  // Recuperación de contraseña en 3 pasos: correo -> código -> contraseña nueva.
+  // Si el mail llega con enlace en vez de código, Supabase abre una sesión de
+  // recuperación y la pantalla salta directo al paso 3.
+  async function requestPasswordReset(email) {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/forgot-password`,
+    })
+    if (error) throw error
+  }
+
+  async function verifyRecoveryCode(email, token) {
+    const { error } = await supabase.auth.verifyOtp({ email, token, type: 'recovery' })
+    if (error) throw error
+  }
+
+  async function updatePassword(password) {
+    const { error } = await supabase.auth.updateUser({ password })
+    if (error) throw error
+    await supabase.auth.signOut()
+  }
+
   async function logout() {
     await supabase.auth.signOut()
   }
@@ -96,7 +117,7 @@ export function AuthProvider({ children }) {
   const can = useCallback((code) => Boolean(user?.permissions.includes(code)), [user])
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, signup, logout, can }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, loading, login, signup, logout, can, requestPasswordReset, verifyRecoveryCode, updatePassword }}>{children}</AuthContext.Provider>
   )
 }
 

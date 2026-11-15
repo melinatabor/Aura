@@ -8,23 +8,27 @@ import * as appointmentsService from '../../bll/appointmentsService'
 import * as treatmentsService from '../../bll/treatmentsService'
 import * as alertsService from '../../bll/alertsService'
 import * as professionalsService from '../../bll/professionalsService'
+import * as workspaceService from '../../bll/workspaceService'
+import { useAuth } from '../../context/AuthContext.jsx'
 import './Dashboard.scss'
 
 export default function Dashboard() {
+  const { can } = useAuth()
   const [data, setData] = useState(null)
 
   useEffect(() => {
     let active = true
     async function load() {
-      const [patients, todayAppointments, treatments, alerts, professionals] = await Promise.all([
+      const [patients, todayAppointments, treatments, alerts, professionals, workspace] = await Promise.all([
         patientsService.getAll(),
         appointmentsService.getToday(),
         treatmentsService.getActive(),
         alertsService.getOpenAlerts(),
         professionalsService.getAll(),
+        workspaceService.get(),
       ])
       if (!active) return
-      setData({ patients, todayAppointments, treatments, alerts, professionals })
+      setData({ patients, todayAppointments, treatments, alerts, professionals, workspace })
     }
     load()
     return () => {
@@ -34,7 +38,7 @@ export default function Dashboard() {
 
   if (!data) return null
 
-  const { patients, todayAppointments, treatments, alerts, professionals } = data
+  const { patients, todayAppointments, treatments, alerts, professionals, workspace } = data
   const activePatients = patients.filter((p) => p.status === 'Activo')
   const pendingFollowUp = patients
     .filter((p) => p.status === 'Activo' && !todayAppointments.some((a) => a.patientId === p.id))
@@ -56,6 +60,18 @@ export default function Dashboard() {
         <h1>Panel principal</h1>
         <p>Resumen general de la actividad de tu centro para hoy.</p>
       </div>
+
+      {can('settings.manage') && !workspace.setupCompleted && (
+        <div className="dashboard-setup-banner">
+          <div>
+            <strong>Terminá de configurar tu espacio de trabajo</strong>
+            <p>Definí tus horarios de atención y las reglas de seguimiento para empezar a operar.</p>
+          </div>
+          <Link to="/app/initial-setup" className="btn btn-primary btn-sm">
+            Configuración inicial
+          </Link>
+        </div>
+      )}
 
       <div className="stat-grid">
         <StatCard label="Pacientes activos" value={activePatients.length} />

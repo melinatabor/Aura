@@ -14,6 +14,8 @@ const TITLES = [
   { prefix: '/app/ai-scoring', title: 'AI Patient Scoring' },
   { prefix: '/app/employees', title: 'Empleados y roles' },
   { prefix: '/app/settings', title: 'Configuración' },
+  { prefix: '/app/initial-setup', title: 'Configuración inicial' },
+  { prefix: '/app/welcome', title: 'Bienvenida' },
 ]
 
 function resolveTitle(pathname) {
