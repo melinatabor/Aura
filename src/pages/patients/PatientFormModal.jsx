@@ -13,14 +13,24 @@ const EMPTY = {
 
 export default function PatientFormModal({ patient, onSave, onClose }) {
   const [form, setForm] = useState(patient ? { ...patient } : { ...EMPTY })
+  const [error, setError] = useState('')
+  const [saving, setSaving] = useState(false)
 
   function handleChange(field, value) {
     setForm((prev) => ({ ...prev, [field]: value }))
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    onSave(form)
+    setError('')
+    setSaving(true)
+    try {
+      await onSave(form)
+    } catch (err) {
+      // 23505 = violación de unicidad: el DNI ya está cargado en otro cliente
+      setError(err?.code === '23505' ? 'Ya existe un cliente con ese DNI.' : 'No se pudo guardar el cliente. Intentá de nuevo.')
+      setSaving(false)
+    }
   }
 
   return (
@@ -65,12 +75,13 @@ export default function PatientFormModal({ patient, onSave, onClose }) {
           <label htmlFor="address">Dirección</label>
           <input id="address" value={form.address} onChange={(e) => handleChange('address', e.target.value)} />
         </div>
+        {error && <p className="field-error">{error}</p>}
         <div className="form-actions">
           <button type="button" className="btn btn-secondary" onClick={onClose}>
             Cancelar
           </button>
-          <button type="submit" className="btn btn-primary">
-            Guardar cambios
+          <button type="submit" className="btn btn-primary" disabled={saving}>
+            {saving ? 'Guardando...' : 'Guardar cambios'}
           </button>
         </div>
       </form>
