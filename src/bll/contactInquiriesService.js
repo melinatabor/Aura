@@ -2,8 +2,7 @@ import * as contactInquiriesDal from '../dal/contactInquiriesDal'
 import { toContactInquiry, toContactInquiryRow } from '../mappers/contactInquiryMapper'
 
 export async function submitInquiry(form) {
-  const row = await contactInquiriesDal.insert(toContactInquiryRow(form))
-  return toContactInquiry(row)
+  await contactInquiriesDal.insert(toContactInquiryRow(form))
 }
 
 export async function getAll() {
