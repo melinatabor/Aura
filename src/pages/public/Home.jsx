@@ -286,7 +286,7 @@ export default function Home() {
         </p>
         <div className="pub-cta-actions">
           <Link to="/activate-account" className="pub-btn-light">
-            Crear cuenta profesional <ArrowRight size={16} />
+            Crear cuenta <ArrowRight size={16} />
           </Link>
           <Link to="/contact" className="pub-btn-ghost">
             Enviar consulta

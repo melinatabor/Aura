@@ -71,7 +71,7 @@ export default function Login() {
         </form>
 
         <p className="auth-footer">
-          ¿No tenés cuenta? <Link to="/activate-account">Creá una cuenta profesional</Link>
+          ¿No tenés cuenta? <Link to="/activate-account">Creá tu cuenta</Link>
         </p>
       </div>
     </div>
