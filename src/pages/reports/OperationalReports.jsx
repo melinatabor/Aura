@@ -23,6 +23,7 @@ export default function OperationalReports() {
   const [trend, setTrend] = useState(null)
   const [exported, setExported] = useState(false)
   const [exporting, setExporting] = useState(false)
+  const [exportError, setExportError] = useState('')
 
   async function loadHistory() {
     setHistory(await reportsService.getExportHistory())
@@ -49,11 +50,14 @@ export default function OperationalReports() {
 
   async function handleExport() {
     setExporting(true)
+    setExportError('')
     try {
       await reportsService.exportReport(user.id)
       downloadOperationalReportPdf(reports)
       setExported(true)
       loadHistory()
+    } catch {
+      setExportError('No se pudo exportar el reporte. Intentá de nuevo.')
     } finally {
       setExporting(false)
     }
@@ -72,6 +76,8 @@ export default function OperationalReports() {
           </button>
         )}
       </div>
+
+      {exportError && <p className="field-error" style={{ marginBottom: 16 }}>{exportError}</p>}
 
       <div className="stat-grid">
         <StatCard label="Ingresos por turnos realizados" icon={Wallet} value={priceFormatter.format(reports.totalRevenue)} />
