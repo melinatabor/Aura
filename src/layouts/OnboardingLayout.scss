@@ -1,0 +1,150 @@
+@use '../styles/variables' as *;
+
+.onboarding {
+  position: relative;
+  min-height: 100vh;
+  background: $color-bg;
+  overflow: hidden;
+}
+
+.onboarding-blob {
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(110px);
+  pointer-events: none;
+
+  &--a {
+    top: -120px;
+    right: -100px;
+    width: 420px;
+    height: 420px;
+    background: $color-primary-light;
+    opacity: 0.28;
+    animation: pub-glow 14s ease-in-out infinite alternate;
+  }
+
+  &--b {
+    bottom: -140px;
+    left: -100px;
+    width: 360px;
+    height: 360px;
+    background: $color-accent;
+    opacity: 0.13;
+    animation: pub-glow 18s ease-in-out infinite alternate-reverse;
+  }
+}
+
+.onboarding-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $space-4 clamp($space-5, 4vw, $space-8);
+  border-bottom: 1px solid $color-border;
+  background: rgba($color-surface, 0.8);
+  backdrop-filter: blur(10px);
+}
+
+.onboarding-user {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  font-size: 14px;
+  color: $color-text-muted;
+}
+
+.onboarding-main {
+  position: relative;
+  z-index: 1;
+  width: min(1040px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: $space-6 0 $space-8;
+}
+
+.onboarding-steps {
+  list-style: none;
+  margin: 0 0 $space-6;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-3;
+  flex-wrap: wrap;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    font-size: 14px;
+    font-weight: 600;
+    color: $color-text-muted;
+
+    // Línea entre pasos
+    &:not(:last-child)::after {
+      content: '';
+      width: clamp(28px, 6vw, 80px);
+      height: 2px;
+      margin-left: $space-3;
+      background: $color-border;
+    }
+
+    &.is-done:not(:last-child)::after {
+      background: $color-success;
+    }
+  }
+
+  .onboarding-step-dot {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $color-surface;
+    border: 2px solid $color-border;
+    font-size: 13px;
+  }
+
+  .is-done {
+    color: $color-text;
+
+    .onboarding-step-dot {
+      background: $color-success;
+      border-color: $color-success;
+      color: #fff;
+    }
+  }
+
+  .is-current {
+    color: $color-primary;
+
+    .onboarding-step-dot {
+      border-color: $color-primary;
+      color: $color-primary;
+      box-shadow: 0 0 0 5px rgba($color-primary, 0.12);
+    }
+  }
+}
+
+.onboarding-content {
+  animation: page-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (max-width: 640px) {
+  .onboarding-step-label {
+    display: none;
+  }
+
+  .onboarding-steps li.is-current .onboarding-step-label {
+    display: inline;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .onboarding-blob,
+  .onboarding-content {
+    animation: none;
+  }
+}

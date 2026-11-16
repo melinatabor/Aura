@@ -29,6 +29,7 @@ import Privacy from './pages/public/Privacy.jsx'
 import InitialSetup from './pages/setup/InitialSetup.jsx'
 import Welcome from './pages/setup/Welcome.jsx'
 import NotFound from './pages/NotFound.jsx'
+import OnboardingLayout from './layouts/OnboardingLayout.jsx'
 
 function guarded(code, element) {
   return <RequirePermission code={code}>{element}</RequirePermission>
@@ -62,6 +63,9 @@ export default function AppRoutes() {
           <Route path="/app/ai-scoring" element={guarded('scoring.view', <AIPatientScoring />)} />
           <Route path="/app/employees" element={guarded('employees.manage', <EmployeesRoles />)} />
           <Route path="/app/settings" element={guarded('settings.manage', <OperationalSettings />)} />
+        </Route>
+
+        <Route element={<OnboardingLayout />}>
           <Route path="/app/initial-setup" element={guarded('settings.manage', <InitialSetup />)} />
           <Route path="/app/welcome" element={guarded('settings.manage', <Welcome />)} />
         </Route>
