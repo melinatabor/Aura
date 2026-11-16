@@ -30,6 +30,15 @@ export default function SupplyFormModal({ supply, onSave, onClose }) {
           <input id="name" required value={form.name} onChange={(e) => handleChange('name', e.target.value)} />
         </div>
         <div className="form-group">
+          <label htmlFor="category">Categoría</label>
+          <input
+            id="category"
+            placeholder="ej. Cremas, Descartables, Higiene"
+            value={form.category ?? ''}
+            onChange={(e) => handleChange('category', e.target.value)}
+          />
+        </div>
+        <div className="form-group">
           <label htmlFor="description">Descripción</label>
           <textarea id="description" rows={2} value={form.description} onChange={(e) => handleChange('description', e.target.value)} />
         </div>

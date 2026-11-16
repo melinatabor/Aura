@@ -23,6 +23,7 @@ export default function SupplyControl() {
   const [history, setHistory] = useState([])
   const [exported, setExported] = useState(false)
   const [exporting, setExporting] = useState(false)
+  const [exportError, setExportError] = useState('')
 
   async function reload() {
     setSupplies(await suppliesService.getAll())
@@ -58,11 +59,14 @@ export default function SupplyControl() {
 
   async function handleExport() {
     setExporting(true)
+    setExportError('')
     try {
       await suppliesService.exportStock(user.id)
       downloadStockExportPdf(supplies)
       setExported(true)
       loadHistory()
+    } catch {
+      setExportError('No se pudo exportar el stock. Intentá de nuevo.')
     } finally {
       setExporting(false)
     }
@@ -86,6 +90,8 @@ export default function SupplyControl() {
           </div>
         )}
       </div>
+
+      {exportError && <p className="field-error" style={{ marginBottom: 16 }}>{exportError}</p>}
 
       <div className="stat-grid">
         <StatCard label="Insumos registrados" icon={Package} value={supplies.length} />
