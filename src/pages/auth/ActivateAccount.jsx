@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext.jsx'
 import * as invitationsService from '../../bll/invitationsService'
 import AuthAside from '../../components/AuthAside/AuthAside.jsx'
@@ -8,6 +8,7 @@ import './Auth.scss'
 
 export default function ActivateAccount() {
   const { signup } = useAuth()
+  const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const token = searchParams.get('token')
   const [invitation, setInvitation] = useState(null)
@@ -42,8 +43,9 @@ export default function ActivateAccount() {
     setError('')
     setSubmitting(true)
     try {
-      await signup({ ...form, invitationToken: invitation ? token : null })
-      setSubmitted(true)
+      const { firstAdmin } = await signup({ ...form, invitationToken: invitation ? token : null })
+      if (firstAdmin) navigate('/app/initial-setup', { replace: true })
+      else setSubmitted(true)
     } catch (err) {
       setError('No pudimos crear la cuenta. El usuario o el email ya existen, o la contraseña tiene menos de 6 caracteres.')
     } finally {
@@ -83,7 +85,7 @@ export default function ActivateAccount() {
         {invitationError && <p className="field-error">{invitationError}</p>}
         {!token && (
           <p className="field-hint" style={{ marginBottom: 16 }}>
-            Sin un enlace de invitación, la cuenta queda pendiente hasta que un administrador la apruebe.
+            Si tu espacio de trabajo todavía no tiene administrador, esta cuenta lo será y vas a poder configurarlo. Si ya lo tiene, la cuenta queda pendiente hasta que un administrador la apruebe.
           </p>
         )}
 

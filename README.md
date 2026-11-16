@@ -120,7 +120,8 @@ Solo hace falta si se usa un proyecto de Supabase nuevo. Correr en el **SQL Edit
 | 4 | `schema_username.sql` | Login por nombre de usuario |
 | 5 | `schema_week8.sql` | Reportes y exportaciones persistidas, recomendaciones |
 | 6 | `schema_week9_to_11.sql` | Roles y permisos, invitaciones, alertas, recordatorios, datos del centro y políticas RLS por permiso |
-| 7 | `seed.sql` y los `seed_*.sql` | Datos de ejemplo (opcionales) |
+| 7 | `schema_first_admin.sql` | La primera cuenta que se registra queda como Administrador activo (alta del negocio desde "Crear cuenta") |
+| 8 | `seed.sql` y los `seed_*.sql` | Datos de ejemplo (opcionales) |
 
 Para la IA: desplegar `supabase/functions/patient-insight` desde **Edge Functions** y cargar el secret `GEMINI_API_KEY` (se saca gratis en [Google AI Studio](https://aistudio.google.com/apikey)).
 

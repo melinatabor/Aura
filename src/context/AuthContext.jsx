@@ -75,8 +75,13 @@ export function AuthProvider({ children }) {
     }
   }
 
+  // Devuelve { firstAdmin }. La primera cuenta del espacio de trabajo nace como
+  // Administrador activo: se deja la sesión abierta para seguir con la
+  // Configuración inicial. Cualquier otra cuenta (invitada o pendiente de
+  // aprobación) cierra la sesión y entra después por el login, que es donde se
+  // valida si la cuenta ya está activa.
   async function signup({ email, password, firstName, lastName, username, invitationToken }) {
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -84,9 +89,15 @@ export function AuthProvider({ children }) {
       },
     })
     if (error) throw error
-    // El registro deja una sesión abierta; la cerramos para que entre por el
-    // login, que es donde se valida si la cuenta ya está activa.
-    await supabase.auth.signOut()
+
+    const built = data.user ? await buildUser(data.user) : null
+    const firstAdmin = !invitationToken && built?.status === 'Activo' && built?.roleName === 'Administrador'
+    if (firstAdmin) {
+      setUser(built)
+    } else {
+      await supabase.auth.signOut()
+    }
+    return { firstAdmin }
   }
 
   // Recuperación de contraseña en 3 pasos: correo -> código -> contraseña nueva.
