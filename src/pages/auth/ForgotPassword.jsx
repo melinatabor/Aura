@@ -140,8 +140,7 @@ export default function ForgotPassword() {
         {step === 1 && (
           <form onSubmit={handleVerify}>
             <p className="field-hint" style={{ marginBottom: 16 }}>
-              Te enviamos un código de verificación a <strong>{email}</strong>. Si en cambio te llegó un enlace, abrilo
-              desde ese mismo navegador.
+              Te enviamos un código de verificación a <strong>{email}</strong>. Revisá también la carpeta de spam.
             </p>
             <div className="form-group">
               <label htmlFor="recoveryCode">Código de verificación</label>
