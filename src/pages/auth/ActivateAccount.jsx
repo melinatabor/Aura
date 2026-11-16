@@ -53,6 +53,28 @@ export default function ActivateAccount() {
     }
   }
 
+  // Con un enlace inválido no se ofrece el formulario: la cuenta solo se activa con una invitación vigente.
+  if (token && (invitationError || !invitation)) {
+    return (
+      <div className="auth-page">
+        <AuthAside />
+        <div className="aura-card auth-card" style={{ textAlign: 'center' }}>
+          <h1>Crear cuenta</h1>
+          {invitationError ? (
+            <>
+              <p className="field-error">{invitationError}</p>
+              <Link to="/login" className="btn btn-primary auth-submit">
+                Ir a iniciar sesión
+              </Link>
+            </>
+          ) : (
+            <p className="auth-subtitle">Validando tu invitación...</p>
+          )}
+        </div>
+      </div>
+    )
+  }
+
   if (submitted) {
     return (
       <div className="auth-page">
